@@ -21,6 +21,7 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] private Vector2 maxVelocity;
+    [SerializeField] private Vector2 maxMoveSpeed;
     [SerializeField] private float moveSpeed, jumpForce;
     [SerializeField] private int maxJumps;
 
@@ -57,12 +58,15 @@ public class Movement : MonoBehaviour
             if (intent.left)
             {
                 transform.localScale = flipScale;
-                rigid.addX(-(moveSpeed));
+
+                if (rigid.velocity.x > -maxMoveSpeed.x)
+                    rigid.addX(-(moveSpeed));
             }
             else if (intent.right)
             {
                 transform.localScale = originalScale;
-                rigid.addX(moveSpeed);
+                if (rigid.velocity.x < maxMoveSpeed.x)
+                    rigid.addX(moveSpeed);
             }
             else
             {
@@ -80,8 +84,8 @@ public class Movement : MonoBehaviour
                 currJump += 1;
             }
         }
-
     }
+
     private void LateUpdate()
     {
         if (isGrounded)
