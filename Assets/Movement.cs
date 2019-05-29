@@ -16,8 +16,11 @@ public class Movement : MonoBehaviour
 
     }
 
+    public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;
 
     public Intent intent = new Intent();
+
+    public CapsuleCollider2D capsule;
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] private Vector2 maxVelocity;
@@ -25,17 +28,17 @@ public class Movement : MonoBehaviour
     [SerializeField] private float moveSpeed, jumpForce;
     [SerializeField] private int maxJumps;
 
-    private GameObject ground;
     private Vector3 originalScale, flipScale;
-    private bool isGrounded;
     [HideInInspector] public bool moving, jumping, falling, crouching;
     [HideInInspector] public int currJump;
+    private object hit;
 
     // Start is called before the first frame update
     void Start()
     {
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        capsule = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -80,7 +83,17 @@ public class Movement : MonoBehaviour
         {
             if (currJump < maxJumps)
             {
+                float wallKickForce = 6;
+
+                if (rigid.velocity.y < 0) rigid.setY(0);
                 rigid.addY(jumpForce);
+
+                if (!bumpingFeet)
+                {
+                    if (bumpingLeft) rigid.addX(wallKickForce);
+                    if (bumpingRight) rigid.addX(-wallKickForce);
+                }
+
                 currJump += 1;
             }
         }
@@ -88,7 +101,7 @@ public class Movement : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isGrounded)
+        if (bumpingFeet)
         {
             jumping = false;
             falling = false;
@@ -113,26 +126,57 @@ public class Movement : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
+
+        //if (capsule != null)
+        //{
+        //    if ((bumpingLeft || bumpingRight))
+        //    {
+        //        capsule.sharedMaterial.friction = 0f;
+        //        capsule.enabled = false;
+        //        capsule.enabled = true;
+        //    }
+        //    else
+        //    {
+        //        capsule.sharedMaterial.friction = 0.04f;
+        //        capsule.enabled = false;
+        //        capsule.enabled = true;
+        //    }
+        //}
+
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            if (contact.normal.y >= 1)
+            if (contact.normal.y > 0)
             {
-                isGrounded = true;
-                ground = collision.gameObject;
+                bumpingFeet = true;
+                Debug.Log("Hit top");
                 currJump = 0;
                 break;
 
             }
+            if (contact.normal.y < 0)
+            {
+                bumpingHead = true;
+                Debug.Log("Hit bottom");
+            }
+            if (contact.normal.x < 0)
+            {
+                bumpingRight = true;
+                Debug.Log("Hit left");
+            }
+            if (contact.normal.x > 0)
+            {
+                bumpingLeft = true;
+                Debug.Log("Hit right");
+            }
         }
+
+        //lastContactPoint = 
+ 
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject == ground)
-        {
-            isGrounded = false;
-            ground = null;
-        }
+        bumpingFeet = false; bumpingHead = false; bumpingLeft = false; bumpingRight = false;
     }
 }

@@ -15,10 +15,10 @@ public class GoalManager : MonoBehaviour
 
     public void ScoreGoal()
     {
-        SpawnBall();
 
 
-        if (Random.Range(0, 1) == 0)
+
+        if (Random.Range(0, 15) == 0)
         {
             players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 0.5f);
         }
@@ -26,9 +26,30 @@ public class GoalManager : MonoBehaviour
         {
             players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 1f);
         }
+
+        if (Random.Range(0, 8) == 0)
+        {
+            SpawnSquid();
+        }
+        else
+        {
+            SpawnBall();
+        }
     }
 
     public void SpawnBall(int numBalls = 1)
+    {
+        Vector3 spawnPos = Vector3.zero;
+
+        spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
+
+        GameObject squid = new GameObject();
+        squid = Resources.Load<GameObject>("Ball");
+        Instantiate(squid, spawnPos, Quaternion.identity);
+
+    }
+
+    public void SpawnSquid(int numBalls = 1)
     {
         Vector3 spawnPos = Vector3.zero;
 

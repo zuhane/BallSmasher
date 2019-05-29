@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StrikeAttack : MonoBehaviour
 {
-    
+    Movement movement;
     GameObject strike;
     int SH_isAxisInUse = 0, SV_isAxisInUse = 0;
     private void Start()
@@ -12,11 +12,29 @@ public class StrikeAttack : MonoBehaviour
         strike = Resources.Load<GameObject>("StrikeBox");
         strike.GetComponent<StrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
         strike.GetComponent<StrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+
+        movement = GetComponent<Movement>();
     }
 
     void Update()
     {
-        
+        //if (movement.bumpingFeet)
+        //{
+        //    StrikeOut(StrikeBox.FacingDirection.Down);
+        //}
+        //if (movement.bumpingHead)
+        //{
+        //    StrikeOut(StrikeBox.FacingDirection.Up);
+        //}
+        //if (movement.bumpingLeft)
+        //{
+        //    StrikeOut(StrikeBox.FacingDirection.Left);
+        //}
+        //if (movement.bumpingRight)
+        //{
+        //    StrikeOut(StrikeBox.FacingDirection.Right);
+        //}
+
         if (Input.GetAxisRaw("StrikeHorizontal") < 0 && SH_isAxisInUse >= 0)
         {
             StrikeOut(StrikeBox.FacingDirection.Left);
