@@ -29,13 +29,18 @@ public class Movement : MonoBehaviour
     [SerializeField] private int maxJumps;
 
     private Vector3 originalScale, flipScale;
-    [HideInInspector] public bool moving, jumping, falling, crouching;
+    [HideInInspector] public bool moving, jumping, falling, crouching, wallSliding;
     [HideInInspector] public int currJump;
     private object hit;
+
+    private CapsuleCollider2D bodyBox, crouchBox;
 
     // Start is called before the first frame update
     void Start()
     {
+        bodyBox = transform.Find("BodyBox").gameObject.GetComponent<CapsuleCollider2D>();
+        crouchBox = transform.Find("CrouchBox").gameObject.GetComponent<CapsuleCollider2D>();
+        //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         capsule = GetComponent<CapsuleCollider2D>();
@@ -46,13 +51,23 @@ public class Movement : MonoBehaviour
     {
         moving = true;
 
-        if (intent.crouch)
+        //Destroy(transform.Find("Graphics").GetComponent<PolygonCollider2D>());
+        //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
+        if (intent.crouch && bumpingFeet)
         {
+            bodyBox.enabled = false;
+            crouchBox.enabled = true;
             crouching = true;
             moving = false;
+
         }
         else
         {
+            if (crouching)
+            {
+                bodyBox.enabled = true;
+                crouchBox.enabled = false;
+            }
             crouching = false;
         }
 
@@ -96,6 +111,15 @@ public class Movement : MonoBehaviour
 
                 currJump += 1;
             }
+        }
+
+        if ((bumpingLeft && intent.left) || (bumpingRight && intent.right))
+        {
+            wallSliding = true;
+        }
+        else
+        {
+            wallSliding = false;
         }
     }
 
@@ -173,7 +197,7 @@ public class Movement : MonoBehaviour
         }
 
         //lastContactPoint = 
- 
+
     }
     private void OnCollisionExit2D(Collision2D collision)
     {

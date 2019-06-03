@@ -44,7 +44,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsRunning", movement.moving);
         animator.SetInteger("JumpCount", movement.currJump);
         animator.SetBool("Crouching", movement.crouching);
-        
+        animator.SetBool("WallSliding", movement.wallSliding);
+
     }
     
 }
