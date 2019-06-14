@@ -13,14 +13,16 @@ public class Movement : MonoBehaviour
         public bool down { get; set; }
         public bool jump { get; set; }
         public bool crouch { get; set; }
-
+        public bool hitRight { get; set; }
+        public bool hitLeft { get; set; }
+        public bool hitUp { get; set; }
+        public bool hitDown { get; set; }
+        public bool dash { get; set; }
     }
 
     public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;
 
     public Intent intent = new Intent();
-
-    public CapsuleCollider2D capsule;
 
     [SerializeField] private Rigidbody2D rigid;
     [SerializeField] private Vector2 maxVelocity;
@@ -29,21 +31,25 @@ public class Movement : MonoBehaviour
     [SerializeField] private int maxJumps;
 
     private Vector3 originalScale, flipScale;
-    [HideInInspector] public bool moving, jumping, falling, crouching, wallSliding;
+    [HideInInspector] public bool moving, ascending, descending, crouching, wallSliding;
     [HideInInspector] public int currJump;
     private object hit;
 
-    private CapsuleCollider2D bodyBox, crouchBox;
+    private float dashSpeed = 8;
+
+    private Vector4 standingScale, crouchingScale;
+
+    [SerializeField] private CapsuleCollider2D collider;
 
     // Start is called before the first frame update
     void Start()
     {
-        bodyBox = transform.Find("BodyBox").gameObject.GetComponent<CapsuleCollider2D>();
-        crouchBox = transform.Find("CrouchBox").gameObject.GetComponent<CapsuleCollider2D>();
+        standingScale = new Vector4(-0.02f, 0.04f, 0.3f, 0.45f);
+        crouchingScale = new Vector4(-0.02f, -0.01f, 0.3f, 0.35f);
         //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        capsule = GetComponent<CapsuleCollider2D>();
+        collider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -55,20 +61,32 @@ public class Movement : MonoBehaviour
         //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
         if (intent.crouch && bumpingFeet)
         {
-            bodyBox.enabled = false;
-            crouchBox.enabled = true;
+            if (gameObject.tag == "Player")
+            {
+                collider.offset = new Vector2(crouchingScale.x, crouchingScale.y);
+                collider.size = new Vector2(crouchingScale.z, crouchingScale.w);
+            }
+
             crouching = true;
             moving = false;
 
         }
         else
         {
-            if (crouching)
+            if (gameObject.tag == "Player")
             {
-                bodyBox.enabled = true;
-                crouchBox.enabled = false;
+                collider.offset = new Vector2(standingScale.x, standingScale.y);
+                collider.size = new Vector2(standingScale.z, standingScale.w);
             }
+
+
             crouching = false;
+        }
+
+        if (intent.dash)
+        {
+            if (intent.left) rigid.addX(-dashSpeed);
+            else if (intent.right) rigid.addX(dashSpeed);
         }
 
         if (!crouching)
@@ -127,13 +145,13 @@ public class Movement : MonoBehaviour
     {
         if (bumpingFeet)
         {
-            jumping = false;
-            falling = false;
+            ascending = false;
+            descending = false;
         }
         else
         {
-            falling = (rigid.velocity.y < 0);
-            jumping = (rigid.velocity.y > 0);
+            descending = (rigid.velocity.y < 0);
+            ascending = (rigid.velocity.y > 0);
         }
     }
 
@@ -147,6 +165,17 @@ public class Movement : MonoBehaviour
             rigid.setY(maxVelocity.y);
         if (rigid.velocity.y < -(maxVelocity.y))
             rigid.setY(-(maxVelocity.y));
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0 || contact.normal.x < 0 || contact.normal.x > 0)
+            {
+                currJump = 0;
+            }
+        }
     }
 
 
@@ -174,25 +203,24 @@ public class Movement : MonoBehaviour
             if (contact.normal.y > 0)
             {
                 bumpingFeet = true;
-                Debug.Log("Hit top");
-                currJump = 0;
+                //Debug.Log("Hit top");
                 break;
 
             }
             if (contact.normal.y < 0)
             {
                 bumpingHead = true;
-                Debug.Log("Hit bottom");
+                //Debug.Log("Hit bottom");
             }
             if (contact.normal.x < 0)
             {
                 bumpingRight = true;
-                Debug.Log("Hit left");
+                //Debug.Log("Hit left");
             }
             if (contact.normal.x > 0)
             {
                 bumpingLeft = true;
-                Debug.Log("Hit right");
+                //Debug.Log("Hit right");
             }
         }
 

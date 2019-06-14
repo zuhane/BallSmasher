@@ -2,74 +2,75 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Movement))]
+[RequireComponent(typeof(PlayerManager))]
 public class StrikeAttack : MonoBehaviour
 {
     Movement movement;
-    GameObject strike;
-    int SH_isAxisInUse = 0, SV_isAxisInUse = 0;
+    GameObject spinStrike, normalStrike;
+    PlayerManager playerManager;
+
     private void Start()
     {
-        strike = Resources.Load<GameObject>("StrikeBox");
-        strike.GetComponent<StrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
-        strike.GetComponent<StrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+        spinStrike = Resources.Load<GameObject>("SpinningStrikeBox");
+        spinStrike.GetComponent<SpinningStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
+        spinStrike.GetComponent<SpinningStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+
+        normalStrike = Resources.Load<GameObject>("NormalStrikeBox");
+        normalStrike.GetComponent<NormalStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
+        normalStrike.GetComponent<NormalStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
 
         movement = GetComponent<Movement>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
     void Update()
     {
-        //if (movement.bumpingFeet)
-        //{
-        //    StrikeOut(StrikeBox.FacingDirection.Down);
-        //}
-        //if (movement.bumpingHead)
-        //{
-        //    StrikeOut(StrikeBox.FacingDirection.Up);
-        //}
-        //if (movement.bumpingLeft)
-        //{
-        //    StrikeOut(StrikeBox.FacingDirection.Left);
-        //}
-        //if (movement.bumpingRight)
-        //{
-        //    StrikeOut(StrikeBox.FacingDirection.Right);
-        //}
-
-        if (Input.GetAxisRaw("StrikeHorizontal") < 0 && SH_isAxisInUse >= 0)
+        if (movement.intent.hitLeft)
         {
-            StrikeOut(StrikeBox.FacingDirection.Left);
-            SH_isAxisInUse = -1;
-        }
-        else if (Input.GetAxisRaw("StrikeHorizontal") > 0 && SH_isAxisInUse <= 0)
-        {
-            StrikeOut(StrikeBox.FacingDirection.Right);
-            SH_isAxisInUse = 1;
-        }
-        else if (Input.GetAxisRaw("StrikeHorizontal") == 0)
-        {
-            SH_isAxisInUse = 0;
+            Debug.Log("Hitting left");
+            SpinStrike(SpinningStrikeBox.FacingDirection.Left);
         }
 
-        
-        if (Input.GetAxisRaw("StrikeVertical") < 0 && SV_isAxisInUse >= 0)
+        if (movement.intent.hitRight)
         {
-            StrikeOut(StrikeBox.FacingDirection.Down);
-            SV_isAxisInUse = -1;
+            Debug.Log("Hitting left");
+            SpinStrike(SpinningStrikeBox.FacingDirection.Right);
         }
-        else if (Input.GetAxisRaw("StrikeVertical") > 0 && SV_isAxisInUse <= 0)
+
+        if (movement.intent.hitUp)
         {
-            StrikeOut(StrikeBox.FacingDirection.Up);
-            SV_isAxisInUse = 1;
+            Debug.Log("Hitting left");
+            NormalStrike(SpinningStrikeBox.FacingDirection.Up);
         }
-        else if (Input.GetAxisRaw("StrikeVertical") == 0)
+
+        if (movement.intent.hitDown)
         {
-            SV_isAxisInUse = 0;
+            if (movement.bumpingFeet)
+            {
+                Debug.Log("Hitting left");
+                NormalStrike(SpinningStrikeBox.FacingDirection.DownOut);
+            }
+            else
+            {
+                Debug.Log("Hitting left");
+                NormalStrike(SpinningStrikeBox.FacingDirection.Down);
+            }
+
         }
+
+
     }
 
-    private void StrikeOut(StrikeBox.FacingDirection direction)
+    private void NormalStrike(SpinningStrikeBox.FacingDirection direction)
     {
-        strike.GetComponent<StrikeBox>().facingDirection = direction;
-        GameObject outStrike = Instantiate(strike, gameObject.transform.position, Quaternion.identity);
+        normalStrike.GetComponent<NormalStrikeBox>().facingDirection = direction;
+        GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+    }
+
+    private void SpinStrike(SpinningStrikeBox.FacingDirection direction)
+    {
+        spinStrike.GetComponent<SpinningStrikeBox>().facingDirection = direction;
+        GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
     }
 }

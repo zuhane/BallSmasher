@@ -18,18 +18,22 @@ public class GoalManager : MonoBehaviour
 
 
 
-        if (Random.Range(0, 15) == 0)
-        {
-            players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 0.5f);
-        }
-        else
-        {
-            players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 1f);
-        }
+        //if (Random.Range(0, 15) == 0)
+        //{
+        //    players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 0.5f);
+        //}
+        //else
+        //{
+        //    players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 1f);
+        //}
 
         if (Random.Range(0, 8) == 0)
         {
             SpawnSquid();
+        }
+        else if (Random.Range(0, 6) == 0)
+        {
+            SpawnFireball();
         }
         else
         {
@@ -49,6 +53,18 @@ public class GoalManager : MonoBehaviour
 
     }
 
+    public void SpawnFireball(int numBalls = 1)
+    {
+        Vector3 spawnPos = Vector3.zero;
+
+        spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
+
+        GameObject squid = new GameObject();
+        squid = Resources.Load<GameObject>("FireBall");
+        Instantiate(squid, spawnPos, Quaternion.identity);
+
+    }
+
     public void SpawnSquid(int numBalls = 1)
     {
         Vector3 spawnPos = Vector3.zero;
@@ -58,7 +74,6 @@ public class GoalManager : MonoBehaviour
         GameObject squid = new GameObject();
         squid = Resources.Load<GameObject>("Squid");
         Instantiate(squid, spawnPos, Quaternion.identity);
-
     }
 
 }

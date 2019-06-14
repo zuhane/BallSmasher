@@ -17,7 +17,7 @@ public class BounceBox : MonoBehaviour
     private Vector2 flingDirection;
     private Vector2 finalFlingDirection;
     public float xOffset = 0f, yOffset = 0f;
-    private float force = 10;
+    private float force = 6;
     private bool used = false;
 
     private int counter, countLimit = 0;

@@ -10,7 +10,10 @@ public class FollowPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        List<Transform> transforms = new List<Transform>();
+        transforms.Add(GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>());
+
+        playerPos = transforms[Random.Range(0, transforms.Count)];
     }
 
     // Update is called once per frame
