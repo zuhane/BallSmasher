@@ -14,6 +14,8 @@ public class NormalStrikeBox : MonoBehaviour
     private bool used = false;
     private Vector3 startPos;
 
+    public int damage = 1;
+
     [SerializeField] private float lifeLimit = 0.55f;
 
     private void Start()
@@ -73,6 +75,12 @@ public class NormalStrikeBox : MonoBehaviour
                 Destroy(gameObject);
             }
 
+            StatsRPG stats = collision.gameObject.GetComponent<StatsRPG>();
+
+            if (stats != null)
+            {
+                stats.TakeDamage(damage);
+            }
 
         }
 

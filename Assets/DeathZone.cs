@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
+    private AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,6 +19,8 @@ public class DeathZone : MonoBehaviour
         if (rigidBody != null && collision.gameObject.tag == "Bouncy")
         {
             Destroy(collision.gameObject);
+
+            audioSource.Play();
 
             GameObject.Find("GoalManager").GetComponent<GoalManager>().ScoreGoal();
         }

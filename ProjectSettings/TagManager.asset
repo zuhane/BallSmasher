@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bouncy
   - Spawner
+  - PlayerSpawner
   layers:
   - Default
   - TransparentFX

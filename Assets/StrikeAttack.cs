@@ -29,13 +29,13 @@ public class StrikeAttack : MonoBehaviour
         if (movement.intent.hitLeft)
         {
             Debug.Log("Hitting left");
-            SpinStrike(SpinningStrikeBox.FacingDirection.Left);
+            NormalStrike(SpinningStrikeBox.FacingDirection.Left);
         }
 
         if (movement.intent.hitRight)
         {
             Debug.Log("Hitting left");
-            SpinStrike(SpinningStrikeBox.FacingDirection.Right);
+            NormalStrike(SpinningStrikeBox.FacingDirection.Right);
         }
 
         if (movement.intent.hitUp)
