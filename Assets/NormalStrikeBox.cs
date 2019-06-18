@@ -44,8 +44,9 @@ public class NormalStrikeBox : MonoBehaviour
             case SpinningStrikeBox.FacingDirection.DownOut:
                 flingDirection = new Vector2(0, 1);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
-                transform.localScale = new Vector3(5, 0.8f, 1);
-                transform.position = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z);
+                transform.localScale = new Vector3(7, 0.8f, 1);
+                transform.position = new Vector3(transform.position.x, transform.position.y - yOffset + 0.1f, transform.position.z);
+                force /= 3;
                 break;
         }
 

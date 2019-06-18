@@ -177,7 +177,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.63
+      scalar: 2.99
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1366,17 +1366,17 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0, b: 0.08789873, a: 0.09803922}
-        key1: {r: 0.91779137, g: 0, b: 1, a: 0}
-        key2: {r: 1, g: 1, b: 1, a: 0}
-        key3: {r: 1, g: 0, b: 0.5497303, a: 0}
+        key1: {r: 1, g: 0, b: 0.08789873, a: 0}
+        key2: {r: 0.078232765, g: 0, b: 1, a: 0}
+        key3: {r: 0.078232765, g: 0, b: 1, a: 0}
         key4: {r: 0.078232765, g: 0, b: 1, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 19661
-        ctime2: 32960
-        ctime3: 41634
+        ctime1: 65535
+        ctime2: 65535
+        ctime3: 65535
         ctime4: 65535
         ctime5: 0
         ctime6: 0
@@ -1390,7 +1390,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 5
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -1707,9 +1707,9 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalX:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: -0.5
-      minScalar: 0
+      minMaxState: 3
+      scalar: -5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1760,9 +1760,9 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalY:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: -5
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1813,7 +1813,7 @@ ParticleSystem:
         m_RotationOrder: 4
     orbitalZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -2026,7 +2026,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -24.19
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4982,7 +4982,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.9424448, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6064,7 +6064,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 0.03529412}
-        key1: {r: 0, g: 1, b: 0.9379053, a: 0}
+        key1: {r: 1, g: 1, b: 1, a: 0}
         key2: {r: 1, g: 1, b: 1, a: 0}
         key3: {r: 0.078232765, g: 0, b: 1, a: 0}
         key4: {r: 0.078232765, g: 0, b: 1, a: 0}
@@ -6072,7 +6072,7 @@ ParticleSystem:
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 12529
+        ctime1: 65535
         ctime2: 65535
         ctime3: 65535
         ctime4: 65535
@@ -6088,7 +6088,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 3
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -10761,18 +10761,18 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0.08789873, a: 0.09803922}
-        key1: {r: 0.91779137, g: 0, b: 1, a: 0}
-        key2: {r: 1, g: 1, b: 1, a: 0}
-        key3: {r: 1, g: 0, b: 0.5497303, a: 0}
+        key0: {r: 1, g: 0.77521884, b: 0, a: 0.09803922}
+        key1: {r: 1, g: 0.77521884, b: 0, a: 0}
+        key2: {r: 0.078232765, g: 0, b: 1, a: 0}
+        key3: {r: 0.078232765, g: 0, b: 1, a: 0}
         key4: {r: 0.078232765, g: 0, b: 1, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
-        ctime1: 19661
-        ctime2: 32960
-        ctime3: 41634
+        ctime1: 65535
+        ctime2: 65535
+        ctime3: 65535
         ctime4: 65535
         ctime5: 0
         ctime6: 0
@@ -10786,7 +10786,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 5
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
@@ -14106,7 +14106,7 @@ GameObject:
   - component: {fileID: 8619280763886916190}
   - component: {fileID: 349505791}
   m_Layer: 0
-  m_Name: DeathZone
+  m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

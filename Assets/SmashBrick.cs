@@ -32,6 +32,8 @@ public class SmashBrick : MonoBehaviour
             audioSource.Play();
             animator.SetTrigger("Hit");
             HP -= collision.gameObject.GetComponent<BallHit>().damage;
+            collision.gameObject.GetComponent<Rigidbody2D>().setX(-collision.GetContact(0).normal.x * collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
+            collision.gameObject.GetComponent<Rigidbody2D>().setY(-collision.GetContact(0).normal.y * collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
             UpdateColor();
         }
 

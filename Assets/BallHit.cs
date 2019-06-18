@@ -14,7 +14,7 @@ public class BallHit : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        audioSource.pitch = Random.Range(.4f, 1.4f);
+        audioSource.pitch = Random.Range(.9f, 1.5f);
         audioSource.Play();
     }
 }

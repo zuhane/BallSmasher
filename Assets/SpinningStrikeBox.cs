@@ -19,7 +19,7 @@ public class SpinningStrikeBox : MonoBehaviour
     private Vector2 flingDirection;
     private Vector2 finalFlingDirection;
     public float xOffset = 0f, yOffset = 0f;
-    private float force = 10;
+    [HideInInspector] public float force = 10;
     private bool used = false;
     private Vector3 startPos;
 
@@ -47,8 +47,8 @@ public class SpinningStrikeBox : MonoBehaviour
                 break;
             case FacingDirection.Left:
                 flingDirection = new Vector2(-1, 0);
-                transform.localRotation = Quaternion.Euler(0, 0, 180);
-                transform.localPosition = new Vector3(0, -yOffset, 0);
+                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                transform.localPosition = new Vector3(0, yOffset, 0);
                 break;
             case FacingDirection.Down:
                 flingDirection = new Vector2(0, -1);                
@@ -70,11 +70,8 @@ public class SpinningStrikeBox : MonoBehaviour
 
     private void Rotate()
     {
-        float angle = 180 / frequency;
-        transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), -angle * 
-            ((facingDirection == FacingDirection.Left || facingDirection == FacingDirection.Right )
-            ? 1f
-            : transform.parent.transform.lossyScale.x));
+        float angle = (180 / frequency) * -flingDirection.x;
+        transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
         Debug.Log(transform.rotation);
     }
     private void OnTriggerEnter2D(Collider2D collision)
