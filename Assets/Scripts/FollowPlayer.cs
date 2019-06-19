@@ -20,14 +20,21 @@ public class FollowPlayer : MonoBehaviour
     void Update()
     {
         movement.intent = new Movement.Intent();
-        Vector3 direction = (playerPos.position - transform.position).normalized;
 
-        if (direction.x < 0)
-            movement.intent.left = true;
-        if (direction.x > 0)
-            movement.intent.right = true;
-        if (direction.y > 0)
-            movement.intent.jump = true;
+        if (playerPos != null)
+        {
+            Vector3 direction = (playerPos.position - transform.position).normalized;
+
+            if (direction.x < 0)
+                movement.intent.left = true;
+            if (direction.x > 0)
+                movement.intent.right = true;
+            if (direction.y > 0)
+                movement.intent.jump = true;
+        }
+
+
+
 
         
 

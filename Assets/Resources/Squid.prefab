@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4408834826889174626}
   - component: {fileID: 4408834826889174636}
   - component: {fileID: 4408834826889174627}
+  - component: {fileID: 7403033546329191753}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -99,6 +100,102 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!82 &7403033546329191753
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4408834826889174625}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e408b79c16800cb43a0757a3cb46b759, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4408834828338915079
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +211,7 @@ GameObject:
   - component: {fileID: 6134116314691583408}
   - component: {fileID: 4084408966155745383}
   - component: {fileID: 4823841581142367361}
+  - component: {fileID: 126173189440118269}
   m_Layer: 0
   m_Name: Squid
   m_TagString: Bouncy
@@ -180,8 +278,8 @@ MonoBehaviour:
   jumpForce: 3
   maxJumps: 1
   moving: 0
-  jumping: 0
-  falling: 0
+  ascending: 0
+  descending: 0
   crouching: 0
   wallSliding: 0
   currJump: 0
@@ -324,3 +422,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &126173189440118269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4408834828338915079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5481a2c30aa3504438a75172b177fdbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHP: 3
+  MaxMP: 5
+  armour: 0
+  attackDamage: 1
+  knockbackForce: 6
+  damageCounter: 0
+  damageLimit: 5
+  hurt: 0
+  hurtNoise: {fileID: 8300000, guid: 54ddfdfc3a03c7a47a2019e051267641, type: 3}
+  deathNoise: {fileID: 8300000, guid: 54ddfdfc3a03c7a47a2019e051267641, type: 3}
+  explosion: {fileID: 211009268581708817, guid: 7f87bd1b281eef74b948842e5cea0a36,
+    type: 3}

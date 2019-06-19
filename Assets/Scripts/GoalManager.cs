@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class GoalManager : MonoBehaviour
 {
+    private GameObject camera;
     private List<GameObject> spawners = new List<GameObject>();
     private List<GameObject> players = new List<GameObject>();
 
     private void Start()
     {
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+
         spawners.AddRange(GameObject.FindGameObjectsWithTag("Spawner"));
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
     }
 
-    public void ScoreGoal()
+    public void ScoreGoal(int goalNumber)
     {
-
-
+        ScoreKeeper.instance.UpdateScore(goalNumber);
 
         //if (Random.Range(0, 15) == 0)
         //{
@@ -30,6 +32,12 @@ public class GoalManager : MonoBehaviour
         if (Random.Range(0, 8) == 0)
         {
             SpawnSquid();
+            SpawnSquid();
+            SpawnSquid();
+            SpawnSquid();
+            SpawnSquid();
+            SpawnSquid();
+            SpawnBall();
         }
         else if (Random.Range(0, 6) == 0)
         {
@@ -39,6 +47,9 @@ public class GoalManager : MonoBehaviour
         {
             SpawnBall();
         }
+
+
+        camera.GetComponent<SmashBrosCamera>().SetTargets();
     }
 
     public void SpawnBall(int numBalls = 1)

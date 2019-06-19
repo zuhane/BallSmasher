@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
 public class StatsRPG : MonoBehaviour
 {
 
@@ -18,21 +17,25 @@ public class StatsRPG : MonoBehaviour
     [SerializeField] private AudioClip hurtNoise, deathNoise;
     private AudioSource audioSource;
 
-    private GameObject explosion;
+    [SerializeField] private GameObject explosion;
 
     private int HP, MP;
     private SpriteRenderer spriteRenderer;
 
+    private bool isPlayer = false;
+
     // Start is called before the first frame update
     void Start()
-    {
-        GetComponent<AudioSource>().clip = hurtNoise;
-        audioSource = GetComponent<AudioSource>();
-        explosion = Resources.Load<GameObject>("PlayerExplosion");
+    {       
+        audioSource = transform.GetChild(0).GetComponent<AudioSource>();
+        audioSource.clip = hurtNoise;
+        //explosion = Resources.Load<GameObject>("PlayerExplosion");
 
         ResetStats();
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (gameObject.tag == "Player") isPlayer = true;
     }
 
     public void TakeDamage(int damage)
@@ -59,11 +62,15 @@ public class StatsRPG : MonoBehaviour
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
 
-        GameObject.Find("PlayerManager").GetComponent<PlayerSpawnManager>().HandleDeath(gameObject.GetComponent<PlayerManager>().playerNumber);
-
-        ResetStats();
-
-        //Destroy(gameObject);
+        if (isPlayer)
+        {
+            GameObject.Find("PlayerManager").GetComponent<PlayerSpawnManager>().HandleDeath(gameObject.GetComponent<PlayerManager>().playerNumber);
+            ResetStats();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void ResetStats()
