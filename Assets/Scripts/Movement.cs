@@ -203,27 +203,26 @@ public class Movement : MonoBehaviour
             if (contact.normal.y > 0)
             {
                 bumpingFeet = true;
-                //Debug.Log("Hit top");
-                break;
-
             }
             if (contact.normal.y < 0)
             {
                 bumpingHead = true;
-                //Debug.Log("Hit bottom");
-            }
+                            }
             if (contact.normal.x < 0)
             {
                 bumpingRight = true;
-                //Debug.Log("Hit left");
-            }
+                            }
             if (contact.normal.x > 0)
             {
                 bumpingLeft = true;
-                //Debug.Log("Hit right");
-            }
+                            }
         }
 
+        if (bumpingFeet && bumpingRight)
+            Debug.Log("Corner Right");
+
+        if (bumpingFeet && bumpingLeft)
+            Debug.Log("Corner Left");
         //lastContactPoint = 
 
     }
