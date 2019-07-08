@@ -5,7 +5,7 @@ using UnityEngine;
 public class NormalStrikeBox : MonoBehaviour
 {
 
-    public SpinningStrikeBox.FacingDirection facingDirection;
+    public FacingDirection facingDirection;
 
     private Vector2 flingDirection;
     private Vector2 finalFlingDirection;
@@ -24,26 +24,26 @@ public class NormalStrikeBox : MonoBehaviour
 
         switch (facingDirection)
         {
-            case SpinningStrikeBox.FacingDirection.Up:
+            case FacingDirection.Up:
                 flingDirection = new Vector2(0, 1);
                 transform.position = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
                 break;
-            case SpinningStrikeBox.FacingDirection.Right:
+            case FacingDirection.Right:
                 flingDirection = new Vector2(1, 0);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 270);
                 transform.position = new Vector3(transform.position.x + xOffset, transform.position.y, transform.position.z);
                 break;
-            case SpinningStrikeBox.FacingDirection.Left:
+            case FacingDirection.Left:
                 flingDirection = new Vector2(-1, 0);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
                 transform.position = new Vector3(transform.position.x - xOffset, transform.position.y, transform.position.z);
                 break;
-            case SpinningStrikeBox.FacingDirection.Down:
+            case FacingDirection.Down:
                 flingDirection = new Vector2(0, -1);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.position = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z);
                 break;
-            case SpinningStrikeBox.FacingDirection.DownOut:
+            case FacingDirection.DownOut:
                 flingDirection = new Vector2(0.5f, 1.5f);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localScale = new Vector3(7, 0.8f, 1);
@@ -69,7 +69,7 @@ public class NormalStrikeBox : MonoBehaviour
 
                 if (rigidBody.velocity.y < 0) rigidBody.setY(0);
 
-                if (collision.transform.position.x < transform.parent.transform.position.x && facingDirection == SpinningStrikeBox.FacingDirection.DownOut) { finalFlingDirection.x *= -1; }
+                if (collision.transform.position.x < transform.parent.transform.position.x && facingDirection == FacingDirection.DownOut) { finalFlingDirection.x *= -1; }
 
                 rigidBody.addX(finalFlingDirection.x);
                 rigidBody.addY(finalFlingDirection.y);

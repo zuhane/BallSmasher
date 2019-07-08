@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum FacingDirection
+{
+    None,
+    Up,
+    Down,
+    Left,
+    Right,
+    DownOut
+}
+
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(PlayerManager))]
 public class StrikeAttack : MonoBehaviour
@@ -11,9 +21,12 @@ public class StrikeAttack : MonoBehaviour
     PlayerManager playerManager;
     StatsRPG rpgStats;
 
-    private int chargeLimit = 120, chargeCounter = 0;
-    private int coolDownLimit = 20, coolDownCounter = 0;
-    private bool charging, cooling;
+    private bool releaseDetected = false;
+
+    private float chargeLimit = 3f, charge = 1f;
+    private float coolDownSeconds = 1f, coolDownTimer = 0f;
+    private bool cooling;
+    private FacingDirection strikeDirection = FacingDirection.None;
 
     private void Start()
     {
@@ -36,11 +49,12 @@ public class StrikeAttack : MonoBehaviour
     {
         if (cooling)
         {
-            coolDownCounter++;
-            if (coolDownCounter >= coolDownLimit)
+            coolDownTimer += Time.deltaTime;
+
+            if (coolDownTimer >= coolDownSeconds)
             {
                 cooling = false;
-                coolDownCounter = 0;
+                coolDownTimer = 0f;
             }
             else
                 return;
@@ -48,78 +62,78 @@ public class StrikeAttack : MonoBehaviour
 
         if (movement.intent.holdLeft || movement.intent.holdRight || movement.intent.holdUp || movement.intent.holdDown)
         {
-            charging = true;
-        }
-        else
-        {
-            charging = false;
-        }
-
-        if (charging)
-        {
-            chargeCounter++;
-
-            if (chargeCounter >= chargeLimit)
+            if (strikeDirection == FacingDirection.None)
             {
-                chargeCounter = chargeLimit;
+                strikeDirection =
+                        (movement.intent.holdLeft ? FacingDirection.Left :
+                        (movement.intent.holdRight ? FacingDirection.Right :
+                        (movement.intent.holdDown ? FacingDirection.Down :
+                        (movement.intent.holdUp ? FacingDirection.Up :
+                        FacingDirection.None))));
             }
+            charge += Time.deltaTime;
+
+            if (charge > chargeLimit)
+                charge = chargeLimit;
         }
 
-        if (!charging)
-        {
-            if (movement.intent.releaseLeft)
+        releaseDetected = false;
+
+        if (strikeDirection != FacingDirection.None)
+        { 
+            switch (strikeDirection)
             {
-                Debug.Log("Hitting left");
-                NormalStrike(SpinningStrikeBox.FacingDirection.Left);
-                return;
+                case FacingDirection.Left:
+                    if (movement.intent.releaseLeft)
+                        releaseDetected = true;
+                    break;
+                case FacingDirection.Right:
+                    if (movement.intent.releaseRight)
+                        releaseDetected = true;
+                    break;
+                case FacingDirection.Up:
+                    if (movement.intent.releaseUp)
+                        releaseDetected = true;
+                    break;
+                case FacingDirection.Down:
+                    if (movement.intent.releaseDown)
+                    {
+                        releaseDetected = true;
+                        if (movement.bumpingFeet)
+                            strikeDirection = FacingDirection.DownOut;
+                    }
+                    break;
+                default:
+                    break;
             }
 
-            if (movement.intent.releaseRight)
-            {
-                Debug.Log("Hitting left");
-                NormalStrike(SpinningStrikeBox.FacingDirection.Right);
-                return;
-            }
-
-            if (movement.intent.releaseUp)
-            {
-                Debug.Log("Hitting left");
-                NormalStrike(SpinningStrikeBox.FacingDirection.Up);
-                return;
-            }
-
-            if (movement.intent.releaseDown)
-            {
-                if (movement.bumpingFeet)
-                {
-                    NormalStrike(SpinningStrikeBox.FacingDirection.DownOut);
-                    return;
-                }
-                else
-                {
-                    NormalStrike(SpinningStrikeBox.FacingDirection.Down);
-                    return;
-                }
-            }
-        }
-
+            if (releaseDetected)
+                NormalStrike(strikeDirection);
     }
 
-    private void NormalStrike(SpinningStrikeBox.FacingDirection direction)
-    {
-        normalStrike.GetComponent<NormalStrikeBox>().facingDirection = direction;
-        normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
-        normalStrike.GetComponent<NormalStrikeBox>().force = 0.15f * chargeCounter;
-        GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        cooling = true;
-        chargeCounter = 0;
-    }
+}
 
-    private void SpinStrike(SpinningStrikeBox.FacingDirection direction)
-    {
-        spinStrike.GetComponent<SpinningStrikeBox>().facingDirection = direction;
-        normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
-        GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        cooling = true;
-    }
+private void NormalStrike(FacingDirection direction)
+{
+    if (charge < 1.5f)
+        charge = 1f;
+
+    Debug.Log(charge);
+
+    normalStrike.GetComponent<NormalStrikeBox>().facingDirection = direction;
+    normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
+    normalStrike.GetComponent<NormalStrikeBox>().force = 5f + (5 * charge);
+    GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+    cooling = true;
+    charge = 1;
+    strikeDirection = FacingDirection.None;
+}
+
+private void SpinStrike(FacingDirection direction)
+{
+    spinStrike.GetComponent<SpinningStrikeBox>().facingDirection = direction;
+    normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
+    GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+    cooling = true;
+}
 }

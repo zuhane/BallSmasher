@@ -5,14 +5,7 @@ using UnityEngine;
 
 public class SpinningStrikeBox : MonoBehaviour
 {
-    public enum FacingDirection
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        DownOut
-    }
+
 
     public FacingDirection facingDirection;
 
