@@ -13,6 +13,8 @@ public class SmashBrick : MonoBehaviour
     private Animator animator;
     private GameObject explosion;
     private AudioSource audioSource;
+    private int damageCounter, damageTimeLimit = 10;
+    private bool damaged = false;
 
     private void Start()
     {
@@ -24,24 +26,82 @@ public class SmashBrick : MonoBehaviour
         UpdateColor();
     }
 
+    private void Update()
+    {
+        if (damaged)
+        {
+            damageCounter++;
+
+            if (damageCounter > damageTimeLimit)
+            {
+                damageCounter = 0;
+                damaged = false;
+            }
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
         if (collision.gameObject.tag == "Bouncy")
         {
-            audioSource.pitch = Random.Range(1.2f, 1.8f);
-            audioSource.Play();
-            animator.SetTrigger("Hit");
-            HP -= collision.gameObject.GetComponent<BallHit>().damage;
-            collision.gameObject.GetComponent<Rigidbody2D>().setX(-collision.GetContact(0).normal.x * collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
-            collision.gameObject.GetComponent<Rigidbody2D>().setY(-collision.GetContact(0).normal.y * collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
-            UpdateColor();
+
+            Rigidbody2D tempRigid = collision.gameObject.GetComponent<Rigidbody2D>();
+
+            float tempBounceForce = 0.5f;
+            bool fastEnoughToDamage = false;
+
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                if (contact.normal.y < 0 && tempRigid.velocity.y > 1)
+                {
+                    fastEnoughToDamage = true;
+                    tempRigid.addY(tempBounceForce);
+                }
+                if (contact.normal.y > 0 && tempRigid.velocity.y < -1)
+                {
+                    fastEnoughToDamage = true;
+                    tempRigid.addY(-tempBounceForce);
+                }
+                if (contact.normal.x > 0 && tempRigid.velocity.x < -1)
+                {
+                    fastEnoughToDamage = true;
+                    tempRigid.addX(tempBounceForce);
+                }
+                if (contact.normal.x < 0 && tempRigid.velocity.x > 1)
+                {
+                    fastEnoughToDamage = true;
+                    tempRigid.addX(-tempBounceForce);
+                }
+            }
+
+            if (fastEnoughToDamage)
+            {
+                if (!damaged)
+                {
+                    HP -= collision.gameObject.GetComponent<BallHit>().damage;
+                }
+                audioSource.pitch = Random.Range(1.2f, 1.8f);
+                audioSource.Play();
+                animator.SetTrigger("Hit");
+                collision.gameObject.GetComponent<Rigidbody2D>().setX(-collision.GetContact(0).normal.x * collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
+                collision.gameObject.GetComponent<Rigidbody2D>().setY(-collision.GetContact(0).normal.y * collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                UpdateColor();
+
+                damaged = true;
+            }
+
         }
+
+
+
 
         if (HP <= 0)
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
+
 
     }
 

@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 2430776021576682876}
   - component: {fileID: 2430776021576682865}
   - component: {fileID: 2430776021576682864}
-  - component: {fileID: 2430776021576682877}
   - component: {fileID: 707757449049624803}
   - component: {fileID: 4180652227649236425}
   - component: {fileID: 4514698623749904686}
+  - component: {fileID: 1079849769528210242}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -57,7 +57,7 @@ Rigidbody2D:
   m_AngularDrag: 0.32
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 9ff985ba10eb76c4b92870efc35be704, type: 2}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -77,7 +77,8 @@ MonoBehaviour:
   playerRenderer: {fileID: 2430776022666849405}
   movement: {fileID: 2430776021576682865}
   playerNumber: 1
-  controllerType: 2
+  team: 1
+  controllerType: 1
   dashRechargeTime: 200
 --- !u!114 &2430776021576682865
 MonoBehaviour:
@@ -120,22 +121,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50f3ac74f1cf1044da0cbe8e0fc7b958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!70 &2430776021576682877
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2430776021576682866}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 9ff985ba10eb76c4b92870efc35be704, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: 0.04}
-  m_Size: {x: 0.3, y: 0.45}
-  m_Direction: 0
 --- !u!114 &707757449049624803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2d2955bc258a4bb42216fa556feda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 2
+  playerNumber: 1
   spriteRenderer: {fileID: 2430776022666849405}
   colour: {r: 0, g: 0, b: 0, a: 0}
   movement: {fileID: 2430776021576682876}
@@ -176,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5481a2c30aa3504438a75172b177fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 8
+  MaxHP: 3
   MaxMP: 5
   armour: 0
   attackDamage: 1
@@ -188,6 +173,32 @@ MonoBehaviour:
   deathNoise: {fileID: 8300000, guid: 6837221beaaa451428f1480dc5e4176e, type: 3}
   explosion: {fileID: 211009268581708817, guid: 0b2e6488ea7a7eb469c70aa4177cdb51,
     type: 3}
+--- !u!61 &1079849769528210242
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430776021576682866}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 9ff985ba10eb76c4b92870efc35be704, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.02, y: 0.04}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.45}
+  m_EdgeRadius: 0
 --- !u!1 &2430776021799184565
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2430776021799184564}
-  - component: {fileID: 2430776021799184563}
+  - component: {fileID: 55791977383714776}
   m_Layer: 0
   m_Name: Feet
   m_TagString: Untagged
@@ -219,8 +230,8 @@ Transform:
   m_Father: {fileID: 2430776021576682879}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &2430776021799184563
-CapsuleCollider2D:
+--- !u!61 &55791977383714776
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -233,8 +244,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.015, y: -0.155}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
   m_Size: {x: 0.2, y: 0.1}
-  m_Direction: 1
+  m_EdgeRadius: 0
 --- !u!1 &2430776022666849406
 GameObject:
   m_ObjectHideFlags: 0

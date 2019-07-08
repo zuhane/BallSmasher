@@ -8,13 +8,13 @@ public class StatsRPG : MonoBehaviour
     [SerializeField] private int MaxHP = 3;
     [SerializeField] private int MaxMP = 5;
     [SerializeField] private int armour = 0;
-    [SerializeField] private int attackDamage = 1;
+    [SerializeField] public int attackDamage = 1;
     [SerializeField] private float knockbackForce = 6;
 
     [HideInInspector] public int damageCounter, damageLimit = 5;
     [HideInInspector] public bool hurt;
 
-    [SerializeField] private AudioClip hurtNoise, deathNoise;
+    [SerializeField] private AudioClip hurtNoise, armourNoise, deathNoise;
     private AudioSource audioSource;
 
     [SerializeField] private GameObject explosion;
@@ -48,10 +48,20 @@ public class StatsRPG : MonoBehaviour
 
         if (audioSource != null && finalDamage > 0)
         {
+            audioSource.clip = hurtNoise;
             audioSource.pitch = Random.Range(0.7f, 1.6f);
             audioSource.Play();
 
             spriteRenderer.color = Color.red;
+            hurt = true;
+        }
+        else
+        {
+            audioSource.clip = armourNoise;
+            audioSource.pitch = Random.Range(0.7f, 1.6f);
+            audioSource.Play();
+
+            spriteRenderer.color = Color.grey;
             hurt = true;
         }
 

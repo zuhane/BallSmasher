@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum team
+{
+    red = 1,
+    green = 2,
+    blue = 3,
+    yellow = 4
+}
+
 [RequireComponent(typeof(Movement))]
 public class PlayerManager : MonoBehaviour
 {
@@ -9,6 +17,7 @@ public class PlayerManager : MonoBehaviour
     public SpriteRenderer playerRenderer;
     [SerializeField] private Movement movement;
     public int playerNumber = 1;
+    public team team = team.red;
 
     public ControllerType controllerType;
 
@@ -16,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     private int dashRegenCounter;
     private bool dashOnCooldown = false;
 
-        int SH_isAxisInUse = 0, SV_isAxisInUse = 0;
+    int SH_isAxisInUse = 0, SV_isAxisInUse = 0;
 
     public enum ControllerType
     {
@@ -52,6 +61,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
 
+        Movement.Intent prevIntent = movement.intent;
 
         movement.intent = new Movement.Intent();
 
@@ -72,45 +82,80 @@ public class PlayerManager : MonoBehaviour
             movement.intent.dash = true;
         }
 
-
-        if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0 && SH_isAxisInUse >= 0)
+        if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0)
         {
-            //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-            movement.intent.hitLeft = true;
-            SH_isAxisInUse = -1;
+            movement.intent.holdLeft = true;
         }
-        else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0 && SH_isAxisInUse <= 0)
+        else if (prevIntent.holdLeft)
         {
-            //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-            movement.intent.hitRight = true;
-            SH_isAxisInUse = 1;
-        }
-        else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) == 0)
-        {
-            //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-            SH_isAxisInUse = 0;
+            movement.intent.releaseLeft = true;
         }
 
+        if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0)
+        {
+            movement.intent.holdRight = true;
+        }
+        else if (prevIntent.holdRight)
+        {
+            movement.intent.releaseRight = true;
+        }
 
-        if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0 && SV_isAxisInUse >= 0)
+        if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0)
         {
-            movement.intent.hitDown = true;
-            SV_isAxisInUse = -1;
+            movement.intent.holdDown = true;
         }
-        else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0 && SV_isAxisInUse <= 0)
+        else if (prevIntent.holdDown)
         {
-            movement.intent.hitUp = true;
-            SV_isAxisInUse = 1;
+            movement.intent.releaseDown = true;
         }
-        else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) == 0)
+
+        if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0)
         {
-            SV_isAxisInUse = 0;
+            movement.intent.holdUp = true;
         }
+        else if (prevIntent.holdUp)
+        {
+            movement.intent.releaseUp = true;
+        }
+
+        //if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0 && SH_isAxisInUse >= 0)
+        //{
+        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
+        //    movement.intent.hitLeft = true;
+        //    SH_isAxisInUse = -1;
+        //}
+        //else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0 && SH_isAxisInUse <= 0)
+        //{
+        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
+        //    movement.intent.hitRight = true;
+        //    SH_isAxisInUse = 1;
+        //}
+        //else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) == 0)
+        //{
+        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
+        //    SH_isAxisInUse = 0;
+        //}
+
+
+        //if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0 && SV_isAxisInUse >= 0)
+        //{
+        //    movement.intent.hitDown = true;
+        //    SV_isAxisInUse = -1;
+        //}
+        //else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0 && SV_isAxisInUse <= 0)
+        //{
+        //    movement.intent.hitUp = true;
+        //    SV_isAxisInUse = 1;
+        //}
+        //else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) == 0)
+        //{
+        //    SV_isAxisInUse = 0;
+        //}
     }
 
     private void LateUpdate()
     {
-        
+
         animator.SetBool("Descending", movement.descending);
         animator.SetBool("Ascending", movement.ascending);
         animator.SetBool("IsRunning", movement.moving);
@@ -119,5 +164,5 @@ public class PlayerManager : MonoBehaviour
         animator.SetBool("WallSliding", movement.wallSliding);
 
     }
-    
+
 }

@@ -9,8 +9,8 @@ public class ScoreKeeper : MonoBehaviour
 
     private Text text;
 
-    private int p1Score, p2Score;
-
+    private int teamRedScore, teamGreenScore, teamBlueScore, teamYellowScore;
+    string scoreBoard;
     private void Awake()
     {
         instance = this;
@@ -20,14 +20,15 @@ public class ScoreKeeper : MonoBehaviour
     void Start()
     {
         text = GetComponent<Text>();
+        scoreBoard = "{0} : {1}";
     }
 
-    public void UpdateScore(int goalNumber)
+    public void UpdateScore(team team)
     {
-        if (goalNumber == 1) p1Score++;
-        if (goalNumber == 2) p2Score++;
-
-        text.text = p1Score + " - " + p2Score;
+        if (team == team.red) teamRedScore++;
+        if (team == team.green) teamGreenScore++;
+        
+        text.text = string.Format(scoreBoard, teamRedScore.ToString(), teamGreenScore.ToString(), teamBlueScore.ToString(), teamYellowScore.ToString());
     }
 
 

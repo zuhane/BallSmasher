@@ -13,11 +13,28 @@ public class Movement : MonoBehaviour
         public bool down { get; set; }
         public bool jump { get; set; }
         public bool crouch { get; set; }
-        public bool hitRight { get; set; }
-        public bool hitLeft { get; set; }
-        public bool hitUp { get; set; }
-        public bool hitDown { get; set; }
+        public bool holdRight { get; set; }
+        public bool holdLeft { get; set; }
+        public bool holdUp { get; set; }
+        public bool holdDown { get; set; }
+        public bool releaseRight { get; set; }
+        public bool releaseLeft { get; set; }
+        public bool releaseUp { get; set; }
+        public bool releaseDown { get; set; }
         public bool dash { get; set; }
+
+        //public Intent()
+        //{
+
+        //}
+        //public Intent(Intent intent)
+        //{
+        //    this.holdDown = intent.holdDown;
+        //    this.holdLeft = intent.holdLeft;
+        //    this.holdRight = intent.holdRight;
+        //    this.holdUp = intent.holdUp;
+        //}
+
     }
 
     public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;
@@ -31,7 +48,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private int maxJumps;
 
     private Vector3 originalScale, flipScale;
-    [HideInInspector] public bool moving, ascending, descending, crouching, wallSliding;
+    public bool moving, ascending, descending, crouching, wallSliding;
     [HideInInspector] public int currJump;
     private object hit;
 
@@ -39,7 +56,7 @@ public class Movement : MonoBehaviour
 
     private Vector4 standingScale, crouchingScale;
 
-    [SerializeField] private CapsuleCollider2D collider;
+    [SerializeField] private BoxCollider2D collider;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +66,7 @@ public class Movement : MonoBehaviour
         //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        collider = GetComponent<CapsuleCollider2D>();
+        collider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -139,6 +156,7 @@ public class Movement : MonoBehaviour
         {
             wallSliding = false;
         }
+
     }
 
     private void LateUpdate()
@@ -218,11 +236,13 @@ public class Movement : MonoBehaviour
                             }
         }
 
+        /*
         if (bumpingFeet && bumpingRight)
             Debug.Log("Corner Right");
 
         if (bumpingFeet && bumpingLeft)
             Debug.Log("Corner Left");
+        */
         //lastContactPoint = 
 
     }

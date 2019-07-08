@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
+    public team team = team.red;
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] clips;
-
-    public int goalNumber = 1;
 
     private void Start()
     {
@@ -26,7 +25,7 @@ public class DeathZone : MonoBehaviour
             audioSource.clip = clips[Random.Range(0, clips.GetLength(0))];
             audioSource.Play();
 
-            GameObject.Find("GoalManager").GetComponent<GoalManager>().ScoreGoal(goalNumber);
+            GameObject.Find("GoalManager").GetComponent<GoalManager>().ScoreGoal(team);
         }
     }
 

@@ -10,7 +10,7 @@ public class NormalStrikeBox : MonoBehaviour
     private Vector2 flingDirection;
     private Vector2 finalFlingDirection;
     public float xOffset = 0f, yOffset = 0f;
-    private float force = 10;
+    public float force = 10;
     private bool used = false;
     private Vector3 startPos;
 
@@ -44,7 +44,7 @@ public class NormalStrikeBox : MonoBehaviour
                 transform.position = new Vector3(transform.position.x, transform.position.y - yOffset, transform.position.z);
                 break;
             case SpinningStrikeBox.FacingDirection.DownOut:
-                flingDirection = new Vector2(0, 1);
+                flingDirection = new Vector2(0.5f, 1.5f);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localScale = new Vector3(7, 0.8f, 1);
                 transform.position = new Vector3(transform.position.x, transform.position.y - yOffset + 0.1f, transform.position.z);
@@ -63,11 +63,13 @@ public class NormalStrikeBox : MonoBehaviour
         {
             Rigidbody2D rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
 
-            if (rigidBody != null)
+            if (rigidBody != null && rigidBody.bodyType == RigidbodyType2D.Dynamic)
             {
                 used = true;
 
                 if (rigidBody.velocity.y < 0) rigidBody.setY(0);
+
+                if (collision.transform.position.x < transform.parent.transform.position.x && facingDirection == SpinningStrikeBox.FacingDirection.DownOut) { finalFlingDirection.x *= -1; }
 
                 rigidBody.addX(finalFlingDirection.x);
                 rigidBody.addY(finalFlingDirection.y);
@@ -79,6 +81,7 @@ public class NormalStrikeBox : MonoBehaviour
 
             if (stats != null)
             {
+                Debug.Log(damage);
                 stats.TakeDamage(damage);
             }
 

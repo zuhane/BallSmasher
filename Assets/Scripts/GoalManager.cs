@@ -16,9 +16,9 @@ public class GoalManager : MonoBehaviour
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
     }
 
-    public void ScoreGoal(int goalNumber)
+    public void ScoreGoal(team team)
     {
-        ScoreKeeper.instance.UpdateScore(goalNumber);
+        ScoreKeeper.instance.UpdateScore(team);
 
         //if (Random.Range(0, 15) == 0)
         //{
