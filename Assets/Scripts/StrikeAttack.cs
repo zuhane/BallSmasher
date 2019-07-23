@@ -21,10 +21,12 @@ public class StrikeAttack : MonoBehaviour
     PlayerManager playerManager;
     StatsRPG rpgStats;
 
+    private NormalStrikeBox activeStrikeBox;
+
     private bool releaseDetected = false;
 
-    private float chargeLimit = 3f, charge = 1f;
-    private float coolDownSeconds = 1f, coolDownTimer = 0f;
+    private float chargeLimit = 2f, charge = 1f;
+    private float coolDownSeconds = 0.3f, coolDownTimer = 0f;
     private bool cooling;
     private FacingDirection strikeDirection = FacingDirection.None;
 
@@ -73,8 +75,21 @@ public class StrikeAttack : MonoBehaviour
             }
             charge += Time.deltaTime;
 
+            if (activeStrikeBox == null)
+            {
+                activeStrikeBox = NormalStrike(strikeDirection);
+            }
+
             if (charge > chargeLimit)
+            {
                 charge = chargeLimit;
+                if (!activeStrikeBox.charged)
+                {
+                    activeStrikeBox.charged = true;
+                    activeStrikeBox.damage = activeStrikeBox.damage * 2;
+                }
+            }
+
         }
 
         releaseDetected = false;
@@ -100,7 +115,7 @@ public class StrikeAttack : MonoBehaviour
                     {
                         releaseDetected = true;
                         if (movement.bumpingFeet)
-                            strikeDirection = FacingDirection.DownOut;
+                            activeStrikeBox.SetDirection(FacingDirection.DownOut);
                     }
                     break;
                 default:
@@ -108,25 +123,29 @@ public class StrikeAttack : MonoBehaviour
             }
 
             if (releaseDetected)
-                NormalStrike(strikeDirection);
+            {
+                if (charge < 1.5f)
+                    charge = 1f;
+
+                Debug.Log(charge);
+
+                activeStrikeBox.released = true;
+                activeStrikeBox.force = 3f + (2.2f * charge);
+                charge = 1;
+                activeStrikeBox = null;
+                cooling = true;
+                strikeDirection = FacingDirection.None;
+            }
     }
 
 }
 
-private void NormalStrike(FacingDirection direction)
+private NormalStrikeBox NormalStrike(FacingDirection direction)
 {
-    if (charge < 1.5f)
-        charge = 1f;
-
-    Debug.Log(charge);
-
-    normalStrike.GetComponent<NormalStrikeBox>().facingDirection = direction;
+    normalStrike.GetComponent<NormalStrikeBox>().thisFacingDirection = direction;
     normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
-    normalStrike.GetComponent<NormalStrikeBox>().force = 5f + (5 * charge);
     GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-    cooling = true;
-    charge = 1;
-    strikeDirection = FacingDirection.None;
+    return outStrike.GetComponent<NormalStrikeBox>();
 }
 
 private void SpinStrike(FacingDirection direction)

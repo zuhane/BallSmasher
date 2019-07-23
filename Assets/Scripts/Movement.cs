@@ -58,6 +58,8 @@ public class Movement : MonoBehaviour
 
     [SerializeField] private BoxCollider2D collider;
 
+    private GameObject graphicsObj;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +69,8 @@ public class Movement : MonoBehaviour
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         collider = GetComponent<BoxCollider2D>();
+
+        graphicsObj = transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
@@ -110,14 +114,14 @@ public class Movement : MonoBehaviour
         {
             if (intent.left)
             {
-                transform.localScale = flipScale;
+                graphicsObj.transform.localScale = flipScale;
 
                 if (rigid.velocity.x > -maxMoveSpeed.x)
                     rigid.addX(-(moveSpeed));
             }
             else if (intent.right)
             {
-                transform.localScale = originalScale;
+                graphicsObj.transform.localScale = originalScale;
                 if (rigid.velocity.x < maxMoveSpeed.x)
                     rigid.addX(moveSpeed);
             }
