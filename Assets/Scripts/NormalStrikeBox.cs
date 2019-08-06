@@ -11,6 +11,7 @@ public class NormalStrikeBox : MonoBehaviour
     private Vector2 finalFlingDirection;
     public float xOffset = 0f, yOffset = 0f;
 
+    [SerializeField] public AudioClip chargeUpSound, chargedFullySound, attackReleaseSound;
 
     private float _force = 10;
 
@@ -23,7 +24,7 @@ public class NormalStrikeBox : MonoBehaviour
         set
         {
             _force = value;
-            transform.localScale *= 1 + (_force / 8);
+            transform.localScale *= 0.1f + (_force / 4);
             finalFlingDirection = flingDirection * _force ;
         }
     }
@@ -82,7 +83,7 @@ public class NormalStrikeBox : MonoBehaviour
         {
             case FacingDirection.Up:
                 flingDirection = new Vector2(0, 1);
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset, transform.localPosition.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset + 0.2f, transform.localPosition.z);
                 break;
             case FacingDirection.Right:
                 flingDirection = new Vector2(1, 0);
@@ -102,8 +103,8 @@ public class NormalStrikeBox : MonoBehaviour
             case FacingDirection.DownOut:
                 flingDirection = new Vector2(0.5f, 1.5f);
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
-                transform.localScale = new Vector3(7, 0.8f, 1);
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset + 0.1f, transform.localPosition.z);
+                transform.localScale = new Vector3(3, 0.8f, 1);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset + 0.2f, transform.localPosition.z);
                 _force /= 3;
                 break;
         }

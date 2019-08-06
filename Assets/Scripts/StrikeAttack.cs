@@ -21,6 +21,7 @@ public class StrikeAttack : MonoBehaviour
     PlayerManager playerManager;
     StatsRPG rpgStats;
 
+    private AudioSource channelSound;
     private NormalStrikeBox activeStrikeBox;
 
     private bool releaseDetected = false;
@@ -35,16 +36,18 @@ public class StrikeAttack : MonoBehaviour
         rpgStats = GetComponent<StatsRPG>();
 
         spinStrike = Resources.Load<GameObject>("SpinningStrikeBox");
-        spinStrike.GetComponent<SpinningStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
-        spinStrike.GetComponent<SpinningStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+        spinStrike.GetComponent<SpinningStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
+        spinStrike.GetComponent<SpinningStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y;
         //normalStrike.GetComponent<SpinningStrikeBox>().dama
 
         normalStrike = Resources.Load<GameObject>("NormalStrikeBox");
-        normalStrike.GetComponent<NormalStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
-        normalStrike.GetComponent<NormalStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
+        normalStrike.GetComponent<NormalStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
+        normalStrike.GetComponent<NormalStrikeBox>().yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y;
 
         movement = GetComponent<Movement>();
         playerManager = GetComponent<PlayerManager>();
+        channelSound = activeStrikeBox.GetComponent<AudioSource>();
+
     }
 
     void Update()
@@ -78,13 +81,25 @@ public class StrikeAttack : MonoBehaviour
             if (activeStrikeBox == null)
             {
                 activeStrikeBox = NormalStrike(strikeDirection);
+
+                channelSound.clip = activeStrikeBox.chargeUpSound;
+                channelSound.loop = false;
+                channelSound.Play();
             }
 
             if (charge > chargeLimit)
             {
                 charge = chargeLimit;
+
                 if (!activeStrikeBox.charged)
                 {
+                    if (channelSound != null)
+                    {
+                        channelSound.clip = activeStrikeBox.chargedFullySound;
+                        channelSound.loop = true;
+                        channelSound.Play();
+                    }
+
                     activeStrikeBox.charged = true;
                     activeStrikeBox.damage = activeStrikeBox.damage * 2;
                 }
@@ -124,13 +139,18 @@ public class StrikeAttack : MonoBehaviour
 
             if (releaseDetected)
             {
+                channelSound.Stop();
+                channelSound.clip = activeStrikeBox.attackReleaseSound;
+                channelSound.loop = false;
+                channelSound.Play();
+
                 if (charge < 1.5f)
                     charge = 1f;
 
                 Debug.Log(charge);
 
                 activeStrikeBox.released = true;
-                activeStrikeBox.force = 3f + (2.2f * charge);
+                activeStrikeBox.force = 0.5f + (4f * charge);
                 charge = 1;
                 activeStrikeBox = null;
                 cooling = true;
@@ -145,6 +165,7 @@ private NormalStrikeBox NormalStrike(FacingDirection direction)
     normalStrike.GetComponent<NormalStrikeBox>().thisFacingDirection = direction;
     normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
     GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        channelSound = outStrike.transform.GetChild(0).GetComponent<AudioSource>();
     return outStrike.GetComponent<NormalStrikeBox>();
 }
 

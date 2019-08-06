@@ -228,7 +228,7 @@ Transform:
   m_GameObject: {fileID: 4408834828338915079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.21, y: 1.02, z: 0.1664226}
-  m_LocalScale: {x: 2, y: 2, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4408834826889174626}
   m_Father: {fileID: 0}
@@ -443,6 +443,7 @@ MonoBehaviour:
   damageLimit: 5
   hurt: 0
   hurtNoise: {fileID: 8300000, guid: 54ddfdfc3a03c7a47a2019e051267641, type: 3}
+  armourNoise: {fileID: 0}
   deathNoise: {fileID: 8300000, guid: 54ddfdfc3a03c7a47a2019e051267641, type: 3}
   explosion: {fileID: 211009268581708817, guid: 7f87bd1b281eef74b948842e5cea0a36,
     type: 3}
