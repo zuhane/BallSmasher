@@ -9,7 +9,7 @@ public class ScoreKeeper : MonoBehaviour
 
     private Text text;
 
-    private int teamRedScore, teamGreenScore, teamBlueScore, teamYellowScore;
+    private int team1Score, team2Score;
     string scoreBoard;
     private void Awake()
     {
@@ -23,12 +23,12 @@ public class ScoreKeeper : MonoBehaviour
         scoreBoard = "{0} : {1}";
     }
 
-    public void UpdateScore(team team)
+    public void UpdateScore(int team)
     {
-        if (team == team.red) teamRedScore++;
-        if (team == team.green) teamGreenScore++;
+        if (team == 1) team2Score++;
+        if (team == 2) team1Score++;
         
-        text.text = string.Format(scoreBoard, teamRedScore.ToString(), teamGreenScore.ToString(), teamBlueScore.ToString(), teamYellowScore.ToString());
+        text.text = string.Format(scoreBoard, team1Score, team2Score);
     }
 
 

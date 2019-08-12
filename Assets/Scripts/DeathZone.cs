@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    public team team = team.red;
+    public int team = 1;
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] clips;
 

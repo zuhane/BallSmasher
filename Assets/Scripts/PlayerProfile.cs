@@ -5,28 +5,38 @@ using UnityEngine;
 public class PlayerProfile : MonoBehaviour
 {
 
-    [SerializeField] [Range(1, 4)] public int playerNumber = 1;
-    [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private Color colour;
+    private SpriteRenderer spriteRenderer;
+    [HideInInspector] public Color colour;
 
-    [SerializeField] private PlayerManager movement;
-    
+    private PlayerManager playerManager;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        movement.playerNumber = playerNumber;
 
-        switch (playerNumber)
+    }
+
+    public void SetColour()
+    {
+        playerManager = GetComponent<PlayerManager>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        switch (playerManager.team)
         {
             case 1:
-
-                break;
-
-            case 2:
                 spriteRenderer.color = Color.green;
                 break;
+            case 2:
+                spriteRenderer.color = Color.cyan;
+                break;
+            //case 3:
+            //    spriteRenderer.color = Color.magenta;
+            //    break;
+            //case 4:
+            //    spriteRenderer.color = Color.blue;
+            //    break;
         }
+
+        colour = spriteRenderer.color;
     }
 
 }

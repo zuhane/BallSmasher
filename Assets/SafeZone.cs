@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SafeZone : MonoBehaviour
 {
-    public team team = team.red;
+    public int team;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +22,7 @@ public class SafeZone : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
-            team playerTeam = player.team;
+            int playerTeam = player.team;
 
             if (playerTeam != team)
             {

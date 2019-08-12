@@ -16,7 +16,7 @@ public class GoalManager : MonoBehaviour
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
     }
 
-    public void ScoreGoal(team team)
+    public void ScoreGoal(int team)
     {
         ScoreKeeper.instance.UpdateScore(team);
 

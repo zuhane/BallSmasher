@@ -9,6 +9,8 @@ public class BetterToggleGroup : ToggleGroup
     public event ChangedEventHandler OnChange;
     public void Start()
     {
+        int a = 1;
+
         foreach (Transform transformToggle in gameObject.transform)
         {
             var toggle = transformToggle.gameObject.GetComponent<Toggle>();

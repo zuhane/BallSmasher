@@ -24,6 +24,8 @@ public class StatsRPG : MonoBehaviour
 
     private bool isPlayer = false;
 
+    private Color originalColour = Color.white;
+
     // Start is called before the first frame update
     void Start()
     {       
@@ -34,6 +36,10 @@ public class StatsRPG : MonoBehaviour
         ResetStats();
 
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        PlayerProfile profile = GetComponent<PlayerProfile>();
+
+        if (profile != null) originalColour = profile.colour;
 
         if (gameObject.tag == "Player") isPlayer = true;
     }
@@ -101,7 +107,7 @@ public class StatsRPG : MonoBehaviour
         {
             hurt = false;
             damageCounter = 0;
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = originalColour;
         }
     }
 }

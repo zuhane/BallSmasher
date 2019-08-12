@@ -2,22 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum team
-{
-    red = 1,
-    green = 2,
-    blue = 3,
-    yellow = 4
-}
-
 [RequireComponent(typeof(Movement))]
 public class PlayerManager : MonoBehaviour
 {
     public Animator animator;
     public SpriteRenderer playerRenderer;
     [SerializeField] private Movement movement;
-    public int playerNumber = 1;
-    public team team = team.red;
+    [HideInInspector] public int playerNumber = 1;
+    [HideInInspector] public int team = 1;
 
     public ControllerType controllerType;
 

@@ -19,23 +19,28 @@ public class PlayerSpawnManager : MonoBehaviour
         for (int i = 0; i < players.GetLength(0); i++)
         {
             GameObject player = Resources.Load<GameObject>("Player");
-            Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity);
             player.GetComponent<PlayerManager>().playerNumber = i + 1;
+            player.GetComponent<PlayerManager>().controllerType = (PlayerManager.ControllerType)i + 1;
 
-            switch (player.GetComponent<PlayerManager>().playerNumber)
-            {
-                case 1:
-                    player.GetComponent<PlayerManager>().controllerType = PlayerManager.ControllerType.Keyboard;
-                    break;
-                case 2:
-                    player.GetComponent<PlayerManager>().controllerType = PlayerManager.ControllerType.Pad1;
-                    break;
-            }
+            if (i == 0) player.GetComponent<PlayerManager>().team = LevelData.player1Team;
+            if (i == 1) player.GetComponent<PlayerManager>().team = LevelData.player2Team;
+            if (i == 2) player.GetComponent<PlayerManager>().team = LevelData.player3Team;
+            if (i == 3) player.GetComponent<PlayerManager>().team = LevelData.player4Team;
 
-            players[0] = player;
+            player.GetComponent<PlayerProfile>().SetColour();
+            Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity);
+
+
+            players[i] = player;
         }
 
-        RefreshPlayers();
+        //RefreshPlayers();
+    }
+
+
+    public int GetPlayerCount()
+    {
+        return players.GetLength(0);
     }
 
     private void RefreshPlayers()
