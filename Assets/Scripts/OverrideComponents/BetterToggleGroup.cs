@@ -31,4 +31,9 @@ public class BetterToggleGroup : ToggleGroup
     {
         OnChange?.Invoke(newactive);
     }
+
+    public int GetActiveIndex()
+    {
+        return System.Array.IndexOf(this.gameObject.transform.GetComponentsInChildren<Toggle>(), this.ActiveToggles().FirstOrDefault());
+    }
 }

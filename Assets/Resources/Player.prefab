@@ -163,13 +163,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 3
   MaxMP: 5
-  armour: 0
+  armour: 1
   attackDamage: 1
   knockbackForce: 6
   damageCounter: 0
   damageLimit: 5
   hurt: 0
   hurtNoise: {fileID: 8300000, guid: 79cc9b4597cb09e4b872728336e14341, type: 3}
+  armourNoise: {fileID: 8300000, guid: f4c77f81f3ac4714aa474aeef7234aa1, type: 3}
   deathNoise: {fileID: 8300000, guid: 6837221beaaa451428f1480dc5e4176e, type: 3}
   explosion: {fileID: 211009268581708817, guid: 0b2e6488ea7a7eb469c70aa4177cdb51,
     type: 3}

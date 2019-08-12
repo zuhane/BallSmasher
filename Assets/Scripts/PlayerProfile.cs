@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerProfile : MonoBehaviour
 {
 
-    [SerializeField] [Range(1, 4)] private int playerNumber = 1;
+    [SerializeField] [Range(1, 4)] public int playerNumber = 1;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color colour;
 
