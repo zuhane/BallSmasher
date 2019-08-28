@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2430776021576682865}
   - component: {fileID: 2430776021576682864}
   - component: {fileID: 707757449049624803}
+  - component: {fileID: -8951628944888510142}
   - component: {fileID: 4180652227649236425}
   - component: {fileID: 4514698623749904686}
   - component: {fileID: 1079849769528210242}
@@ -73,11 +74,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bba30985b10e8df418bfe3584b6e4090, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: -8951628944888510142}
   animator: {fileID: 2430776022666849403}
   playerRenderer: {fileID: 2430776022666849405}
   movement: {fileID: 2430776021576682865}
   playerNumber: 1
-  teamColour: 1
+  team: 1
   controllerType: 1
   dashRechargeTime: 200
 --- !u!114 &2430776021576682865
@@ -133,10 +135,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2d2955bc258a4bb42216fa556feda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 1
-  spriteRenderer: {fileID: 2430776022666849405}
   colour: {r: 0, g: 0, b: 0, a: 1}
-  movement: {fileID: 2430776021576682876}
+--- !u!114 &-8951628944888510142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430776021576682866}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 49f4feb67f6a8504782f43b40b86e872,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.InputSystem.PlayerInput+DeviceLostEvent, Unity.InputSystem,
+      Version=0.9.3.0, Culture=neutral, PublicKeyToken=null
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.InputSystem.PlayerInput+DeviceRegainedEvent, Unity.InputSystem,
+      Version=0.9.3.0, Culture=neutral, PublicKeyToken=null
+  m_ActionEvents: []
+  m_AutoSwitchControlScheme: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: f8ea6a5f-ef90-4f9c-9bb3-c1ecff4be710
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!114 &4180652227649236425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +346,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

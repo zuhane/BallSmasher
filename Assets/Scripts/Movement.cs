@@ -22,19 +22,10 @@ public class Movement : MonoBehaviour
         public bool releaseUp { get; set; }
         public bool releaseDown { get; set; }
         public bool dash { get; set; }
-
-        //public Intent()
-        //{
-
-        //}
-        //public Intent(Intent intent)
-        //{
-        //    this.holdDown = intent.holdDown;
-        //    this.holdLeft = intent.holdLeft;
-        //    this.holdRight = intent.holdRight;
-        //    this.holdUp = intent.holdUp;
-        //}
-
+        public bool holdClockwiseAttack { get; set; }
+        public bool releaseClockwiseAttack { get; set; }
+        public bool holdAnticlockwiseAttack { get; set; }
+        public bool releaseAnticlockwiseAttack { get; set; }
     }
 
     public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;

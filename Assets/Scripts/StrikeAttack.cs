@@ -9,7 +9,9 @@ public enum FacingDirection
     Down,
     Left,
     Right,
-    DownOut
+    DownOut,
+    Clockwise,
+    Anticlockwise
 }
 
 [RequireComponent(typeof(Movement))]
@@ -22,7 +24,7 @@ public class StrikeAttack : MonoBehaviour
     StatsRPG rpgStats;
 
     private AudioSource channelSound;
-    private NormalStrikeBox activeStrikeBox;
+    private StrikeBox activeStrikeBox;
 
     private bool releaseDetected = false;
 
@@ -65,7 +67,7 @@ public class StrikeAttack : MonoBehaviour
                 return;
         }
 
-        if (movement.intent.holdLeft || movement.intent.holdRight || movement.intent.holdUp || movement.intent.holdDown)
+        if (movement.intent.holdLeft || movement.intent.holdRight || movement.intent.holdUp || movement.intent.holdDown || movement.intent.holdClockwiseAttack || movement.intent.holdAnticlockwiseAttack)
         {
             if (strikeDirection == FacingDirection.None)
             {
@@ -74,13 +76,18 @@ public class StrikeAttack : MonoBehaviour
                         (movement.intent.holdRight ? FacingDirection.Right :
                         (movement.intent.holdDown ? FacingDirection.Down :
                         (movement.intent.holdUp ? FacingDirection.Up :
+                        movement.intent.holdClockwiseAttack ? FacingDirection.Clockwise :
+                        movement.intent.holdAnticlockwiseAttack ? FacingDirection.Anticlockwise :
                         FacingDirection.None))));
             }
             charge += Time.deltaTime;
 
             if (activeStrikeBox == null)
             {
-                activeStrikeBox = NormalStrike(strikeDirection);
+                if (strikeDirection == FacingDirection.Anticlockwise || strikeDirection == FacingDirection.Clockwise)
+                    activeStrikeBox = SpinStrike(strikeDirection);
+                else
+                    activeStrikeBox = NormalStrike(strikeDirection);
 
                 channelSound.clip = activeStrikeBox.chargeUpSound;
                 channelSound.loop = false;
@@ -110,7 +117,7 @@ public class StrikeAttack : MonoBehaviour
         releaseDetected = false;
 
         if (strikeDirection != FacingDirection.None)
-        { 
+        {
             switch (strikeDirection)
             {
                 case FacingDirection.Left:
@@ -133,6 +140,14 @@ public class StrikeAttack : MonoBehaviour
                             activeStrikeBox.SetDirection(FacingDirection.DownOut);
                     }
                     break;
+                case FacingDirection.Clockwise:
+                    if (movement.intent.releaseClockwiseAttack)
+                        releaseDetected = true;
+                    break;
+                case FacingDirection.Anticlockwise:
+                    if (movement.intent.releaseAnticlockwiseAttack)
+                        releaseDetected = true;
+                    break;
                 default:
                     break;
             }
@@ -147,7 +162,8 @@ public class StrikeAttack : MonoBehaviour
                 if (charge < 1.5f)
                     charge = 1f;
 
-                Debug.Log(charge);
+                Debug.Log("Euler angles: " + activeStrikeBox.GetComponent<StrikeBox>().transform.rotation.eulerAngles.z);
+                Debug.Log("Final fling direction: " + activeStrikeBox.GetComponent<StrikeBox>().finalFlingDirection);
 
                 activeStrikeBox.released = true;
                 activeStrikeBox.force = 0.5f + (4f * charge);
@@ -156,24 +172,27 @@ public class StrikeAttack : MonoBehaviour
                 cooling = true;
                 strikeDirection = FacingDirection.None;
             }
+        }
+
     }
 
-}
-
-private NormalStrikeBox NormalStrike(FacingDirection direction)
-{
-    normalStrike.GetComponent<NormalStrikeBox>().thisFacingDirection = direction;
-    normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
-    GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+    private NormalStrikeBox NormalStrike(FacingDirection direction)
+    {
+        normalStrike.GetComponent<NormalStrikeBox>().thisFacingDirection = direction;
+        normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
+        GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
         channelSound = outStrike.transform.GetChild(0).GetComponent<AudioSource>();
-    return outStrike.GetComponent<NormalStrikeBox>();
-}
+        return outStrike.GetComponent<NormalStrikeBox>();
+    }
 
-private void SpinStrike(FacingDirection direction)
-{
-    spinStrike.GetComponent<SpinningStrikeBox>().facingDirection = direction;
-    normalStrike.GetComponent<NormalStrikeBox>().damage = rpgStats.attackDamage;
-    GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-    cooling = true;
-}
+    private SpinningStrikeBox SpinStrike(FacingDirection direction)
+    {
+        spinStrike.GetComponent<SpinningStrikeBox>().thisFacingDirection = direction;
+        spinStrike.GetComponent<SpinningStrikeBox>().damage = rpgStats.attackDamage;
+        GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
+        channelSound = outStrike.transform.GetChild(0).GetComponent<AudioSource>();
+        return outStrike.GetComponent<SpinningStrikeBox>();
+
+    }
+
 }

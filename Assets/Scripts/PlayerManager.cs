@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Movement))]
 public class PlayerManager : MonoBehaviour
 {
+    private PlayerControls playerControls;
+    public PlayerInput playerInput;
+
     public Animator animator;
     public SpriteRenderer playerRenderer;
     [SerializeField] private Movement movement;
@@ -31,6 +35,9 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
+        
+        playerControls.Gameplay.Enable();
+        
 
     }
 
@@ -42,6 +49,8 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("UPDATE!");
+
         if (dashOnCooldown)
         {
             dashRegenCounter++;
@@ -57,6 +66,16 @@ public class PlayerManager : MonoBehaviour
 
         movement.intent = new Movement.Intent();
 
+        //if (playerControls.Gameplay.Move.ReadValue<Vector2>().x > 0)
+        //{
+        //    movement.intent.right = true;
+        //}
+        //else if (playerControls.Gameplay.Move.ReadValue<Vector2>().x < 0)
+        //{
+        //    movement.intent.left = true;
+        //}
+
+        
         if (Input.GetAxis("HorizontalP" + (int)controllerType) < 0)
             movement.intent.left = true;
         if (Input.GetAxis("HorizontalP" + (int)controllerType) > 0)
@@ -72,6 +91,25 @@ public class PlayerManager : MonoBehaviour
         {
             dashOnCooldown = true;
             movement.intent.dash = true;
+        }
+
+
+        if (Input.GetButton("ClockwiseHitP" + (int)controllerType))
+        {
+            movement.intent.holdClockwiseAttack = true;
+        }
+        else if (prevIntent.holdClockwiseAttack)
+        {
+            movement.intent.releaseClockwiseAttack = true;
+        }
+
+        if (Input.GetButton("AntiClockwiseHitP" + (int)controllerType))
+        {
+            movement.intent.holdAnticlockwiseAttack = true;
+        }
+        else if (prevIntent.holdAnticlockwiseAttack)
+        {
+            movement.intent.releaseAnticlockwiseAttack = true;
         }
 
         if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0)
@@ -143,6 +181,7 @@ public class PlayerManager : MonoBehaviour
         //{
         //    SV_isAxisInUse = 0;
         //}
+        
     }
 
     private void LateUpdate()
@@ -157,4 +196,36 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    private void OnJump()
+    {
+        Debug.Log("Growing " + playerNumber);
+        movement.intent.jump = true;
+    }
+
+
+    private void OnDash()
+    {
+        Debug.Log("Combo " + playerNumber);
+        movement.intent.dash = true;
+    }
+
+    private void OnMove(InputValue direction)
+    {
+
+
+
+        //movement.intent.right = false;
+        //movement.intent.left = false;
+
+
+
+        //Vector2 tmpDir = direction.Get<Vector2>();
+        //if (tmpDir.x < 0)
+        //    movement.intent.left = true;
+        //else if (tmpDir.x > 0)
+        //    movement.intent.right = true;
+
+
+        //Debug.Log("ON MOVE! " + $"Direction: {tmpDir}");
+    }
 }
