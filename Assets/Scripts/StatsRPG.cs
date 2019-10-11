@@ -5,7 +5,7 @@ using UnityEngine;
 public class StatsRPG : MonoBehaviour
 {
 
-    [SerializeField] private int MaxHP = 3;
+    [SerializeField] public int MaxHP = 3;
     [SerializeField] private int MaxMP = 5;
     [SerializeField] private int armour = 0;
     [SerializeField] public int attackDamage = 1;
@@ -14,12 +14,12 @@ public class StatsRPG : MonoBehaviour
     [HideInInspector] public int damageCounter, damageLimit = 5;
     [HideInInspector] public bool hurt;
 
-    [SerializeField] private AudioClip hurtNoise, armourNoise, deathNoise;
+    [SerializeField] private AudioClip hurtNoise, armourNoise, deathNoise, healNoise;
     private AudioSource audioSource;
 
     [SerializeField] private GameObject explosion;
 
-    private int HP, MP;
+    [HideInInspector] public int HP, MP;
     private SpriteRenderer spriteRenderer;
 
     private bool isPlayer = false;
@@ -46,6 +46,8 @@ public class StatsRPG : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (damage < 1) return;
+
         int finalDamage = damage - armour;
 
         if (finalDamage < 0) finalDamage = 0;
@@ -74,13 +76,30 @@ public class StatsRPG : MonoBehaviour
         if (HP <= 0) Die();
     }
 
+    public void Heal(int heal)
+    {
+        if (heal < 1) return;
+
+        audioSource.clip = healNoise;
+        audioSource.pitch = Random.Range(0.7f, 1.6f);
+        audioSource.Play();
+
+        HP += heal;
+
+        if (HP > MaxHP)
+        {
+            HP = MaxHP;
+        }
+    }
+
     public void Die()
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
 
         if (isPlayer)
         {
-            GameObject.Find("PlayerManager").GetComponent<PlayerSpawnManager>().HandleDeath(gameObject.GetComponent<PlayerManager>().playerNumber);
+            //GameObject.Find("PlayerManager").GetComponent<PlayerSpawnManager>().HandleDeath(gameObject.GetComponent<PlayerManager>().playerNumber);
+            GameObject.Find("PlayerManager").GetComponent<PlayerSpawnManager>().HandleDeath(gameObject);
             ResetStats();
         }
         else
@@ -93,6 +112,9 @@ public class StatsRPG : MonoBehaviour
     {
         HP = MaxHP;
         MP = MaxMP;
+
+        Debug.Log($"HP={HP} MP={MP}");
+
     }
 
     // Update is called once per frame

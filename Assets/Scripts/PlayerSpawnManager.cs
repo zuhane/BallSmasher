@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
-    private GameObject[] players;
+    private List<GameObject> players = new List<GameObject>();
     private List<GameObject> playerSpawners;
 
     // Start is called before the first frame update
@@ -14,9 +14,9 @@ public class PlayerSpawnManager : MonoBehaviour
         playerSpawners = new List<GameObject>();
         playerSpawners.AddRange(GameObject.FindGameObjectsWithTag("PlayerSpawner"));
         //players = new GameObject[GameObject.FindGameObjectsWithTag("Player").GetLength(0)];
-        players = new GameObject[LevelData.playerCount];
+        //players = new GameObject[LevelData.playerCount];
 
-        for (int i = 0; i < players.GetLength(0); i++)
+        for (int i = 0; i < LevelData.playerCount; i++)
         {
             GameObject player = Resources.Load<GameObject>("Player");
             player.GetComponent<PlayerManager>().playerNumber = i + 1;
@@ -28,36 +28,49 @@ public class PlayerSpawnManager : MonoBehaviour
             if (i == 3) player.GetComponent<PlayerManager>().team = LevelData.player4Team;
 
             player.GetComponent<PlayerProfile>().SetColour();
-            Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity);
+            players.Add(Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity));
 
 
-            players[i] = player;
+
         }
 
         //RefreshPlayers();
     }
 
 
+    //public void Update()
+    //{
+    //    RefreshPlayers();
+    //}
+
+
+    public GameObject GetPlayer(int index)
+    {
+        return players[index]; 
+    }
+
+
     public int GetPlayerCount()
     {
-        return players.GetLength(0);
+        return players.Count;
     }
 
     private void RefreshPlayers()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        players.Clear();
+        players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
     }
 
     public void HandleDeath(int playerNumber)
     {
-        GameObject playerToSpawn = null;
 
         foreach (GameObject p in players)
         {
-            if (p.GetComponent<PlayerManager>().playerNumber == playerNumber) playerToSpawn = p;
+            if (p.GetComponent<PlayerManager>().playerNumber == playerNumber) p.transform.position = Vector2.zero;
+            //playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position;
         }
 
-        playerToSpawn.transform.position = playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position;
+
 
         //Instantiate(playerToSpawn, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity);
 
@@ -66,9 +79,9 @@ public class PlayerSpawnManager : MonoBehaviour
         //RefreshPlayers();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HandleDeath(GameObject player)
     {
-        
+        player.transform.position = Vector2.zero;
     }
+
 }

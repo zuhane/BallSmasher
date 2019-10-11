@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 150789164}
   - component: {fileID: 150789167}
   m_Layer: 0
-  m_Name: Ball
+  m_Name: BeachBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9103cf5cfcc399c48b5cb5a9e6a03ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  blockDamage: 1
+  playerDamage: 0
 --- !u!1 &7489737379271426557
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +238,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

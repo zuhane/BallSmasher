@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4180652227649236425}
   - component: {fileID: 4514698623749904686}
   - component: {fileID: 1079849769528210242}
+  - component: {fileID: 1077947487583757974}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -78,10 +79,9 @@ MonoBehaviour:
   animator: {fileID: 2430776022666849403}
   playerRenderer: {fileID: 2430776022666849405}
   movement: {fileID: 2430776021576682865}
-  playerNumber: 1
+  playerNumber: 2
   team: 1
-  controllerType: 1
-  dashRechargeTime: 200
+  controllerType: 2
 --- !u!114 &2430776021576682865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec2d2955bc258a4bb42216fa556feda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colour: {r: 0, g: 0, b: 0, a: 1}
+  colour: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &-8951628944888510142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,9 +192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5481a2c30aa3504438a75172b177fdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHP: 3
-  MaxMP: 5
-  armour: 1
+  MaxHP: 6
+  MaxMP: 6
+  armour: 0
   attackDamage: 1
   knockbackForce: 6
   damageCounter: 0
@@ -203,8 +203,11 @@ MonoBehaviour:
   hurtNoise: {fileID: 8300000, guid: 79cc9b4597cb09e4b872728336e14341, type: 3}
   armourNoise: {fileID: 8300000, guid: f4c77f81f3ac4714aa474aeef7234aa1, type: 3}
   deathNoise: {fileID: 8300000, guid: 6837221beaaa451428f1480dc5e4176e, type: 3}
+  healNoise: {fileID: 8300000, guid: 3844d5738244c394180b7b416f91b64c, type: 3}
   explosion: {fileID: 211009268581708817, guid: 0b2e6488ea7a7eb469c70aa4177cdb51,
     type: 3}
+  HP: 0
+  MP: 0
 --- !u!61 &1079849769528210242
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -231,6 +234,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.45}
   m_EdgeRadius: 0
+--- !u!114 &1077947487583757974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430776021576682866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0513705fc1af74eb13607598e07681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AbilityObjects:
+  - {fileID: 11400000, guid: 3101264f535074f45aa7f86601337985, type: 2}
+  - {fileID: 11400000, guid: 4154b5fca64b3aa48829550d18efcf33, type: 2}
+  - {fileID: 11400000, guid: 9f29d01d7e7e3d640aba037092be4c06, type: 2}
 --- !u!1 &2430776021799184565
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +379,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300004, guid: 2f9eda8eaa1fd504bb0613389af5c7a7, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

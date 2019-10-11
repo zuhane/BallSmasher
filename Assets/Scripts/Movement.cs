@@ -21,11 +21,13 @@ public class Movement : MonoBehaviour
         public bool releaseLeft { get; set; }
         public bool releaseUp { get; set; }
         public bool releaseDown { get; set; }
-        public bool dash { get; set; }
         public bool holdClockwiseAttack { get; set; }
         public bool releaseClockwiseAttack { get; set; }
         public bool holdAnticlockwiseAttack { get; set; }
         public bool releaseAnticlockwiseAttack { get; set; }
+        public bool useAbility1 { get; set; }
+        public bool useAbility2 { get; set; }
+        public bool useAbility3 { get; set; }
     }
 
     public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;
@@ -42,8 +44,6 @@ public class Movement : MonoBehaviour
     public bool moving, ascending, descending, crouching, wallSliding;
     [HideInInspector] public int currJump;
     private object hit;
-
-    private float dashSpeed = 8;
 
     private Vector4 standingScale, crouchingScale;
 
@@ -95,12 +95,6 @@ public class Movement : MonoBehaviour
             crouching = false;
         }
 
-        if (intent.dash)
-        {
-            if (intent.left) rigid.addX(-dashSpeed);
-            else if (intent.right) rigid.addX(dashSpeed);
-        }
-
         if (!crouching)
         {
             if (intent.left)
@@ -150,6 +144,15 @@ public class Movement : MonoBehaviour
         else
         {
             wallSliding = false;
+        }
+
+        AbilityManager abilities = GetComponent<AbilityManager>();
+
+        if (abilities != null)
+        {
+            if (intent.useAbility1) abilities.ActivateAbility(1, gameObject);
+            if (intent.useAbility2) abilities.ActivateAbility(2, gameObject);
+            if (intent.useAbility3) abilities.ActivateAbility(3, gameObject);
         }
 
     }

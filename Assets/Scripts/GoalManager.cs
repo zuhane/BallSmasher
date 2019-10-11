@@ -8,6 +8,15 @@ public class GoalManager : MonoBehaviour
     private List<GameObject> spawners = new List<GameObject>();
     private List<GameObject> players = new List<GameObject>();
 
+    private string[] balls = {
+            "Ball"
+            ,"FireBall"
+            ,"BeachBall"
+            ,"HealBall"
+            ,"PlasmaBall"
+    };
+
+
     private void Start()
     {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -20,71 +29,23 @@ public class GoalManager : MonoBehaviour
     {
         ScoreKeeper.instance.UpdateScore(team);
 
-        //if (Random.Range(0, 15) == 0)
-        //{
-        //    players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 0.5f);
-        //}
-        //else
-        //{
-        //    players.ForEach(a => a.GetComponent<Rigidbody2D>().gravityScale = 1f);
-        //}
-
-        if (Random.Range(0, 8) == 0)
-        {
-            SpawnSquid();
-            SpawnSquid();
-            SpawnSquid();
-            SpawnSquid();
-            SpawnSquid();
-            SpawnSquid();
-            SpawnBall();
-        }
-        else if (Random.Range(0, 6) == 0)
-        {
-            SpawnFireball();
-        }
-        else
-        {
-            SpawnBall();
-        }
-
+        SpawnBall(BallType: balls[Random.Range(0, balls.Length)]);
 
         camera.GetComponent<SmashBrosCamera>().SetTargets();
     }
 
-    public void SpawnBall(int numBalls = 1)
+    public void SpawnBall(int numBalls = 1, string BallType = "Ball")
     {
         Vector3 spawnPos = Vector3.zero;
 
         spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
 
-        GameObject squid = new GameObject();
-        squid = Resources.Load<GameObject>("Ball");
-        Instantiate(squid, spawnPos, Quaternion.identity);
+        for (int i = 0; i < numBalls; i++)
+        {
+            GameObject Ball = new GameObject();
+            Ball = Resources.Load<GameObject>("Balls/" + BallType);
+            Instantiate(Ball, spawnPos, Quaternion.identity);
+        }
 
     }
-
-    public void SpawnFireball(int numBalls = 1)
-    {
-        Vector3 spawnPos = Vector3.zero;
-
-        spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
-
-        GameObject squid = new GameObject();
-        squid = Resources.Load<GameObject>("FireBall");
-        Instantiate(squid, spawnPos, Quaternion.identity);
-
-    }
-
-    public void SpawnSquid(int numBalls = 1)
-    {
-        Vector3 spawnPos = Vector3.zero;
-
-        spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
-
-        GameObject squid = new GameObject();
-        squid = Resources.Load<GameObject>("Squid");
-        Instantiate(squid, spawnPos, Quaternion.identity);
-    }
-
 }

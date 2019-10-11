@@ -17,10 +17,6 @@ public class PlayerManager : MonoBehaviour
 
     public ControllerType controllerType;
 
-    [SerializeField] private int dashRechargeTime = 200;
-    private int dashRegenCounter;
-    private bool dashOnCooldown = false;
-
     int SH_isAxisInUse = 0, SV_isAxisInUse = 0;
 
     public enum ControllerType
@@ -36,7 +32,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         
-        playerControls.Gameplay.Enable();
+        //playerControls.Gameplay.Enable();
         
 
     }
@@ -49,18 +45,6 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("UPDATE!");
-
-        if (dashOnCooldown)
-        {
-            dashRegenCounter++;
-
-            if (dashRegenCounter >= dashRechargeTime)
-            {
-                dashRegenCounter = 0;
-                dashOnCooldown = false;
-            }
-        }
 
         Movement.Intent prevIntent = movement.intent;
 
@@ -87,11 +71,12 @@ public class PlayerManager : MonoBehaviour
         if (Input.GetAxis("VerticalP" + (int)controllerType) < 0)
             movement.intent.crouch = true;
 
-        if (Input.GetButtonDown("DashP" + (int)controllerType) && !dashOnCooldown)
-        {
-            dashOnCooldown = true;
-            movement.intent.dash = true;
-        }
+        if (Input.GetButtonDown("Ability1P" + (int)controllerType))
+            movement.intent.useAbility1 = true;
+        if (Input.GetButtonDown("Ability2P" + (int)controllerType))
+            movement.intent.useAbility2 = true;
+        if (Input.GetButtonDown("Ability3P" + (int)controllerType))
+            movement.intent.useAbility3 = true;
 
 
         if (Input.GetButton("ClockwiseHitP" + (int)controllerType))
@@ -147,40 +132,6 @@ public class PlayerManager : MonoBehaviour
         {
             movement.intent.releaseUp = true;
         }
-
-        //if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0 && SH_isAxisInUse >= 0)
-        //{
-        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-        //    movement.intent.hitLeft = true;
-        //    SH_isAxisInUse = -1;
-        //}
-        //else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0 && SH_isAxisInUse <= 0)
-        //{
-        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-        //    movement.intent.hitRight = true;
-        //    SH_isAxisInUse = 1;
-        //}
-        //else if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) == 0)
-        //{
-        //    //Debug.Log(Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType));
-        //    SH_isAxisInUse = 0;
-        //}
-
-
-        //if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0 && SV_isAxisInUse >= 0)
-        //{
-        //    movement.intent.hitDown = true;
-        //    SV_isAxisInUse = -1;
-        //}
-        //else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0 && SV_isAxisInUse <= 0)
-        //{
-        //    movement.intent.hitUp = true;
-        //    SV_isAxisInUse = 1;
-        //}
-        //else if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) == 0)
-        //{
-        //    SV_isAxisInUse = 0;
-        //}
         
     }
 
@@ -200,32 +151,5 @@ public class PlayerManager : MonoBehaviour
     {
         Debug.Log("Growing " + playerNumber);
         movement.intent.jump = true;
-    }
-
-
-    private void OnDash()
-    {
-        Debug.Log("Combo " + playerNumber);
-        movement.intent.dash = true;
-    }
-
-    private void OnMove(InputValue direction)
-    {
-
-
-
-        //movement.intent.right = false;
-        //movement.intent.left = false;
-
-
-
-        //Vector2 tmpDir = direction.Get<Vector2>();
-        //if (tmpDir.x < 0)
-        //    movement.intent.left = true;
-        //else if (tmpDir.x > 0)
-        //    movement.intent.right = true;
-
-
-        //Debug.Log("ON MOVE! " + $"Direction: {tmpDir}");
     }
 }

@@ -13,6 +13,9 @@ public class StrikeBox : MonoBehaviour
     public float xOffset = 0f, yOffset = 0f;
 
     [SerializeField] public AudioClip chargeUpSound, chargedFullySound, attackReleaseSound;
+    private GameObject smashEffect;
+
+    private BoxCollider2D boxCollider;
 
     protected float _force = 10;
 
@@ -46,6 +49,9 @@ public class StrikeBox : MonoBehaviour
         {
             _released = value;
             anim.SetBool("Firing", _released);
+            GameObject temp = Instantiate(smashEffect, transform.position, transform.rotation);
+            Destroy(temp, 1);
+            //temp.transform.localPosition = new Vector3(boxCollider.bounds.size.x / 2, 0, 0);
             Destroy(gameObject, lifeLimit);
         }
     }
@@ -70,6 +76,8 @@ public class StrikeBox : MonoBehaviour
     public virtual void Start()
     {
         anim = transform.GetComponentInChildren<Animator>();
+        smashEffect = Resources.Load<GameObject>("AttackEffect");
+        boxCollider = GetComponent<BoxCollider2D>();
         float offset = 0.3f;
 
         SetDirection(thisFacingDirection);
