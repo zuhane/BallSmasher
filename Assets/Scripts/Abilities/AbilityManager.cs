@@ -30,6 +30,14 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        foreach (BaseAbility b in abilities)
+        {
+            b.Update();
+        }
+    }
+
 
 
 }

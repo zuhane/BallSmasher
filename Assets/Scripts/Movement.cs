@@ -122,6 +122,7 @@ public class Movement : MonoBehaviour
         {
             if (currJump < maxJumps)
             {
+                AudioManager.PlaySound("Jump", Random.Range(0.8f, 1.2f));
                 float wallKickForce = 6;
 
                 if (rigid.velocity.y < 0) rigid.setY(0);
@@ -189,6 +190,7 @@ public class Movement : MonoBehaviour
         {
             if (contact.normal.y > 0 || contact.normal.x < 0 || contact.normal.x > 0)
             {
+                AudioManager.PlaySound("Landing", Random.Range(0.8f, 1.2f));
                 currJump = 0;
             }
         }

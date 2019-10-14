@@ -107,6 +107,19 @@ public class StrikeBox : MonoBehaviour
 
             if (rigidBody != null && rigidBody.bodyType == RigidbodyType2D.Dynamic)
             {
+                if (charged)
+                {
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), collision.gameObject.transform.position, Quaternion.identity);
+                    AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                }
+                else
+                {
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), collision.gameObject.transform.position, Quaternion.identity);
+                    AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                }
+
+
+
                 used = true;
 
                 if (rigidBody.velocity.y < 0) rigidBody.setY(0);
@@ -115,6 +128,7 @@ public class StrikeBox : MonoBehaviour
 
                 if (this is SpinningStrikeBox)
                 {
+
                     //finalFlingDirection = new Vector2(Mathf.Cos(transform.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(transform.eulerAngles.z * Mathf.Deg2Rad));
 
                     //finalFlingDirection = new Vector2(-transform.rotation.z, 0);

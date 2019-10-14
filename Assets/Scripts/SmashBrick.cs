@@ -20,7 +20,7 @@ public class SmashBrick : MonoBehaviour
     {
         spriteRend = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
-        explosion = Resources.Load<GameObject>("BrickExplosion");
+        explosion = Resources.Load<GameObject>("Effects/BrickExplosion");
         audioSource = GetComponentInChildren<AudioSource>();
         HP = maxHP;
         UpdateColor();

@@ -8,6 +8,9 @@ public class GoalManager : MonoBehaviour
     private List<GameObject> spawners = new List<GameObject>();
     private List<GameObject> players = new List<GameObject>();
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] clips;
+
     private string[] balls = {
             "Ball"
             ,"FireBall"
@@ -19,6 +22,7 @@ public class GoalManager : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         spawners.AddRange(GameObject.FindGameObjectsWithTag("Spawner"));
@@ -28,6 +32,9 @@ public class GoalManager : MonoBehaviour
     public void ScoreGoal(int team)
     {
         ScoreKeeper.instance.UpdateScore(team);
+
+        audioSource.clip = clips[Random.Range(0, clips.GetLength(0))];
+        audioSource.Play();
 
         SpawnBall(BallType: balls[Random.Range(0, balls.Length)]);
 

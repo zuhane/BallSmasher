@@ -16,6 +16,6 @@ MonoBehaviour:
   fileName: Dash
   description: Propells the player in the direction they are facing
   cooldown: 200
-  cooldownLimit: 200
+  cooldownLimit: 20
   shardCost: 2147483647
   icon: {fileID: 21300000, guid: 58ee8e60ff5d70d40b284b38133517f0, type: 3}
