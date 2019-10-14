@@ -17,7 +17,12 @@ public class Dash : BaseAbility
         base.Activate(player);
         Debug.Log("Dash worked!");
 
+        AudioManager.PlaySound("Woosh", Random.Range(0.8f, 1.2f));
+
         if (player.GetComponent<Movement>().intent.left) player.GetComponent<Rigidbody2D>().addX(-dashSpeed);
         else if (player.GetComponent<Movement>().intent.right) player.GetComponent<Rigidbody2D>().addX(dashSpeed);
+
+        GameObject echo = Resources.Load<GameObject>("EchoSpawner");
+        Instantiate(echo, player.transform);
     }
 }

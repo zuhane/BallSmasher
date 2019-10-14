@@ -79,9 +79,9 @@ MonoBehaviour:
   animator: {fileID: 2430776022666849403}
   playerRenderer: {fileID: 2430776022666849405}
   movement: {fileID: 2430776021576682865}
-  playerNumber: 2
+  playerNumber: 1
   team: 1
-  controllerType: 2
+  controllerType: 1
 --- !u!114 &2430776021576682865
 MonoBehaviour:
   m_ObjectHideFlags: 0

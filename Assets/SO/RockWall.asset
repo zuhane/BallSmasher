@@ -16,6 +16,6 @@ MonoBehaviour:
   fileName: RockWall
   description: A wall of rock is generated in front of the player
   cooldown: 500
-  cooldownLimit: 500
+  cooldownLimit: 150
   shardCost: 0
   icon: {fileID: 21300000, guid: 8ef01e122b5d07542bb8142fa7ef9d5a, type: 3}

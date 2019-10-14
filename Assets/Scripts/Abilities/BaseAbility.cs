@@ -9,9 +9,7 @@ public abstract class BaseAbility : MonoBehaviour
     {
 
     }
-    public void Start()
-    {
-    }
+
 
     public virtual void Update()
     {

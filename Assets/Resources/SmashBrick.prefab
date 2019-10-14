@@ -58,6 +58,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -243,6 +244,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 4
+  explosion: {fileID: 211009268581708817, guid: de93a1dd6ab83a94f9d14e51036c1c87,
+    type: 3}
 --- !u!61 &733569606697014421
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -326,6 +326,22 @@ InputManager:
     axis: 3
     joyNum: 0
   - serializedVersion: 3
+    m_Name: StrikeHorizontal3
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 0
+    dead: 0.9
+    sensitivity: 1
+    snap: 0
+    invert: 0
+    type: 2
+    axis: 3
+    joyNum: 0
+  - serializedVersion: 3
     m_Name: StrikeVertical1
     descriptiveName: 
     descriptiveNegativeName: 
@@ -343,6 +359,22 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: StrikeVertical2
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: 
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.9
+    sensitivity: 1
+    snap: 0
+    invert: 1
+    type: 2
+    axis: 4
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: StrikeVertical3
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -396,7 +428,7 @@ InputManager:
     negativeButton: 
     positiveButton: j
     altNegativeButton: 
-    altPositiveButton: joystick button 1
+    altPositiveButton: 
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

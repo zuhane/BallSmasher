@@ -51,6 +51,13 @@ public class Movement : MonoBehaviour
 
     private GameObject graphicsObj;
 
+    private bool facingLeft = false;
+
+    public bool FacingLeft()
+    {
+        return facingLeft;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -103,12 +110,16 @@ public class Movement : MonoBehaviour
 
                 if (rigid.velocity.x > -maxMoveSpeed.x)
                     rigid.addX(-(moveSpeed));
+
+                facingLeft = true;
             }
             else if (intent.right)
             {
                 graphicsObj.transform.localScale = originalScale;
                 if (rigid.velocity.x < maxMoveSpeed.x)
                     rigid.addX(moveSpeed);
+
+                facingLeft = false;
             }
             else
             {

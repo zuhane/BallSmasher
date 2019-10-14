@@ -20,6 +20,8 @@ public class PlasmaBallExplode : MonoBehaviour
             AudioManager.PlaySound("PlasmaBallExplode", Random.Range(0.8f, 1.2f));
             Instantiate(Resources.Load<GameObject>("Effects/PlasmaBallExplosion"), transform.position, Quaternion.identity);
             Destroy(gameObject);
+
+            GameObject.Find("GoalManager").GetComponent<GoalManager>().SpawnBall(3);
         }
     }
 }

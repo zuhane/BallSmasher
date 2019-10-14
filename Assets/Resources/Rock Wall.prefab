@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 063b5684ee7c3f545ad4e5f0ae39e30f, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -111,7 +111,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 451dcd88292ee9f459b4e1c81894afd5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cd99106876fabfa43a0f7e209507b380, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 2632336491767925912}
   - component: {fileID: 3362457999081857488}
   - component: {fileID: 8876739750666498085}
+  - component: {fileID: 5022840149749571197}
   m_Layer: 9
   m_Name: Rock Wall
   m_TagString: Untagged
@@ -243,7 +244,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084693ede6987004fbf9114131c68940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 4
+  maxHP: 6
+  explosion: {fileID: 211009268581708817, guid: dfd4c3b5e6daff6489540a2649d560d6,
+    type: 3}
 --- !u!61 &3362457999081857488
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -268,7 +271,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0
 --- !u!114 &8876739750666498085
 MonoBehaviour:
@@ -280,5 +283,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 50f3ac74f1cf1044da0cbe8e0fc7b958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5022840149749571197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5119562329877497223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7872e865519f7e44d82c11f953b958d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

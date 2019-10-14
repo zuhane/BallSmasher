@@ -11,7 +11,7 @@ public class SmashBrick : MonoBehaviour
     private Color color;
     private SpriteRenderer spriteRend;
     private Animator animator;
-    private GameObject explosion;
+    [SerializeField] private GameObject explosion;
     private AudioSource audioSource;
     private int damageCounter, damageTimeLimit = 10;
     private bool damaged = false;
@@ -20,7 +20,6 @@ public class SmashBrick : MonoBehaviour
     {
         spriteRend = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
-        explosion = Resources.Load<GameObject>("Effects/BrickExplosion");
         audioSource = GetComponentInChildren<AudioSource>();
         HP = maxHP;
         UpdateColor();
@@ -77,32 +76,35 @@ public class SmashBrick : MonoBehaviour
 
             if (fastEnoughToDamage)
             {
+                int damageToDeal = 0;
+
                 if (!damaged)
                 {
-                    HP -= collision.gameObject.GetComponent<BallHit>().blockDamage;
+                    damageToDeal = collision.gameObject.GetComponent<BallHit>().blockDamage;
                 }
+
                 audioSource.pitch = Random.Range(1.2f, 1.8f);
                 audioSource.Play();
                 animator.SetTrigger("Hit");
                 collision.gameObject.GetComponent<Rigidbody2D>().setX(-collision.GetContact(0).normal.x * collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
                 collision.gameObject.GetComponent<Rigidbody2D>().setY(-collision.GetContact(0).normal.y * collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
-                UpdateColor();
 
-                damaged = true;
+                Damage(damageToDeal);
             }
-
         }
+    }
 
-
-
+    public void Damage(int damage)
+    {
+        HP -= damage;
+        UpdateColor();
+        damaged = true;
 
         if (HP <= 0)
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-
-
     }
 
     private void UpdateColor()

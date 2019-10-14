@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class KillMe : MonoBehaviour
 {
-
+    public float duration;
     void Start()
     {
-        float duration = GetComponent<AudioSource>().clip.length;
+        if (duration == 0) duration = GetComponent<AudioSource>().clip.length;
         Destroy(gameObject, duration);
     }
 
