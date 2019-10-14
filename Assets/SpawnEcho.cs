@@ -5,8 +5,9 @@ using UnityEngine;
 public class SpawnEcho : MonoBehaviour
 {
     private float timeBetweenSpawns;
-    private float startTimeBetweenSpawns = 0.05f;
+    public float startTimeBetweenSpawns = 0.05f;
     private SpriteRenderer thisRenderer, playerRenderer;
+    public Sprite sprite;
 
     private void Start()
     {
@@ -18,9 +19,21 @@ public class SpawnEcho : MonoBehaviour
     private void Update()
     {
         //thisRenderer.sprite = playerRenderer.sprite;
+
         if (timeBetweenSpawns <= 0)
         {
-            Instantiate(Resources.Load<GameObject>("PlayerEcho"), transform.position, Quaternion.identity);
+            GameObject echo = Resources.Load<GameObject>("PlayerEcho");
+
+            if (sprite == null)
+            {
+                sprite = playerRenderer.sprite;
+                echo.GetComponent<SpriteRenderer>().flipX = playerRenderer.flipX;
+                echo.GetComponent<SpriteRenderer>().color = playerRenderer.color;
+            }
+
+            echo.GetComponent<SpriteRenderer>().sprite = sprite;
+            Instantiate(echo, transform.position, Quaternion.identity);
+
             timeBetweenSpawns = startTimeBetweenSpawns;
         }
         else

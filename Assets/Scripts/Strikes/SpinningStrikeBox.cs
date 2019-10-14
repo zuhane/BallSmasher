@@ -40,7 +40,7 @@ public class SpinningStrikeBox : StrikeBox
     {
         float angle = (180 / frequency) * (thisFacingDirection == FacingDirection.Clockwise ? -1 : 1);
         transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
-
+        transform.parent.Find("AttackOrb").RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
     }
 
     public override void SetDirection(FacingDirection facingDirection)
@@ -50,6 +50,7 @@ public class SpinningStrikeBox : StrikeBox
 
         transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset + 0.2f, transform.localPosition.z);
+        transform.parent.Find("AttackOrb").localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset + 0.2f, transform.localPosition.z);
 
         base.SetDirection(facingDirection);
     }

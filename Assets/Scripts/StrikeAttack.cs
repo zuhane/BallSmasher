@@ -169,6 +169,7 @@ public class StrikeAttack : MonoBehaviour
                 activeStrikeBox.force = 0.5f + (4f * charge);
                 charge = 1;
                 activeStrikeBox = null;
+                transform.Find("AttackOrb").localPosition = Vector3.zero;
                 cooling = true;
                 strikeDirection = FacingDirection.None;
             }

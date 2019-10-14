@@ -5,6 +5,7 @@ using UnityEngine;
 public class HUDManager : MonoBehaviour
 {
     private GameObject playerHUDContainer;
+    private GameObject playerHUDRContainer;
     private GameObject playerManager;
     private PlayerSpawnManager playerSpawnManager;
 
@@ -12,20 +13,29 @@ public class HUDManager : MonoBehaviour
     void Start()
     {
         playerHUDContainer = GameObject.Find("PlayerHUDs");
+        playerHUDRContainer = GameObject.Find("PlayerHUDsR");
         playerManager = GameObject.Find("PlayerManager");
         playerSpawnManager = playerManager.GetComponent<PlayerSpawnManager>();
 
-        for (int i = 0; i < playerManager.GetComponent<PlayerSpawnManager>().GetPlayerCount(); i++)
+        for (int i = 0; i < playerSpawnManager.GetPlayerCount(); i++)
         {
             GameObject playerHUD = Resources.Load<GameObject>("PlayerHUDBox");
             playerHUD.GetComponent<HUDBoxPlayerTracker>().player = playerSpawnManager.GetPlayer(i);
-            Instantiate(playerHUD, playerHUDContainer.transform);
+            if (playerSpawnManager.GetPlayer(i).GetComponent<PlayerManager>().team == 1)
+            {
+                Instantiate(playerHUD, playerHUDContainer.transform);
+            }
+            else
+            {
+                Instantiate(playerHUD, playerHUDRContainer.transform);
+            }
+
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

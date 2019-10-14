@@ -24,7 +24,7 @@ public class StatsRPG : MonoBehaviour
 
     private bool isPlayer = false;
 
-    private Color originalColour = Color.white;
+    public Color originalColour = Color.white;
 
     // Start is called before the first frame update
     void Start()

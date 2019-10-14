@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDBoxPlayerTracker : MonoBehaviour
 {
     [HideInInspector] public GameObject player;
     private StatsRPG playerStats;
     private PlayerManager playerManager;
+    private PlayerProfile playerProfile;
 
     private void Start()
     {
         playerStats = player.GetComponent<StatsRPG>();
         playerManager = player.GetComponent<PlayerManager>();
-
+        playerProfile = player.GetComponent<PlayerProfile>();
+        Debug.Log($"player colour {playerProfile.colour}");
+        transform.GetComponent<Image>().color = playerProfile.colour;
+        Debug.Log($"player Hud {transform.parent.GetComponent<Image>().color}");
     }
 
     public void Update()
