@@ -17,10 +17,12 @@ public class Movement : MonoBehaviour
         public bool holdLeft { get; set; }
         public bool holdUp { get; set; }
         public bool holdDown { get; set; }
+        public bool release { get; set; }
         public bool releaseRight { get; set; }
         public bool releaseLeft { get; set; }
         public bool releaseUp { get; set; }
         public bool releaseDown { get; set; }
+        public bool attack { get; set; }
         public bool holdClockwiseAttack { get; set; }
         public bool releaseClockwiseAttack { get; set; }
         public bool holdAnticlockwiseAttack { get; set; }

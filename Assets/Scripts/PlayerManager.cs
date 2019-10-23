@@ -81,56 +81,56 @@ public class PlayerManager : MonoBehaviour
 
         if (Input.GetButton("ClockwiseHitP" + (int)controllerType))
         {
-            movement.intent.holdClockwiseAttack = true;
+            movement.intent.holdClockwiseAttack = movement.intent.attack = true;
         }
         else if (prevIntent.holdClockwiseAttack)
         {
-            movement.intent.releaseClockwiseAttack = true;
+            movement.intent.releaseClockwiseAttack = movement.intent.release = true;
         }
 
         if (Input.GetButton("AntiClockwiseHitP" + (int)controllerType))
         {
-            movement.intent.holdAnticlockwiseAttack = true;
+            movement.intent.holdAnticlockwiseAttack = movement.intent.attack = true;
         }
         else if (prevIntent.holdAnticlockwiseAttack)
         {
-            movement.intent.releaseAnticlockwiseAttack = true;
+            movement.intent.releaseAnticlockwiseAttack = movement.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0)
         {
-            movement.intent.holdLeft = true;
+            movement.intent.holdLeft = movement.intent.attack = true;
         }
         else if (prevIntent.holdLeft)
         {
-            movement.intent.releaseLeft = true;
+            movement.intent.releaseLeft = movement.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0)
         {
-            movement.intent.holdRight = true;
+            movement.intent.holdRight = movement.intent.attack = true;
         }
         else if (prevIntent.holdRight)
         {
-            movement.intent.releaseRight = true;
+            movement.intent.releaseRight = movement.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0)
         {
-            movement.intent.holdDown = true;
+            movement.intent.holdDown = movement.intent.attack = true;
         }
         else if (prevIntent.holdDown)
         {
-            movement.intent.releaseDown = true;
+            movement.intent.releaseDown = movement.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0)
         {
-            movement.intent.holdUp = true;
+            movement.intent.holdUp = movement.intent.attack = true;
         }
         else if (prevIntent.holdUp)
         {
-            movement.intent.releaseUp = true;
+            movement.intent.releaseUp = movement.intent.release = true;
         }
         
     }

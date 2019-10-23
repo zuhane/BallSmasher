@@ -13,7 +13,7 @@ public abstract class BaseAbility : MonoBehaviour
 
     public virtual void Update()
     {
-        Debug.Log("UPSDFHYSD!!!");
+        
         if (abilitySO.cooldown > 0)
             abilitySO.cooldown--;
     }
