@@ -178,10 +178,12 @@ public class AttackOrb : MonoBehaviour
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset, transform.localPosition.z);
                 break;
             case FacingDirection.DownOut:
-                flingDirection = new Vector2(0.5f, 1.5f);
+                flingDirection = new Vector2(0.5f, 0.5f);
+                if (transform.parent.GetComponent<Movement>().FacingLeft()) flingDirection.x *= -1;
+                force *= 3;
+
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset, transform.localPosition.z);
-                _force /= 3;
                 break;
         }
     }
@@ -213,8 +215,8 @@ public class AttackOrb : MonoBehaviour
 
                 fireState = FireState.Returning;
 
-                if (rigidBody.velocity.y < 0) rigidBody.setY(0);
-                if (collision.transform.position.x < transform.parent.transform.position.x && thisFacingDirection == FacingDirection.DownOut) { finalFlingDirection.x *= -1; }
+                //if (rigidBody.velocity.y < 0) rigidBody.setY(0);
+                //if (collision.transform.position.x < transform.parent.transform.position.x && thisFacingDirection == FacingDirection.DownOut) { finalFlingDirection.x *= -1; }
 
                 if (this is SpinningStrikeBox)
                 {

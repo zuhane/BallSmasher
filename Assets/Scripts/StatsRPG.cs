@@ -113,7 +113,7 @@ public class StatsRPG : MonoBehaviour
         HP = MaxHP;
         MP = MaxMP;
 
-        Debug.Log($"HP={HP} MP={MP}");
+        //Debug.Log($"HP={HP} MP={MP}");
 
     }
 

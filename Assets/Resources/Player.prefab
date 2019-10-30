@@ -359,7 +359,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d9971c7362455e0439b2a248a9e1a575, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -583,41 +583,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4441261147921284304, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4441261147921284302, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 551306284263082038, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: chargeUpSound
-      value: 
-      objectReference: {fileID: 8300000, guid: ba9407ab328f0b74db8205d4d9d19ec4, type: 3}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: chargedFullySound
-      value: 
-      objectReference: {fileID: 8300000, guid: 2f846ce7b011b4447b7164620357d799, type: 3}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: attackReleaseSound
-      value: 
-      objectReference: {fileID: 8300000, guid: 8c0ce1455ba838c498ca6fd0a1cc8e3b, type: 3}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: xOffset
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8123078362204631396, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -647,6 +612,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: chargeUpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ba9407ab328f0b74db8205d4d9d19ec4, type: 3}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: chargedFullySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f846ce7b011b4447b7164620357d799, type: 3}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: attackReleaseSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 8c0ce1455ba838c498ca6fd0a1cc8e3b, type: 3}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: xOffset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441261147921284302, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 551306284263082038, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8419239213261361283, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9971c7362455e0439b2a248a9e1a575, type: 2}
+    - target: {fileID: 4441261147921284304, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4441261147921284303, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}

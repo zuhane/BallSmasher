@@ -36,8 +36,8 @@ public class StrikeAttack : MonoBehaviour
     {
         rpgStats = GetComponent<StatsRPG>();
         attackOrb = gameObject.GetComponentInChildren<AttackOrb>();
-        attackOrb.xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x /2;
-        attackOrb.yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y /2;
+        attackOrb.xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2;
+        attackOrb.yOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.y / 2;
 
         //spinStrike = Resources.Load<GameObject>("SpinningStrikeBox");
         //spinStrike.GetComponent<SpinningStrikeBox>().xOffset = gameObject.GetComponentInChildren<SpriteRenderer>().bounds.size.x;
@@ -121,7 +121,7 @@ public class StrikeAttack : MonoBehaviour
                 attackOrb.fireState = AttackOrb.FireState.Live;
                 attackOrb.force = 0.5f + (4f * charge);
                 charge = 1;
-                attackOrb.SetDirection(FacingDirection.None);
+                //attackOrb.SetDirection(FacingDirection.None);
                 attackOrb.attacking = false;
                 //attackOrb.GetComponent<TrailRenderer>().enabled = true;
                 //attackOrb.GetComponent<SpawnEcho>().enabled = true;

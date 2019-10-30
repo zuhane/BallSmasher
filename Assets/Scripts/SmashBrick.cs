@@ -13,7 +13,7 @@ public class SmashBrick : MonoBehaviour
     private Animator animator;
     [SerializeField] private GameObject explosion;
     private AudioSource audioSource;
-    private int damageCounter, damageTimeLimit = 10;
+    private int damageCounter, damageTimeLimit = 0;
     private bool damaged = false;
 
     private void Start()
@@ -47,32 +47,35 @@ public class SmashBrick : MonoBehaviour
 
             Rigidbody2D tempRigid = collision.gameObject.GetComponent<Rigidbody2D>();
 
-            float tempBounceForce = 0.5f;
+            float tempBounceForce = 3.5f;
             bool fastEnoughToDamage = false;
+            float minVelocityToDamage = 0.0f;
 
             foreach (ContactPoint2D contact in collision.contacts)
             {
-                if (contact.normal.y < 0 && tempRigid.velocity.y > 1)
+                if (contact.normal.y < 0 && tempRigid.velocity.y > minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.addY(tempBounceForce);
+                    tempRigid.setY(tempBounceForce);
                 }
-                if (contact.normal.y > 0 && tempRigid.velocity.y < -1)
+                if (contact.normal.y > 0 && tempRigid.velocity.y < -minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.addY(-tempBounceForce);
+                    tempRigid.setY(-tempBounceForce);
                 }
-                if (contact.normal.x > 0 && tempRigid.velocity.x < -1)
+                if (contact.normal.x > 0 && tempRigid.velocity.x < -minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.addX(tempBounceForce);
+                    tempRigid.setX(tempBounceForce);
                 }
-                if (contact.normal.x < 0 && tempRigid.velocity.x > 1)
+                if (contact.normal.x < 0 && tempRigid.velocity.x > minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.addX(-tempBounceForce);
+                    tempRigid.setX(-tempBounceForce);
                 }
             }
+
+            fastEnoughToDamage = true;
 
             if (fastEnoughToDamage)
             {
@@ -130,8 +133,6 @@ public class SmashBrick : MonoBehaviour
                 color = Color.red;
                 break;
         }
-
-
 
         spriteRend.color = color;
     }
