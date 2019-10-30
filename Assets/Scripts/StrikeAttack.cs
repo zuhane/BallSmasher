@@ -70,7 +70,7 @@ public class StrikeAttack : MonoBehaviour
                 attackOrb.fireState = AttackOrb.FireState.Charging;
                 attackOrb.damage = rpgStats.attackDamage;
 
-                channelSound.PlayOnce(attackOrb.attackReleaseSound);
+                channelSound.PlayOnce(attackOrb.chargeUpSound);
 
                 strikeDirection =
                           (movement.intent.holdLeft ? FacingDirection.Left :
@@ -123,8 +123,8 @@ public class StrikeAttack : MonoBehaviour
                 charge = 1;
                 attackOrb.SetDirection(FacingDirection.None);
                 attackOrb.attacking = false;
-                attackOrb.GetComponent<TrailRenderer>().enabled = true;
-                attackOrb.GetComponent<SpawnEcho>().enabled = true;
+                //attackOrb.GetComponent<TrailRenderer>().enabled = true;
+                //attackOrb.GetComponent<SpawnEcho>().enabled = true;
             }
         }
     }

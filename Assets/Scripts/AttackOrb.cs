@@ -67,19 +67,22 @@ public class AttackOrb : MonoBehaviour
             switch (_fireState)
             {
                 case FireState.Idling:
-
+                    anim.SetBool("Returning", false);
                     break;
                 case FireState.Charging:
-
+                    anim.SetBool("Charging", true);
                     break;
                 case FireState.Charged:
                     charged = true;
+
                     break;
                 case FireState.Live:
-
+                    anim.SetBool("Charging", false);
                     break;
                 case FireState.Returning:
-
+                    anim.SetBool("Returning", true);
+                    charged = false;
+                    
                     break;
             }
         }
@@ -109,7 +112,6 @@ public class AttackOrb : MonoBehaviour
         smashEffect = Resources.Load<GameObject>("AttackEffect");
         boxCollider = GetComponent<BoxCollider2D>();
         playerPos = transform.parent.transform.position;
-        float offset = 0.3f;
 
         SetDirection(thisFacingDirection);
     }
