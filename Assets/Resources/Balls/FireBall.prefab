@@ -358,8 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9103cf5cfcc399c48b5cb5a9e6a03ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockDamage: 10
-  playerDamage: 2
+  startingBlockDamage: 10
+  startingPlayerDamage: 2
 --- !u!114 &6349480084720558005
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -23,6 +23,6 @@ public class Dash : BaseAbility
         else if (player.GetComponent<Movement>().intent.right) player.GetComponent<Rigidbody2D>().addX(dashSpeed);
 
         GameObject echo = Resources.Load<GameObject>("EchoSpawner");
-        Instantiate(echo, player.transform);
+        Instantiate(echo, player.transform.GetChild(0).transform);
     }
 }

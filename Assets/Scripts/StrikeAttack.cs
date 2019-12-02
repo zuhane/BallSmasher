@@ -65,6 +65,8 @@ public class StrikeAttack : MonoBehaviour
         {
             charge += Time.deltaTime;
 
+            attackOrb.liveTimeLimit = (int)(charge * 8 - 3);
+
             if (attackOrb.fireState == AttackOrb.FireState.Idling)
             {
                 attackOrb.fireState = AttackOrb.FireState.Charging;
@@ -92,7 +94,13 @@ public class StrikeAttack : MonoBehaviour
                 {
                     channelSound.PlayLooped(attackOrb.chargedFullySound);
                     attackOrb.fireState = AttackOrb.FireState.Charged;
+                    attackOrb.liveTimeLimit = 40;
                 }
+            }
+
+            if (attackOrb.thisFacingDirection == FacingDirection.Clockwise || attackOrb.thisFacingDirection == FacingDirection.Anticlockwise)
+            {
+                attackOrb.Rotate();
             }
         }
 
@@ -119,11 +127,12 @@ public class StrikeAttack : MonoBehaviour
                 //Debug.Log("Final fling direction: " + activeStrikeBox.GetComponent<StrikeBox>().finalFlingDirection);
 
                 attackOrb.fireState = AttackOrb.FireState.Live;
-                attackOrb.force = 0.5f + (4f * charge);
+
+                attackOrb.SetFlingDirection();
+                attackOrb.force = 0.5f + (10f * charge);
                 charge = 1;
                 //attackOrb.SetDirection(FacingDirection.None);
                 attackOrb.attacking = false;
-                //attackOrb.GetComponent<TrailRenderer>().enabled = true;
                 //attackOrb.GetComponent<SpawnEcho>().enabled = true;
             }
         }

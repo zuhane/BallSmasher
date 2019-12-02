@@ -673,7 +673,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0.1484375, z: 0.015625, w: -0.0390625}
+  m_BoundingSphereOverride: {x: 0.03125, y: 0.048828125, z: 0.0234375, w: -0.013671875}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -10632,14 +10632,13 @@ GameObject:
   - component: {fileID: 1435754792}
   - component: {fileID: 1435754794}
   - component: {fileID: 1435754793}
-  - component: {fileID: 1435754795}
   m_Layer: 0
   m_Name: CompositeTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1435754792
 Transform:
   m_ObjectHideFlags: 0
@@ -10697,21 +10696,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &1435754795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1435754791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084693ede6987004fbf9114131c68940, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHP: 4
-  explosion: {fileID: 211009268581708817, guid: dfd4c3b5e6daff6489540a2649d560d6,
-    type: 3}
 --- !u!1001 &1441337172
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,9 +16,10 @@ public class HUDBoxPlayerTracker : MonoBehaviour
         playerStats = player.GetComponent<StatsRPG>();
         playerManager = player.GetComponent<PlayerManager>();
         playerProfile = player.GetComponent<PlayerProfile>();
-        Debug.Log($"player colour {playerProfile.colour}");
-        transform.GetComponent<Image>().color = playerProfile.colour;
-        Debug.Log($"player Hud {transform.parent.GetComponent<Image>().color}");
+        //Debug.Log($"player colour {playerProfile.colour}");
+        transform.GetComponent<Image>().material = player.GetComponentInChildren<SpriteRenderer>().material;
+        
+        //Debug.Log($"player Hud {transform.parent.GetComponent<Image>().color}");
     }
 
     public void Update()
