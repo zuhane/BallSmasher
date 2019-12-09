@@ -46,7 +46,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public GameObject GetPlayer(int index)
     {
-        return players[index]; 
+        return players[index];
     }
 
 
@@ -66,7 +66,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
         foreach (GameObject p in players)
         {
-            if (p.GetComponent<PlayerManager>().playerNumber == playerNumber) p.transform.position = Vector2.zero;
+            if (p.GetComponent<PlayerManager>().playerNumber == playerNumber) p.transform.position = Vector3.zero;
             //playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position;
         }
 
@@ -81,7 +81,8 @@ public class PlayerSpawnManager : MonoBehaviour
 
     public void HandleDeath(GameObject player)
     {
-        player.transform.position = Vector2.zero;
+        player.transform.position = playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position;
+        player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
     }
 
 }

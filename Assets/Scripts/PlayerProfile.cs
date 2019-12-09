@@ -6,7 +6,7 @@ public class PlayerProfile : MonoBehaviour
 {
 
     private SpriteRenderer spriteRenderer;
-    [HideInInspector] public Color colour;
+    //[HideInInspector] public Color colour;
 
     private PlayerManager playerManager;
 
@@ -37,7 +37,7 @@ public class PlayerProfile : MonoBehaviour
                 //    break;
         }
 
-        colour = spriteRenderer.color;
+        //colour = spriteRenderer.color;
     }
 
     public void SetColour()

@@ -39,7 +39,7 @@ public class StatsRPG : MonoBehaviour
 
         PlayerProfile profile = GetComponent<PlayerProfile>();
 
-        if (profile != null) originalColour = profile.colour;
+        if (profile != null) originalColour = Color.white;
 
         if (gameObject.tag == "Player") isPlayer = true;
     }
@@ -112,7 +112,7 @@ public class StatsRPG : MonoBehaviour
     {
         HP = MaxHP;
         MP = MaxMP;
-
+        
         //Debug.Log($"HP={HP} MP={MP}");
 
     }

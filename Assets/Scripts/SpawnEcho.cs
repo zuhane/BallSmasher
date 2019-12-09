@@ -5,32 +5,21 @@ using UnityEngine;
 public class SpawnEcho : MonoBehaviour
 {
     private float timeBetweenSpawns;
-    public float startTimeBetweenSpawns = 0.05f;
-    private SpriteRenderer thisRenderer, playerRenderer;
+    public float startTimeBetweenSpawns = 0.005f;
+    private SpriteRenderer parentRenderer;
     public Sprite sprite;
-
-    private void Start()
-    {
-        thisRenderer = GetComponent<SpriteRenderer>();
-        playerRenderer = transform.parent.transform.GetChild(0).transform.GetComponent<SpriteRenderer>();
-    }
-
 
     private void Update()
     {
-        //thisRenderer.sprite = playerRenderer.sprite;
 
         if (timeBetweenSpawns <= 0)
         {
             GameObject echo = Resources.Load<GameObject>("PlayerEcho");
 
-            if (sprite == null)
-            {
-                sprite = playerRenderer.sprite;
-                echo.GetComponent<SpriteRenderer>().flipX = playerRenderer.flipX;
-                echo.GetComponent<SpriteRenderer>().color = playerRenderer.color;
-            }
-
+            parentRenderer = transform.parent.GetComponent<SpriteRenderer>();
+            sprite = parentRenderer.sprite;
+            echo.transform.localScale = transform.parent.localScale;
+            echo.GetComponent<SpriteRenderer>().material = parentRenderer.material;
             echo.GetComponent<SpriteRenderer>().sprite = sprite;
             Instantiate(echo, transform.position, Quaternion.identity);
 

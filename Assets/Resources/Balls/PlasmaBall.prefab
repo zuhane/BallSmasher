@@ -186,6 +186,8 @@ MonoBehaviour:
   maxHealth: 0
   playerDamage: 10
   lifespan: 0
+  startingBlockDamage: 10
+  startingPlayerDamage: 10
 --- !u!114 &3186911579551985003
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class BetterToggleGroup : ToggleGroup
 {
@@ -9,12 +10,10 @@ public class BetterToggleGroup : ToggleGroup
     public event ChangedEventHandler OnChange;
     public void Start()
     {
-        int a = 1;
-
-        foreach (Transform transformToggle in gameObject.transform)
+        foreach (Toggle toggle in gameObject.GetComponentsInChildren<Toggle>())
         {
-            var toggle = transformToggle.gameObject.GetComponent<Toggle>();
-            toggle.onValueChanged.AddListener((isSelected) => {
+            toggle.onValueChanged.AddListener((isSelected) =>
+            {
                 if (!isSelected)
                 {
                     return;
@@ -23,6 +22,8 @@ public class BetterToggleGroup : ToggleGroup
                 DoOnChange(activeToggle);
             });
         }
+
+
     }
     public Toggle Active()
     {
