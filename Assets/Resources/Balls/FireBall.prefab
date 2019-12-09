@@ -46,6 +46,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -96,6 +97,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -359,7 +361,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockDamage: 10
+  maxHealth: 0
   playerDamage: 2
+  lifespan: 571
 --- !u!114 &6349480084720558005
 MonoBehaviour:
   m_ObjectHideFlags: 0

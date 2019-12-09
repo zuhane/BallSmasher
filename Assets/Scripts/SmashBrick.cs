@@ -83,7 +83,7 @@ public class SmashBrick : MonoBehaviour
 
                 if (!damaged)
                 {
-                    damageToDeal = collision.gameObject.GetComponent<BallHit>().blockDamage;
+                    damageToDeal = collision.gameObject.GetComponent<Ball>().blockDamage;
                 }
 
                 audioSource.pitch = Random.Range(1.2f, 1.8f);

@@ -12,11 +12,11 @@ public class GoalManager : MonoBehaviour
     [SerializeField] private AudioClip[] clips;
 
     private string[] balls = {
-            "Ball"
-            ,"FireBall"
-            ,"BeachBall"
-            ,"HealBall"
-            ,"PlasmaBall"
+            //"Ball"
+            /*,*/"FireBall"
+            //,"BeachBall"
+            //,"HealBall"
+            //,"PlasmaBall"
     };
 
 
@@ -27,6 +27,8 @@ public class GoalManager : MonoBehaviour
 
         spawners.AddRange(GameObject.FindGameObjectsWithTag("Spawner"));
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
+
+        SpawnRandomBall();
     }
 
     public void ScoreGoal(int team)
@@ -36,15 +38,12 @@ public class GoalManager : MonoBehaviour
         audioSource.clip = clips[Random.Range(0, clips.GetLength(0))];
         audioSource.Play();
 
-        SpawnBall(BallType: balls[Random.Range(0, balls.Length)]);
-
-        camera.GetComponent<SmashBrosCamera>().SetTargets();
+        SpawnRandomBall();
     }
 
     public void SpawnBall(int numBalls = 1, string BallType = "Ball")
     {
         Vector3 spawnPos = Vector3.zero;
-
         spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
 
         for (int i = 0; i < numBalls; i++)
@@ -54,5 +53,11 @@ public class GoalManager : MonoBehaviour
             Instantiate(Ball, spawnPos, Quaternion.identity);
         }
 
+        camera.GetComponent<SmashBrosCamera>().SetTargets();
+    }
+
+    public void SpawnRandomBall()
+    {
+        SpawnBall(BallType: balls[Random.Range(0, balls.Length)]);
     }
 }

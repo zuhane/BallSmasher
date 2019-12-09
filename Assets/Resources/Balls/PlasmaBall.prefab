@@ -183,7 +183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockDamage: 10
+  maxHealth: 0
   playerDamage: 10
+  lifespan: 0
 --- !u!114 &3186911579551985003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +256,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -304,6 +307,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
