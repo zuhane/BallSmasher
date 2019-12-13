@@ -9,10 +9,7 @@ public class Ball : MonoBehaviour
     [Range(-10, 10)] public int playerDamage = 0;
     [Range(0, 10)] public int startingBlockDamage = 1;
     [Range(-10, 10)] public int startingPlayerDamage = 0;
-
-    public int blockDamage { get; private set; }
-    public int playerDamage { get; private set; }
-
+    
     [HideInInspector] private bool electrified;
     private GameObject electricBall;
 
@@ -20,6 +17,7 @@ public class Ball : MonoBehaviour
     public int lifespan = 0;
 
     private GoalManager goalManager;
+    private Timer lifeTimer;
     void Start()
     {
         float initialMaxForce = 0.8f;
@@ -27,6 +25,11 @@ public class Ball : MonoBehaviour
         GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-initialMaxForce, initialMaxForce), Random.Range(-initialMaxForce, initialMaxForce)), ForceMode2D.Impulse);
         health = maxHealth;
         goalManager = GameObject.Find("GoalManager").GetComponent<GoalManager>();
+
+        if (lifespan > 0)
+        {            
+            lifeTimer = Timer.CreateComponent(gameObject, lifespan);
+        }
     }
 
     private void Update()
@@ -36,9 +39,15 @@ public class Ball : MonoBehaviour
         if (maxHealth > 0 && health <= 0) {
             DestroyBall();
         }
-        if (lifespan > 0 && lifespanTick > lifespan)
-        {
+
+        if (lifeTimer?.LimitReached() == true)
+        { 
             DestroyBall();
+        }
+
+        if (GetComponent<Rigidbody2D>().velocity.magnitude < 3 && electrified)
+        {
+            UnelectrifyBall();
         }
     }
 
@@ -68,14 +77,6 @@ public class Ball : MonoBehaviour
         blockDamage = startingBlockDamage;
         playerDamage = startingPlayerDamage;
         Destroy(electricBall);
-    }
-
-    private void Update()
-    {
-        if (GetComponent<Rigidbody2D>().velocity.magnitude < 3 && electrified)
-        {
-            UnelectrifyBall();
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

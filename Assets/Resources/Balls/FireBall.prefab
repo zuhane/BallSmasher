@@ -363,9 +363,9 @@ MonoBehaviour:
   blockDamage: 10
   maxHealth: 0
   playerDamage: 2
-  lifespan: 571
   startingBlockDamage: 10
   startingPlayerDamage: 2
+  lifespan: 10
 --- !u!114 &6349480084720558005
 MonoBehaviour:
   m_ObjectHideFlags: 0

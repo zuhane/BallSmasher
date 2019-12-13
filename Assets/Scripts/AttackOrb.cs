@@ -245,7 +245,7 @@ public class AttackOrb : MonoBehaviour
 
             if (rigidBody != null && rigidBody.bodyType == RigidbodyType2D.Dynamic)
             {
-                BallHit ballHit = rigidBody.gameObject.GetComponent<BallHit>();
+                Ball ballHit = rigidBody.gameObject.GetComponent<Ball>();
                 if (ballHit != null && charged)
                 {
                     ballHit.ElectrifyBall();
