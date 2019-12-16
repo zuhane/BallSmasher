@@ -182,8 +182,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockDamage: 1
-  maxHealth: 0
+  maxHealth: 3
   playerDamage: 0
+  startingBlockDamage: 1
+  startingPlayerDamage: 0
   lifespan: 0
 --- !u!114 &-8108177899108508469
 MonoBehaviour:
