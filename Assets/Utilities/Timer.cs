@@ -48,7 +48,7 @@ class Timer : MonoBehaviour
     /// <returns></returns>
     public bool SecondsPassed(int seconds)
     {
-        if (timercount > seconds)
+        if (timercount >= seconds)
         {
             timercount = 0f;
             return true;
@@ -64,7 +64,7 @@ class Timer : MonoBehaviour
     /// <returns></returns>
     public bool LimitReached()
     {
-        if (timercount > secondLimit)
+        if (timercount >= secondLimit)
         {
             timercount = 0f;
             return true;

@@ -230,25 +230,27 @@ public class AttackOrb : MonoBehaviour
             //Debug.Log("Trigger Stay Live");
 
             Rigidbody2D rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
-
-            if (charged)
-            {
-                Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), transform.position, Quaternion.identity);
-                AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
-            }
-            else
-            {
-                Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), transform.position, Quaternion.identity);
-                AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
-            }
-
-
             if (rigidBody != null && rigidBody.bodyType == RigidbodyType2D.Dynamic)
             {
-                Ball ballHit = rigidBody.gameObject.GetComponent<Ball>();
-                if (ballHit != null && charged)
+                if (charged)
                 {
-                    ballHit.ElectrifyBall();
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), transform.position, Quaternion.identity);
+                    AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                }
+                else
+                {
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), transform.position, Quaternion.identity);
+                    AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                }
+
+                Ball ballHit = rigidBody.gameObject.GetComponent<Ball>();
+                if (ballHit != null)
+                {
+                    ballHit.TakeDamage(damage);
+                    if (charged)
+                    {
+                        ballHit.ElectrifyBall();
+                    }
                 }
 
                 rigidBody.addX(finalFlingDirection.x);
@@ -261,12 +263,9 @@ public class AttackOrb : MonoBehaviour
                     Debug.Log(damage);
                     stats.TakeDamage(damage);
                 }
+                fireState = FireState.Returning;
             }
-
-            fireState = FireState.Returning;
-
         }
-
     }
 
 }

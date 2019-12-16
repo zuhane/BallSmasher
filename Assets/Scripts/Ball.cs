@@ -9,7 +9,7 @@ public class Ball : MonoBehaviour
     [Range(-10, 10)] public int playerDamage = 0;
     [Range(0, 10)] public int startingBlockDamage = 1;
     [Range(-10, 10)] public int startingPlayerDamage = 0;
-    
+
     [HideInInspector] private bool electrified;
     private GameObject electricBall;
 
@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour
         goalManager = GameObject.Find("GoalManager").GetComponent<GoalManager>();
 
         if (lifespan > 0)
-        {            
+        {
             lifeTimer = Timer.CreateComponent(gameObject, lifespan);
         }
     }
@@ -36,12 +36,13 @@ public class Ball : MonoBehaviour
     {
         lifespanTick++;
 
-        if (maxHealth > 0 && health <= 0) {
+        if (maxHealth > 0 && health <= 0)
+        {
             DestroyBall();
         }
 
         if (lifeTimer?.LimitReached() == true)
-        { 
+        {
             DestroyBall();
         }
 
@@ -77,6 +78,18 @@ public class Ball : MonoBehaviour
         blockDamage = startingBlockDamage;
         playerDamage = startingPlayerDamage;
         Destroy(electricBall);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (maxHealth > 0)
+        {
+            health -= damage;
+            if (health <= 0)
+            {
+                DestroyBall();
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -14,7 +14,7 @@ public class GoalManager : MonoBehaviour
     private string[] balls = {
             //"Ball"
             /*,*/"FireBall"
-            //,"BeachBall"
+            ,"BeachBall"
             //,"HealBall"
             //,"PlasmaBall"
     };
