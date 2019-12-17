@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Movement))]
 public class PlayerManager : MonoBehaviour
-{
-    private PlayerControls playerControls;
-    public PlayerInput playerInput;
+{ 
 
     public Animator animator;
     public SpriteRenderer playerRenderer;
