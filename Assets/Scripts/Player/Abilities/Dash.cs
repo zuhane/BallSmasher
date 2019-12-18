@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dash : BaseAbility
 {
-    private float dashSpeed = 8;
+    private float dashSpeed = 2000;
 
 
     public Dash()
@@ -19,8 +19,8 @@ public class Dash : BaseAbility
 
         AudioManager.PlaySound("Woosh", Random.Range(0.8f, 1.2f));
 
-        if (player.GetComponent<Movement>().intent.left) player.GetComponent<Rigidbody2D>().addX(-dashSpeed);
-        else if (player.GetComponent<Movement>().intent.right) player.GetComponent<Rigidbody2D>().addX(dashSpeed);
+        if (player.GetComponent<Movement>().facingLeft) player.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(-dashSpeed, 0));
+        else if (!player.GetComponent<Movement>().facingLeft) player.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(dashSpeed, 0));
 
         GameObject echo = Resources.Load<GameObject>("EchoSpawner");
         Instantiate(echo, player.transform.GetChild(0).transform);

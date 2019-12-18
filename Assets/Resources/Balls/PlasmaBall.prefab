@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 150789167}
   - component: {fileID: 3186911579551985003}
   - component: {fileID: 2954871941718737582}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlasmaBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
@@ -185,9 +185,9 @@ MonoBehaviour:
   blockDamage: 10
   maxHealth: 0
   playerDamage: 10
-  lifespan: 0
   startingBlockDamage: 10
   startingPlayerDamage: 10
+  lifespan: 0
 --- !u!114 &3186911579551985003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 7489737379271426558}
   - component: {fileID: 7489737379271426559}
   - component: {fileID: 8983108237225396977}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

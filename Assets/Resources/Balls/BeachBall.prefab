@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 150789164}
   - component: {fileID: 150789167}
   - component: {fileID: -8108177899108508469}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BeachBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 7489737379271426558}
   - component: {fileID: 7489737379271426559}
   - component: {fileID: 1843913366429527330}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -18,9 +18,9 @@ TagManager:
   - 
   - PostProcessing
   - Wall
-  - 
-  - 
-  - 
+  - Ball
+  - HitsBallsOnly
+  - Player
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Tiles
+    uniqueID: 1610339731
     locked: 0
   - name: Overlay
     uniqueID: 551469179

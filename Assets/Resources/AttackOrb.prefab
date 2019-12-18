@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8419239213261361283}
   - component: {fileID: 4477646992339685318}
   - component: {fileID: 374281722038833299}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 551469179
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 934616183246214731, guid: ad8a4316c2f79c24aa248c8b083ea5ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -210,7 +211,7 @@ GameObject:
   - component: {fileID: 551306284263082038}
   - component: {fileID: 8343826703721570159}
   - component: {fileID: 1307192053710225479}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AttackOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,6 +248,7 @@ TrailRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -345,8 +347,9 @@ MonoBehaviour:
   finalFlingDirection: {x: 0, y: 0}
   xOffset: 0
   yOffset: 0
-  liveTimeCounter: 0
-  liveTimeLimit: 30
+  lifeTimeCounter: 0
+  lifeTimeLimit: 0
+  distancefactor: 5
   chargeUpSound: {fileID: 0}
   chargedFullySound: {fileID: 0}
   attackReleaseSound: {fileID: 0}
@@ -377,7 +380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1598664100023110210}
   - component: {fileID: 23858225676191460}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnEcho
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -8,22 +8,22 @@ public class AttackOrb : MonoBehaviour
 
     private float rotateFrequency = 60f;
 
-    public FacingDirection thisFacingDirection;
+    [HideInInspector] public FacingDirection thisFacingDirection;
 
     [HideInInspector] public bool attacking;
 
-    protected Vector2 flingDirection;
-    public Vector2 finalFlingDirection;
+    [HideInInspector] protected Vector2 flingDirection;
+    [HideInInspector] public Vector2 finalFlingDirection;
 
-    public float xOffset = 0f, yOffset = 0f;
+    [HideInInspector] public float xOffset = 0f, yOffset = 0f;
 
-    public int liveTimeCounter, liveTimeLimit = 30;
+    [HideInInspector] public int lifeTimeCounter, lifeTimeLimit;
+    [Range(1, 20)] public int distancefactor = 5;
+
     private float returningTimeStrength = 0.2f;
 
     [SerializeField] public AudioClip chargeUpSound, chargedFullySound, attackReleaseSound;
     private GameObject smashEffect;
-
-    private BoxCollider2D boxCollider;
 
     protected float _force = 10;
 
@@ -88,7 +88,7 @@ public class AttackOrb : MonoBehaviour
                 case FireState.Returning:
                     anim.SetBool("Returning", true);
                     transform.GetComponentInChildren<SpawnEcho>().enabled = false;
-                    liveTimeCounter = 0;
+                    lifeTimeCounter = 0;
                     charged = false;
                     break;
             }
@@ -117,7 +117,6 @@ public class AttackOrb : MonoBehaviour
     {
         anim = transform.GetComponentInChildren<Animator>();
         smashEffect = Resources.Load<GameObject>("AttackEffect");
-        boxCollider = GetComponent<BoxCollider2D>();
         playerPos = transform.parent.transform.position;
 
         SetDirection(thisFacingDirection);
@@ -127,9 +126,9 @@ public class AttackOrb : MonoBehaviour
     {
         if (fireState == FireState.Live)
         {
-            liveTimeCounter++;
+            lifeTimeCounter++;
 
-            if (liveTimeCounter >= liveTimeLimit)
+            if (lifeTimeCounter >= lifeTimeLimit)
                 fireState = FireState.Returning;
             else
                 transform.position += new Vector3(finalFlingDirection.normalized.x * 10, finalFlingDirection.normalized.y * 10) / 50;
@@ -190,7 +189,7 @@ public class AttackOrb : MonoBehaviour
                 break;
             case FacingDirection.DownOut:
                 flingDirection = new Vector2(0.5f, 0.5f);
-                if (transform.parent.GetComponent<Movement>().FacingLeft()) flingDirection.x *= -1;
+                if (transform.parent.GetComponent<Movement>().facingLeft) flingDirection.x *= -1;
                 force *= 5;
                 transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset - 0.1f, transform.localPosition.z);
@@ -222,15 +221,23 @@ public class AttackOrb : MonoBehaviour
 
     }
 
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        BallhitTrigger(collision);
+    }
+
     protected void OnTriggerStay2D(Collider2D collision)
     {
-        //Debug.Log("Trigger Stay");
-        if (_fireState == FireState.Live)
+        BallhitTrigger(collision);
+    }
+
+    private void BallhitTrigger(Collider2D collision)
+    {
+        if (_fireState == FireState.Live && (collision.gameObject.layer == 10 || collision.gameObject.layer == 12))
         {
-            //Debug.Log("Trigger Stay Live");
 
             Rigidbody2D rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rigidBody != null && rigidBody.bodyType == RigidbodyType2D.Dynamic)
+            if (rigidBody != null)
             {
                 if (charged)
                 {
@@ -267,5 +274,4 @@ public class AttackOrb : MonoBehaviour
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerPhysicsMovement))]
 public class Movement : MonoBehaviour
 {
     public class Intent
@@ -32,33 +33,22 @@ public class Movement : MonoBehaviour
         public bool useAbility3 { get; set; }
     }
 
-    public bool bumpingHead, bumpingFeet, bumpingLeft, bumpingRight;
+    [HideInInspector] public bool moving, ascending, descending, crouching, wallSliding;
+    [HideInInspector] public int currJump;
 
-    public Intent intent = new Intent();
+    [HideInInspector] public PlayerPhysicsMovement playerPhysics;
 
-    [SerializeField] private Rigidbody2D rigid;
-    [SerializeField] private Vector2 maxVelocity;
-    [SerializeField] private Vector2 maxMoveSpeed;
-    [SerializeField] private float moveSpeed, jumpForce;
-    [SerializeField] private int maxJumps;
+    [HideInInspector] public Intent intent = new Intent();
 
     private Vector3 originalScale, flipScale;
-    public bool moving, ascending, descending, crouching, wallSliding;
-    [HideInInspector] public int currJump;
-    private object hit;
 
     private Vector4 standingScale, crouchingScale;
 
-    [SerializeField] private BoxCollider2D collider;
+    [HideInInspector] public bool facingLeft;
 
-    private GameObject graphicsObj;
+    [HideInInspector] public bool brushingFeet, brushingHead, brushingLeft, brushingRight;
 
-    private bool facingLeft = false;
-
-    public bool FacingLeft()
-    {
-        return facingLeft;
-    }
+    private SpriteRenderer sprRend;
 
     // Start is called before the first frame update
     void Start()
@@ -68,97 +58,85 @@ public class Movement : MonoBehaviour
         //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
         originalScale = transform.localScale;
         flipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        collider = GetComponent<BoxCollider2D>();
 
-        graphicsObj = transform.GetChild(0).gameObject;
+        playerPhysics = GetComponent<PlayerPhysicsMovement>();
+        sprRend = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        moving = true;
+        facingLeft = playerPhysics.facingLeft;
 
-        //Destroy(transform.Find("Graphics").GetComponent<PolygonCollider2D>());
-        //transform.Find("Graphics").gameObject.AddComponent<PolygonCollider2D>();
-        if (intent.crouch && bumpingFeet)
+        moving = playerPhysics.running;
+        ascending = playerPhysics.ascending;
+        descending = playerPhysics.descending;
+        crouching = playerPhysics.crouching;
+        wallSliding = playerPhysics.wallSliding;
+        currJump = playerPhysics.currJump;
+
+        brushingFeet = playerPhysics.brushingFeet;
+        brushingHead = playerPhysics.brushingHead;
+        brushingLeft = playerPhysics.brushingLeft;
+        brushingRight = playerPhysics.brushingRight;
+
+        if (facingLeft)
         {
-            if (gameObject.tag == "Player")
-            {
-                collider.offset = new Vector2(crouchingScale.x, crouchingScale.y);
-                collider.size = new Vector2(crouchingScale.z, crouchingScale.w);
-            }
-
-            crouching = true;
-            moving = false;
-
+            sprRend.flipX = true;
         }
-        else
-        {
-            if (gameObject.tag == "Player")
-            {
-                collider.offset = new Vector2(standingScale.x, standingScale.y);
-                collider.size = new Vector2(standingScale.z, standingScale.w);
-            }
+        
+        else sprRend.flipX = false;
+
+        //if (intent.crouch && bumpingFeet)
+        //{
+        //    if (gameObject.tag == "Player")
+        //    {
+        //        collider.offset = new Vector2(crouchingScale.x, crouchingScale.y);
+        //        collider.size = new Vector2(crouchingScale.z, crouchingScale.w);
+        //    }
+
+        //    crouching = true;
+        //    moving = false;
+
+        //}
+        //else
+        //{
+        //    if (gameObject.tag == "Player")
+        //    {
+        //        collider.offset = new Vector2(standingScale.x, standingScale.y);
+        //        collider.size = new Vector2(standingScale.z, standingScale.w);
+        //    }
 
 
-            crouching = false;
-        }
+        //    crouching = false;
+        //}
 
-        if (!crouching)
-        {
-            if (intent.left)
-            {
-                graphicsObj.transform.localScale = flipScale;
+        //if (!crouching)
+        //{
+        //    if (intent.left)
+        //    {
+        //        graphicsObj.transform.localScale = flipScale;
 
-                if (rigid.velocity.x > -maxMoveSpeed.x)
-                    rigid.addX(-(moveSpeed));
+        //        if (rigid.velocity.x > -maxMoveSpeed.x)
+        //            rigid.addX(-(moveSpeed));
 
-                facingLeft = true;
-            }
-            else if (intent.right)
-            {
-                graphicsObj.transform.localScale = originalScale;
-                if (rigid.velocity.x < maxMoveSpeed.x)
-                    rigid.addX(moveSpeed);
+        //        facingLeft = true;
+        //    }
+        //    else if (intent.right)
+        //    {
+        //        graphicsObj.transform.localScale = originalScale;
+        //        if (rigid.velocity.x < maxMoveSpeed.x)
+        //            rigid.addX(moveSpeed);
 
-                facingLeft = false;
-            }
-            else
-            {
-                moving = false;
-            }
-        }
+        //        facingLeft = false;
+        //    }
+        //    else
+        //    {
+        //        moving = false;
+        //    }
+        //}
 
-        checkMaxSpeed();
 
-        if (intent.jump)
-        {
-            if (currJump < maxJumps)
-            {
-                AudioManager.PlaySound("Jump", Random.Range(0.8f, 1.2f));
-                float wallKickForce = 6;
-
-                if (rigid.velocity.y < 0) rigid.setY(0);
-                rigid.addY(jumpForce);
-
-                if (!bumpingFeet)
-                {
-                    if (bumpingLeft) rigid.addX(wallKickForce);
-                    if (bumpingRight) rigid.addX(-wallKickForce);
-                }
-
-                currJump += 1;
-            }
-        }
-
-        if ((bumpingLeft && intent.left) || (bumpingRight && intent.right))
-        {
-            wallSliding = true;
-        }
-        else
-        {
-            wallSliding = false;
-        }
 
         AbilityManager abilities = GetComponent<AbilityManager>();
 
@@ -171,96 +149,6 @@ public class Movement : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-        if (bumpingFeet)
-        {
-            ascending = false;
-            descending = false;
-        }
-        else
-        {
-            descending = (rigid.velocity.y < 0);
-            ascending = (rigid.velocity.y > 0);
-        }
-    }
-
-    private void checkMaxSpeed()
-    {
-        if (rigid.velocity.x > maxVelocity.x)
-            rigid.setX(maxVelocity.x);
-        if (rigid.velocity.x < -(maxVelocity.x))
-            rigid.setX(-(maxVelocity.x));
-        if (rigid.velocity.y > maxVelocity.y)
-            rigid.setY(maxVelocity.y);
-        if (rigid.velocity.y < -(maxVelocity.y))
-            rigid.setY(-(maxVelocity.y));
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        foreach (ContactPoint2D contact in collision.contacts)
-        {
-            if (contact.normal.y > 0 || contact.normal.x < 0 || contact.normal.x > 0)
-            {
-                AudioManager.PlaySound("Landing", Random.Range(0.8f, 1.2f));
-                currJump = 0;
-            }
-        }
-    }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-
-        //if (capsule != null)
-        //{
-        //    if ((bumpingLeft || bumpingRight))
-        //    {
-        //        capsule.sharedMaterial.friction = 0f;
-        //        capsule.enabled = false;
-        //        capsule.enabled = true;
-        //    }
-        //    else
-        //    {
-        //        capsule.sharedMaterial.friction = 0.04f;
-        //        capsule.enabled = false;
-        //        capsule.enabled = true;
-        //    }
-        //}
-
-        foreach (ContactPoint2D contact in collision.contacts)
-        {
-            if (contact.normal.y > 0)
-            {
-                bumpingFeet = true;
-            }
-            if (contact.normal.y < 0)
-            {
-                bumpingHead = true;
-                            }
-            if (contact.normal.x < 0)
-            {
-                bumpingRight = true;
-                            }
-            if (contact.normal.x > 0)
-            {
-                bumpingLeft = true;
-                            }
-        }
-
-        /*
-        if (bumpingFeet && bumpingRight)
-            Debug.Log("Corner Right");
-
-        if (bumpingFeet && bumpingLeft)
-            Debug.Log("Corner Left");
-        */
-        //lastContactPoint = 
-
-    }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        bumpingFeet = false; bumpingHead = false; bumpingLeft = false; bumpingRight = false;
-    }
 }

@@ -48,10 +48,11 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -72,7 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300032, guid: 2f9eda8eaa1fd504bb0613389af5c7a7, type: 3}
+  m_Sprite: {fileID: 6808205469259210545, guid: ad8a4316c2f79c24aa248c8b083ea5ed,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,3 +129,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b924089cf05e6a34db79d9cd4a15382b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alpha: 0

@@ -65,7 +65,7 @@ public class StrikeAttack : MonoBehaviour
         {
             charge += Time.deltaTime;
 
-            attackOrb.liveTimeLimit = (int)(charge * 8 - 3);
+            attackOrb.lifeTimeLimit = (int)(charge * attackOrb.distancefactor);
 
             if (attackOrb.fireState == AttackOrb.FireState.Idling)
             {
@@ -94,7 +94,7 @@ public class StrikeAttack : MonoBehaviour
                 {
                     channelSound.PlayLooped(attackOrb.chargedFullySound);
                     attackOrb.fireState = AttackOrb.FireState.Charged;
-                    attackOrb.liveTimeLimit = 40;
+                    attackOrb.lifeTimeLimit = 40;
                 }
             }
 
@@ -111,7 +111,7 @@ public class StrikeAttack : MonoBehaviour
             if (movement.intent.release)
             {
                 releaseDetected = true;
-                if (strikeDirection == FacingDirection.Down && movement.bumpingFeet)
+                if (strikeDirection == FacingDirection.Down && movement.brushingFeet)
                     attackOrb.SetDirection(FacingDirection.DownOut);
             }
 
@@ -136,26 +136,6 @@ public class StrikeAttack : MonoBehaviour
                 //attackOrb.GetComponent<SpawnEcho>().enabled = true;
             }
         }
-    }
-
-    private AttackOrb NormalStrike(FacingDirection direction)
-    {
-        //attackOrbObject.GetComponent<AttackOrbIdle>().thisFacingDirection = direction;
-        //attackOrbObject.GetComponent<AttackOrbIdle>().damage = rpgStats.attackDamage;
-        ////GameObject outStrike = Instantiate(normalStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        //channelSound = attackOrbObject.transform.GetChild(0).GetComponent<AudioSource>();
-        return gameObject.GetComponent<AttackOrb>();
-    }
-
-    private AttackOrb SpinStrike(FacingDirection direction)
-    {
-        return null;
-        //spinStrike.GetComponent<SpinningStrikeBox>().thisFacingDirection = direction;
-        //spinStrike.GetComponent<SpinningStrikeBox>().damage = rpgStats.attackDamage;
-        //GameObject outStrike = Instantiate(spinStrike, gameObject.transform.position, Quaternion.identity, gameObject.transform);
-        //channelSound = outStrike.transform.GetChild(0).GetComponent<AudioSource>();
-        //return outStrike.GetComponent<SpinningStrikeBox>();
-
     }
 
 }

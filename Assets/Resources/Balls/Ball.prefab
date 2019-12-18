@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 150789164}
   - component: {fileID: 150789167}
   - component: {fileID: -528667500983806878}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ball
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
@@ -184,9 +184,9 @@ MonoBehaviour:
   blockDamage: 1
   maxHealth: 0
   playerDamage: 0
-  lifespan: 0
   startingBlockDamage: 2
   startingPlayerDamage: 0
+  lifespan: 0
 --- !u!114 &-528667500983806878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 7489737379271426558}
   - component: {fileID: 7489737379271426559}
   - component: {fileID: 5471584888716597582}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}

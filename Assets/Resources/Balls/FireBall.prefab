@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6983654587031067263}
   - component: {fileID: 6983654587031067262}
   - component: {fileID: 8838550832482125642}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 6499981633101571827}
   - component: {fileID: 1114634023918868051}
   - component: {fileID: 6349480084720558005}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FireBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
