@@ -54,8 +54,8 @@ public class Ball : MonoBehaviour
 
     public void DestroyBall()
     {
-        AudioManager.PlaySound("PlasmaBallExplode", Random.Range(0.8f, 1.2f));
-        Instantiate(Resources.Load<GameObject>("Effects/PlasmaBallExplosion"), transform.position, Quaternion.identity);
+        AudioManager.PlaySound("BeachBallPop", Random.Range(0.8f, 1.2f));
+        Instantiate(Resources.Load<GameObject>("Effects/BeachBallPop"), transform.position, Quaternion.identity);
         Destroy(gameObject);
         goalManager.SpawnRandomBall();
         blockDamage = startingBlockDamage;
