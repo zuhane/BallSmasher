@@ -19,6 +19,10 @@ public class AttackOrb : MonoBehaviour
 
     [HideInInspector] public int lifeTimeCounter, lifeTimeLimit;
     [Range(1, 20)] public int distancefactor = 5;
+    [Range(0f, 5f)] public float speed;
+
+
+    private SpawnEcho spawnEcho;
 
     private float returningTimeStrength = 0.2f;
 
@@ -83,11 +87,11 @@ public class AttackOrb : MonoBehaviour
                 case FireState.Live:
                     anim.SetBool("Charging", false);
                     GetComponent<TrailRenderer>().enabled = true;
-                    transform.GetComponentInChildren<SpawnEcho>().enabled = true;
+                    if (spawnEcho != null) spawnEcho.enabled = true;
                     break;
                 case FireState.Returning:
                     anim.SetBool("Returning", true);
-                    transform.GetComponentInChildren<SpawnEcho>().enabled = false;
+                    if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
                     break;
@@ -118,7 +122,7 @@ public class AttackOrb : MonoBehaviour
         anim = transform.GetComponentInChildren<Animator>();
         smashEffect = Resources.Load<GameObject>("AttackEffect");
         playerPos = transform.parent.transform.position;
-
+        spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         SetDirection(thisFacingDirection);
     }
 
@@ -131,14 +135,14 @@ public class AttackOrb : MonoBehaviour
             if (lifeTimeCounter >= lifeTimeLimit)
                 fireState = FireState.Returning;
             else
-                transform.position += new Vector3(finalFlingDirection.normalized.x * 10, finalFlingDirection.normalized.y * 10) / 50;
+                transform.position += new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed);
         }
 
         if (fireState == FireState.Returning)
         {
             GetComponent<TrailRenderer>().time -= 0.08f;
 
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, transform.parent.transform.position.x, returningTimeStrength), Mathf.Lerp(transform.position.y, transform.parent.transform.position.y, returningTimeStrength));
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, transform.parent.transform.position.x, speed), Mathf.Lerp(transform.position.y, transform.parent.transform.position.y, speed));
 
             if (transform.position.x < transform.parent.transform.position.x + 0.01f && transform.position.x > transform.parent.transform.position.x - 0.01f &&
                 transform.position.y < transform.parent.transform.position.y + 0.01f && transform.position.y > transform.parent.transform.position.y - 0.01f)

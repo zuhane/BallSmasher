@@ -139,7 +139,10 @@ public class PhysicsObject : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            hitListLeft.Add(hitBufferLeft[i]);
+            if (hitListLeft[i].transform.gameObject.layer == 9)
+            {
+                hitListLeft.Add(hitBufferLeft[i]);
+            }
         }
 
         for (int i = 0; i < hitListLeft.Count; i++)
@@ -168,7 +171,7 @@ public class PhysicsObject : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 //if not a ball
-                if (hitBuffer[i].transform.gameObject.layer != 10)
+                if (hitBuffer[i].transform.gameObject.layer == 9)
                 {
                     hitBufferList.Add(hitBuffer[i]);
                 }

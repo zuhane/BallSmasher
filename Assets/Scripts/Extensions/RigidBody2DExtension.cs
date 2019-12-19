@@ -20,4 +20,5 @@ public static class RigidBody2DExtensions
     {
         rigid.velocity = new Vector2(rigid.velocity.x, rigid.velocity.y + y);
     }
+
 }

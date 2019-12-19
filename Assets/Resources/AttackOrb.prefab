@@ -349,7 +349,8 @@ MonoBehaviour:
   yOffset: 0
   lifeTimeCounter: 0
   lifeTimeLimit: 0
-  distancefactor: 5
+  distancefactor: 20
+  speed: 0.05
   chargeUpSound: {fileID: 0}
   chargedFullySound: {fileID: 0}
   attackReleaseSound: {fileID: 0}
@@ -386,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1598664100023110210
 Transform:
   m_ObjectHideFlags: 0
