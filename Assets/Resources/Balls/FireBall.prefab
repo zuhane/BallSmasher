@@ -367,6 +367,9 @@ MonoBehaviour:
   startingBlockDamage: 10
   startingPlayerDamage: 2
   lifespan: 10
+  explosionParticle: {fileID: 3478010183448093419, guid: fa51241c77fdb7b4082293a1b89f1168,
+    type: 3}
+  explodeNoise: {fileID: 0}
 --- !u!114 &6349480084720558005
 MonoBehaviour:
   m_ObjectHideFlags: 0

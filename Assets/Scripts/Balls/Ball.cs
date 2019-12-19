@@ -9,13 +9,15 @@ public class Ball : MonoBehaviour
     [Range(-10, 10)] public int playerDamage = 0;
     [Range(0, 10)] public int startingBlockDamage = 1;
     [Range(-10, 10)] public int startingPlayerDamage = 0;
+    [Range(1, 3)] public int goalPoints = 1;
 
-    [HideInInspector] private bool electrified;
+    [HideInInspector] public bool electrified;
     private GameObject electricBall;
 
-    private int health, lifespanTick;
+    private int health;
     public int lifespan = 0;
-
+    public GameObject explosionParticle;
+    public AudioClip explodeNoise;
     private GoalManager goalManager;
     private Timer lifeTimer;
     void Start()
@@ -30,11 +32,16 @@ public class Ball : MonoBehaviour
         {
             lifeTimer = Timer.CreateComponent(gameObject, lifespan);
         }
+
+        if (Random.Range(0, 10) == 1)
+        {
+            GetComponent<Rigidbody2D>().gravityScale *= -0.5f;
+        }
+
     }
 
     private void Update()
     {
-        lifespanTick++;
 
         if (maxHealth > 0 && health <= 0)
         {
@@ -54,8 +61,14 @@ public class Ball : MonoBehaviour
 
     public void DestroyBall()
     {
-        AudioManager.PlaySound("BeachBallPop", Random.Range(0.8f, 1.2f));
-        Instantiate(Resources.Load<GameObject>("Effects/BeachBallPop"), transform.position, Quaternion.identity);
+        if (explodeNoise != null)
+        {
+            AudioManager.PlaySound(explodeNoise);
+        }
+        if (explosionParticle != null)
+        {
+            Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
         goalManager.SpawnRandomBall();
         blockDamage = startingBlockDamage;
@@ -74,7 +87,7 @@ public class Ball : MonoBehaviour
 
     public void UnelectrifyBall()
     {
-        electrified = true;
+        electrified = false;
         blockDamage = startingBlockDamage;
         playerDamage = startingPlayerDamage;
         Destroy(electricBall);

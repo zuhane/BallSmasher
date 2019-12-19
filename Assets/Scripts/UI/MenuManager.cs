@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Linq;
-using Assets.Scripts;
 
 public class MenuManager : MonoBehaviour
 {
@@ -15,8 +14,11 @@ public class MenuManager : MonoBehaviour
     private BetterToggleGroup toggleGroup;
     private BetterToggleGroup playerPanelGroup;
     private BetterToggleGroup teamToggleGroup;
+    private BetterToggleGroup gameModeToggleGroup;
 
     private BetterToggleGroup player1Team, player2Team, player3Team, player4Team;
+
+    private GameObject GoalDropDown, TimeDropDown;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,14 @@ public class MenuManager : MonoBehaviour
         player2Team = GameObject.Find("Player2Team").GetComponent<BetterToggleGroup>();
         player3Team = GameObject.Find("Player3Team").GetComponent<BetterToggleGroup>();
         player4Team = GameObject.Find("Player4Team").GetComponent<BetterToggleGroup>();
+
+        gameModeToggleGroup = GameObject.Find("GameMode").GetComponent<BetterToggleGroup>();
+
+        GoalDropDown = GameObject.Find("GoalDropDown");
+        TimeDropDown = GameObject.Find("TimeDropDown");
+
+        GoalDropDown.SetActive(true);
+        TimeDropDown.SetActive(false);
 
     }
 
@@ -55,6 +65,25 @@ public class MenuManager : MonoBehaviour
         selectedLevelIndex = System.Array.IndexOf(toggleGroup.gameObject.transform.GetComponentsInChildren<Toggle>(), activeToggle) + 1;
     }
 
+    public void ChangeGameMode(Toggle activeToggle)
+    {
+        switch (activeToggle.name)
+        {
+            case "GameModeGoal":
+                GoalDropDown.SetActive(true);
+                TimeDropDown.SetActive(false);
+                break;
+            case "GameModeTime":
+                GoalDropDown.SetActive(false);
+                TimeDropDown.SetActive(true);
+                break;
+            default:
+                GoalDropDown.SetActive(true);
+                TimeDropDown.SetActive(false);
+                break;
+        }
+    }
+
     public void LoadLevelAutomated()
     {
         Debug.Log("player1Team: " + (player1Team.GetActiveIndex() + 1));
@@ -70,7 +99,21 @@ public class MenuManager : MonoBehaviour
         LevelData.playerCount = playerCount;
         LevelData.levelIndex = levelCount;
 
+        LevelData.gameMode = (GameMode)gameModeToggleGroup.GetActiveIndex();
+        switch (LevelData.gameMode)
+        {
+            case GameMode.Goals:
+                LevelData.GoalsToWin = GoalDropDown.GetComponent<Dropdown>().value;
+                break;
+            case GameMode.Time:
+                LevelData.MatchTime = LevelData.Times[TimeDropDown.GetComponent<Dropdown>().value];
+                break;
+        }
+
+
         SceneManager.LoadScene("Level" + selectedLevelIndex);
+
+
     }
 
     public void LoadLevelManual(string levelName)

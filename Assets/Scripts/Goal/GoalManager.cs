@@ -11,14 +11,8 @@ public class GoalManager : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] clips;
 
-    private string[] balls = {
-            //"Ball"
-            /*,*/"FireBall"
-            ,"BeachBall"
-            //,"HealBall"
-            //,"PlasmaBall"
-    };
-
+    private GameObject[] balls;
+    private GameOver gameOverScreen;
 
     private void Start()
     {
@@ -28,29 +22,34 @@ public class GoalManager : MonoBehaviour
         spawners.AddRange(GameObject.FindGameObjectsWithTag("Spawner"));
         players.AddRange(GameObject.FindGameObjectsWithTag("Player"));
 
+        balls = Resources.LoadAll<GameObject>("Balls");
+
+        gameOverScreen = GameObject.Find("GameOver").GetComponent<GameOver>();
+
         SpawnRandomBall();
     }
 
-    public void ScoreGoal(int team)
+    public void ScoreGoal(int team, int points = 1)
     {
-        ScoreKeeper.instance.UpdateScore(team);
+        ScoreKeeper.instance.UpdateScore(team, points);
 
         audioSource.clip = clips[Random.Range(0, clips.GetLength(0))];
         audioSource.Play();
 
-        SpawnRandomBall();
+        if (!gameOverScreen.CheckScoreCount())
+        {
+            SpawnRandomBall();
+        }
     }
 
-    public void SpawnBall(int numBalls = 1, string BallType = "Ball")
+    public void SpawnBall(GameObject ball, int numBalls = 1)
     {
         Vector3 spawnPos = Vector3.zero;
         spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
 
         for (int i = 0; i < numBalls; i++)
         {
-            GameObject Ball = new GameObject();
-            Ball = Resources.Load<GameObject>("Balls/" + BallType);
-            Instantiate(Ball, spawnPos, Quaternion.identity);
+            Instantiate(ball, spawnPos, Quaternion.identity);
         }
 
         camera.GetComponent<SmashBrosCamera>().SetTargets();
@@ -58,6 +57,6 @@ public class GoalManager : MonoBehaviour
 
     public void SpawnRandomBall()
     {
-        SpawnBall(BallType: balls[Random.Range(0, balls.Length)]);
+        SpawnBall(balls[Random.Range(0, balls.Length)]);
     }
 }

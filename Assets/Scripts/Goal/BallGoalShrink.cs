@@ -35,7 +35,7 @@ public class BallGoalShrink : MonoBehaviour
             {
                 Destroy(gameObject);
                 Instantiate(Resources.Load<GameObject>("Effects/GoalScore"), transform.position, Quaternion.identity);
-                GameObject.Find("GoalManager").GetComponent<GoalManager>().ScoreGoal(team);
+                GameObject.Find("GoalManager").GetComponent<GoalManager>().ScoreGoal(team, gameObject.GetComponent<Ball>().goalPoints);
             }
         }
     }

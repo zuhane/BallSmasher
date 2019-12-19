@@ -9,7 +9,7 @@ public class ScoreKeeper : MonoBehaviour
 
     private Text text;
 
-    private int team1Score, team2Score;
+    [HideInInspector] public int team1Score, team2Score;
     string scoreBoard;
     private void Awake()
     {
@@ -23,10 +23,10 @@ public class ScoreKeeper : MonoBehaviour
         scoreBoard = "{0} : {1}";
     }
 
-    public void UpdateScore(int team)
+    public void UpdateScore(int team, int points = 1)
     {
-        if (team == 1) team2Score++;
-        if (team == 2) team1Score++;
+        if (team == 1) team2Score+= points;
+        if (team == 2) team1Score+= points;
         
         text.text = string.Format(scoreBoard, team1Score, team2Score);
     }

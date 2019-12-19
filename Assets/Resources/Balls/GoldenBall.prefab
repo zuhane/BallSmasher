@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 7489737378105079964}
   - component: {fileID: 150789164}
   - component: {fileID: 150789167}
-  - component: {fileID: 3186911579551985003}
-  - component: {fileID: 2954871941718737582}
-  m_Layer: 10
-  m_Name: PlasmaBall
+  - component: {fileID: -528667500983806878}
+  - component: {fileID: 2851781508582994896}
+  m_Layer: 0
+  m_Name: GoldenBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7489737378105079963}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.21, y: 1.02, z: 0.1664226}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalPosition: {x: 1.633, y: 0.802, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 7489737379271426558}
   m_Father: {fileID: 0}
@@ -52,8 +52,8 @@ Rigidbody2D:
   m_Mass: 0.175
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 0
-  m_Material: {fileID: 6200000, guid: ee7a13b6b4b7b7f4fbb575852f629ec6, type: 2}
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 2dea6fb8dc627214f86648c0e83d0384, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -67,7 +67,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 7489737378105079963}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2dea6fb8dc627214f86648c0e83d0384, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -182,28 +182,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9103cf5cfcc399c48b5cb5a9e6a03ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockDamage: 10
+  blockDamage: 1
   maxHealth: 0
-  playerDamage: 10
-  startingBlockDamage: 10
-  startingPlayerDamage: 10
+  playerDamage: 0
+  startingBlockDamage: 2
+  startingPlayerDamage: 0
+  goalPoints: 1
+  electrified: 0
   lifespan: 0
   explosionParticle: {fileID: 3478010183448093419, guid: fa51241c77fdb7b4082293a1b89f1168,
     type: 3}
-  explodeNoise: {fileID: 8300000, guid: 419c710c35021a348af533d9ef910f9a, type: 3}
---- !u!114 &3186911579551985003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7489737378105079963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e57be1bf104d1a4bbc8e965c637fa1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2954871941718737582
+  explodeNoise: {fileID: 0}
+--- !u!114 &-528667500983806878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,6 +205,108 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9987de62c88149b409910cb8f8b03e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2851781508582994896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7489737378105079963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a89e60b57c4734197019ffa1215b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bronzeBall: {fileID: 21300000, guid: c23f5919077ae2e4397dd69d8b52ccbf, type: 3}
+  bronzeGradient:
+    serializedVersion: 2
+    key0: {r: 0.7019608, g: 0.44705886, b: 0.17254902, a: 1}
+    key1: {r: 0.5294118, g: 0.3137255, b: 0.08627451, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 35081
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  silverBall: {fileID: 21300000, guid: 9028e90d040941e49b182c4553566e8e, type: 3}
+  silverGradient:
+    serializedVersion: 2
+    key0: {r: 0.8470589, g: 0.8862746, b: 0.91372555, a: 1}
+    key1: {r: 0.6509804, g: 0.6784314, b: 0.69803923, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 35081
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  goldenBall: {fileID: 21300000, guid: afbb46a8f6ec48b4a82c12571e62a851, type: 3}
+  goldenGradient:
+    serializedVersion: 2
+    key0: {r: 0.8313726, g: 0.6862745, b: 0.21568629, a: 1}
+    key1: {r: 0.94117653, g: 0.78823537, b: 0.07058824, a: 0}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 35273
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
 --- !u!1 &7489737379271426557
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,8 +317,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7489737379271426558}
   - component: {fileID: 7489737379271426559}
-  - component: {fileID: 8983108237225396977}
-  m_Layer: 10
+  - component: {fileID: 5471584888716597582}
+  m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +378,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f5dedcd900cd566418894ffe2361a436, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c23f5919077ae2e4397dd69d8b52ccbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -297,7 +389,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!96 &8983108237225396977
+--- !u!96 &5471584888716597582
 TrailRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
@@ -337,10 +429,10 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 1.2
+  m_Time: 0.4
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.7
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -358,32 +450,32 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 0, g: 0.7765689, b: 1, a: 0}
-      key2: {r: 1, g: 1, b: 1, a: 0}
-      key3: {r: 0, g: 0.8239019, b: 1, a: 0}
-      key4: {r: 1, g: 1, b: 1, a: 0}
-      key5: {r: 0, g: 0.885386, b: 1, a: 0}
-      key6: {r: 1, g: 1, b: 1, a: 0}
-      key7: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 0.7019608, g: 0.44705886, b: 0.17254902, a: 1}
+      key1: {r: 0.5294118, g: 0.3137255, b: 0.08627451, a: 0}
+      key2: {r: 1, g: 0.21484128, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 10409
-      ctime2: 19468
-      ctime3: 31611
-      ctime4: 42598
-      ctime5: 54163
-      ctime6: 65535
-      ctime7: 65535
+      ctime1: 35081
+      ctime2: 36430
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 65535
-      atime3: 65535
+      atime2: 0
+      atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 7
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0

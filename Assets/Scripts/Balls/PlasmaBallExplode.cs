@@ -17,11 +17,7 @@ public class PlasmaBallExplode : MonoBehaviour
     {
         if (rigid.velocity.magnitude > 40)
         {
-            AudioManager.PlaySound("PlasmaBallExplode", Random.Range(0.8f, 1.2f));
-            Instantiate(Resources.Load<GameObject>("Effects/PlasmaBallExplosion"), transform.position, Quaternion.identity);
-            Destroy(gameObject);
-
-            GameObject.Find("GoalManager").GetComponent<GoalManager>().SpawnBall(3);
+            gameObject.GetComponent<Ball>().DestroyBall();
         }
     }
 }
