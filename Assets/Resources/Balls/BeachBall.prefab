@@ -187,9 +187,12 @@ MonoBehaviour:
   playerDamage: 0
   startingBlockDamage: 1
   startingPlayerDamage: 0
+  goalPoints: 1
+  electrified: 0
   lifespan: 0
-  explosionParticle: {fileID: 0}
-  explodeNoise: {fileID: 0}
+  explosionParticle: {fileID: 2256027101055837489, guid: bea3b9be1378b9f499af136d5f9a88ed,
+    type: 3}
+  explodeNoise: {fileID: 8300000, guid: 0f3fa5845b0fad94aaef434d6333d41f, type: 3}
 --- !u!114 &-8108177899108508469
 MonoBehaviour:
   m_ObjectHideFlags: 0

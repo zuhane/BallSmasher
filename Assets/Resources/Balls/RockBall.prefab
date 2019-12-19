@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 150789167}
   - component: {fileID: -528667500983806878}
   - component: {fileID: 7370447989847414190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RockBall
   m_TagString: Bouncy
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 7489737379271426558}
   - component: {fileID: 7489737379271426559}
   - component: {fileID: 5471584888716597582}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
