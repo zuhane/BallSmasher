@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackBallPop : MonoBehaviour
+public class BeachBallPop : MonoBehaviour
 {
     Ball ball;
     // Start is called before the first frame update

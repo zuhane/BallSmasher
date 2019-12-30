@@ -7,7 +7,7 @@ public class AttackOrb : MonoBehaviour
 {
 
     private float rotateFrequency = 60f;
-
+    [Range(1f, 10f)] public float strikeForce = 5f;
     [HideInInspector] public FacingDirection thisFacingDirection;
 
     [HideInInspector] public bool attacking;
@@ -264,8 +264,9 @@ public class AttackOrb : MonoBehaviour
                     }
                 }
 
-                rigidBody.addX(finalFlingDirection.x);
-                rigidBody.addY(finalFlingDirection.y);
+                rigidBody.AddForce(new Vector2(finalFlingDirection.x, finalFlingDirection.y) * strikeForce);
+                //rigidBody.addX(finalFlingDirection.x);
+                //rigidBody.addY(finalFlingDirection.y);
 
                 StatsRPG stats = collision.gameObject.GetComponent<StatsRPG>();
 

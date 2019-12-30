@@ -8,6 +8,8 @@ public class PhysicsObject : MonoBehaviour
     [SerializeField] [Range(0, 1)] protected float velocityXDecayGrounded = 0.87f;
     [SerializeField] [Range(0, 1)] protected float velocityXDecayAerial = 0.97f;
 
+    public bool enabled = true;
+
     protected BoxCollider2D boxCollider;
 
     //Collision data
@@ -51,21 +53,23 @@ public class PhysicsObject : MonoBehaviour
     void Update()
     {
         //targetVelocity = Vector2.zero;
-
-        ComputeVelocity();
-
-        if (!intent_moveLeft && !intent_moveRight)
+        if (enabled)
         {
-            if (brushingFeet) targetVelocity.x *= velocityXDecayGrounded;
-            else targetVelocity.x *= velocityXDecayAerial;
+            ComputeVelocity();
+
+            if (!intent_moveLeft && !intent_moveRight)
+            {
+                if (brushingFeet) targetVelocity.x *= velocityXDecayGrounded;
+                else targetVelocity.x *= velocityXDecayAerial;
+            }
+
+            if (targetVelocity.x > topSpeedX) targetVelocity.x = topSpeedX;
+            if (targetVelocity.x < -topSpeedX) targetVelocity.x = -topSpeedX;
+            if (targetVelocity.y > topSpeedY) targetVelocity.y = topSpeedY;
+            if (targetVelocity.y < -topSpeedY) targetVelocity.y = -topSpeedY;
+
+            DebugContacts();
         }
-
-        if (targetVelocity.x > topSpeedX) targetVelocity.x = topSpeedX;
-        if (targetVelocity.x < -topSpeedX) targetVelocity.x = -topSpeedX;
-        if (targetVelocity.y > topSpeedY) targetVelocity.y = topSpeedY;
-        if (targetVelocity.y < -topSpeedY) targetVelocity.y = -topSpeedY;
-
-        DebugContacts();
     }
 
     private void DebugContacts()

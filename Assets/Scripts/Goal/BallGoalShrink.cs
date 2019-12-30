@@ -14,8 +14,8 @@ public class BallGoalShrink : MonoBehaviour
     {
         this.team = team;
         this.goalCentre = goalCentre;
-        Destroy(GetComponent<Rigidbody2D>());
-        Destroy(GetComponent<CircleCollider2D>());
+        GetComponent<Rigidbody2D>().simulated = false;
+        GetComponent<CircleCollider2D>().enabled = false;
         startShrinking = true;
         originalPos = transform.position;
     }
