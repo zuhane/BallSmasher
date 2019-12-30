@@ -46,7 +46,7 @@ class Timer : MonoBehaviour
     /// </summary>
     /// <param name="seconds"></param>
     /// <returns></returns>
-    public bool SecondsPassed(int seconds)
+    public bool SecondsPassed(float seconds)
     {
         if (timercount >= seconds)
         {

@@ -42,21 +42,23 @@ public class GoalManager : MonoBehaviour
         }
     }
 
-    public void SpawnBall(GameObject ball, int numBalls = 1)
+    public void SpawnBall(GameObject ball, int numBalls = 1, Vector3? spawnPos = null)
     {
-        Vector3 spawnPos = Vector3.zero;
-        spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
+        if (spawnPos == null)
+        {
+            spawnPos = spawners[(Random.Range(0, spawners.Count))].transform.position;
+        }
 
         for (int i = 0; i < numBalls; i++)
         {
-            Instantiate(ball, spawnPos, Quaternion.identity);
+            Instantiate(ball, spawnPos.GetValueOrDefault(), Quaternion.identity);
         }
 
         camera.GetComponent<SmashBrosCamera>().SetTargets();
     }
 
-    public void SpawnRandomBall()
+    public void SpawnRandomBall(Vector3? spawnPos = null)
     {
-        SpawnBall(balls[Random.Range(0, balls.Length)]);
+        SpawnBall(balls[Random.Range(0, balls.Length)], spawnPos: spawnPos);
     }
 }
