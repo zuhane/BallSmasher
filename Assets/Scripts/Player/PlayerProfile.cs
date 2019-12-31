@@ -8,11 +8,11 @@ public class PlayerProfile : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     //[HideInInspector] public Color colour;
 
-    private PlayerManager playerManager;
+    private InputToIntent playerManager;
 
     private void Start()
     {
-        playerManager = GetComponent<PlayerManager>();
+        playerManager = GetComponent<InputToIntent>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         SpriteRenderer ballRenderer = transform.Find("AttackOrb").GetComponentInChildren<SpriteRenderer>();
 

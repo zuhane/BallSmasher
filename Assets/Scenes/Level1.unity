@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 232937968}
   - component: {fileID: 232937967}
   - component: {fileID: 232937966}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GoalBoundsP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14337,14 +14337,13 @@ MonoBehaviour:
   topSpeedY: 5
   velocityXDecayGrounded: 0.87
   velocityXDecayAerial: 0.97
+  enabled: 1
   brushingHead: 0
   brushingFeet: 0
   brushingLeft: 0
   brushingRight: 0
   pushingLeft: 0
   pushingRight: 0
-  intent_moveLeft: 0
-  intent_moveRight: 0
   minGroundNormalY: 0.65
   minSideNormalX: 0.65
   gravityModifier: 2
@@ -18204,7 +18203,7 @@ GameObject:
   - component: {fileID: 1979336965}
   - component: {fileID: 1979336964}
   - component: {fileID: 1979336963}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: GoalBoundsP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

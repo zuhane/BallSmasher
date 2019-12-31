@@ -8,13 +8,13 @@ public class HUDBoxPlayerTracker : MonoBehaviour
 {
     [HideInInspector] public GameObject player;
     private StatsRPG playerStats;
-    private PlayerManager playerManager;
+    private InputToIntent playerManager;
     private PlayerProfile playerProfile;
 
     private void Start()
     {
         playerStats = player.GetComponent<StatsRPG>();
-        playerManager = player.GetComponent<PlayerManager>();
+        playerManager = player.GetComponent<InputToIntent>();
         playerProfile = player.GetComponent<PlayerProfile>();
         //Debug.Log($"player colour {playerProfile.colour}");
         transform.GetComponent<Image>().material = player.GetComponentInChildren<SpriteRenderer>().material;

@@ -17,7 +17,7 @@ public class PhysicsObject : MonoBehaviour
     private bool touchingAtLeastOneleft, touchingAtLeastOneRight;
 
     //TEMPORARY
-    [HideInInspector] public bool intent_moveLeft, intent_moveRight;
+    [HideInInspector] protected bool movingLeft, movingRight;
 
     [HideInInspector] public float minGroundNormalY = 0.65f, minSideNormalX = 0.65f;
     [Range(0, 10)] public float gravityModifier = 0.1f;
@@ -57,7 +57,7 @@ public class PhysicsObject : MonoBehaviour
         {
             ComputeVelocity();
 
-            if (!intent_moveLeft && !intent_moveRight)
+            if (!movingLeft && !movingRight)
             {
                 if (brushingFeet) targetVelocity.x *= velocityXDecayGrounded;
                 else targetVelocity.x *= velocityXDecayAerial;
@@ -205,7 +205,7 @@ public class PhysicsObject : MonoBehaviour
                 {
                     touchingAtLeastOneleft = true;
 
-                    if (intent_moveLeft)
+                    if (movingLeft)
                     {
                         pushingLeft = true;
                     }
@@ -221,7 +221,7 @@ public class PhysicsObject : MonoBehaviour
                 {
                     touchingAtLeastOneRight = true;
 
-                    if (intent_moveRight)
+                    if (movingRight)
                     {
                         pushingRight = true;
                     }

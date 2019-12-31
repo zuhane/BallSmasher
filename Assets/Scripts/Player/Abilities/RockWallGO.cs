@@ -5,24 +5,22 @@ using UnityEngine;
 public class RockWallGO : MonoBehaviour
 {
     private SmashBrick smashBrick;
-    private int currentTick;
-    private int ticksBetweenDamage = 30;
+    private float timeTick = 0.4f;
+
+    private Timer timer;
 
     void Start()
     {
         smashBrick = GetComponent<SmashBrick>();
+        timer = Timer.CreateComponent(gameObject);
     }
 
     // Update is called once per frame
     void Update()
     {
-        currentTick++;
-
-        if (currentTick >= ticksBetweenDamage)
+        if (timer.SecondsPassed(timeTick))
         {
-            currentTick = 0;
             smashBrick.Damage(1);
         }
-
     }
 }

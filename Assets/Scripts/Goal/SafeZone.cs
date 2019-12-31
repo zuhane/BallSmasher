@@ -19,14 +19,16 @@ public class SafeZone : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+
+        GameObject goCollisionRoot = collision.transform.root.gameObject;
+        if (goCollisionRoot.tag == "Player")
         {
-            PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
+            InputToIntent player = goCollisionRoot.GetComponent<InputToIntent>();
             int playerTeam = player.team;
 
             if (playerTeam != team)
             {
-                collision.gameObject.GetComponent<StatsRPG>().TakeDamage(1);
+                goCollisionRoot.GetComponent<StatsRPG>().TakeDamage(1);
             }
 
         }

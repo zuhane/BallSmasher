@@ -14,13 +14,13 @@ public enum FacingDirection
     Anticlockwise
 }
 
-[RequireComponent(typeof(Movement))]
-[RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(IntentToAction))]
+[RequireComponent(typeof(InputToIntent))]
 public class StrikeAttack : MonoBehaviour
 {
-    Movement movement;
+    IntentToAction intentToAction;
     //GameObject spinStrike, normalStrike;
-    PlayerManager playerManager;
+    InputToIntent playerManager;
     StatsRPG rpgStats;
     AttackOrb attackOrb;
 
@@ -46,8 +46,8 @@ public class StrikeAttack : MonoBehaviour
 
         //normalStrike = Resources.Load<GameObject>("NormalStrikeBox");
 
-        movement = GetComponent<Movement>();
-        playerManager = GetComponent<PlayerManager>();
+        intentToAction = GetComponent<IntentToAction>();
+        playerManager = GetComponent<InputToIntent>();
         channelSound = attackOrb.GetComponentInChildren<AudioSource>();
 
     }
@@ -61,7 +61,7 @@ public class StrikeAttack : MonoBehaviour
 
     private void OrbChargeSetup()
     {
-        if (movement.intent.attack)
+        if (intentToAction.intent.attack)
         {
             charge += Time.deltaTime;
 
@@ -75,12 +75,12 @@ public class StrikeAttack : MonoBehaviour
                 channelSound.PlayOnce(attackOrb.chargeUpSound);
 
                 strikeDirection =
-                          (movement.intent.holdLeft ? FacingDirection.Left :
-                          (movement.intent.holdRight ? FacingDirection.Right :
-                          (movement.intent.holdDown ? FacingDirection.Down :
-                          (movement.intent.holdUp ? FacingDirection.Up :
-                          movement.intent.holdClockwiseAttack ? FacingDirection.Clockwise :
-                          movement.intent.holdAnticlockwiseAttack ? FacingDirection.Anticlockwise :
+                          (intentToAction.intent.holdLeft ? FacingDirection.Left :
+                          (intentToAction.intent.holdRight ? FacingDirection.Right :
+                          (intentToAction.intent.holdDown ? FacingDirection.Down :
+                          (intentToAction.intent.holdUp ? FacingDirection.Up :
+                          intentToAction.intent.holdClockwiseAttack ? FacingDirection.Clockwise :
+                          intentToAction.intent.holdAnticlockwiseAttack ? FacingDirection.Anticlockwise :
                           FacingDirection.None))));
 
                 attackOrb.SetDirection(strikeDirection);
@@ -108,10 +108,10 @@ public class StrikeAttack : MonoBehaviour
 
         if (strikeDirection != FacingDirection.None)
         {
-            if (movement.intent.release)
+            if (intentToAction.intent.release)
             {
                 releaseDetected = true;
-                if (strikeDirection == FacingDirection.Down && movement.brushingFeet)
+                if (strikeDirection == FacingDirection.Down && intentToAction.state.brushingFeet)
                     attackOrb.SetDirection(FacingDirection.DownOut);
             }
 

@@ -21,7 +21,7 @@ public class HUDManager : MonoBehaviour
         {
             GameObject playerHUD = Resources.Load<GameObject>("PlayerHUDBox");
             playerHUD.GetComponent<HUDBoxPlayerTracker>().player = playerSpawnManager.GetPlayer(i);
-            if (playerSpawnManager.GetPlayer(i).GetComponent<PlayerManager>().team == 1)
+            if (playerSpawnManager.GetPlayer(i).GetComponent<InputToIntent>().team == 1)
             {
                 Instantiate(playerHUD, playerHUDContainer.transform);
             }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathZone : MonoBehaviour
+public class GoalHole : MonoBehaviour
 {
     public int team = 1;
     private AudioSource audioSource;

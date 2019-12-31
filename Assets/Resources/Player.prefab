@@ -78,7 +78,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 2430776022666849403}
   playerRenderer: {fileID: 2430776022666849405}
-  movement: {fileID: 2430776021576682865}
   playerNumber: 1
   team: 1
   controllerType: 1
@@ -94,18 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4242e1fa815538944bd1cae344caab48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moving: 0
-  ascending: 0
-  descending: 0
-  crouching: 0
-  wallSliding: 0
-  currJump: 0
   playerPhysics: {fileID: 0}
-  facingLeft: 0
-  brushingFeet: 0
-  brushingHead: 0
-  brushingLeft: 0
-  brushingRight: 0
 --- !u!114 &2430776021576682864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilityObjects:
   - {fileID: 11400000, guid: 3101264f535074f45aa7f86601337985, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0016d2a27968c7340a7c5908639f1a1d, type: 2}
+  - {fileID: 11400000, guid: 0016d2a27968c7340a7c5908639f1a1d, type: 2}
 --- !u!114 &6290798691834981924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,14 +217,13 @@ MonoBehaviour:
   topSpeedY: 0
   velocityXDecayGrounded: 0.92
   velocityXDecayAerial: 0.98
+  enabled: 1
   brushingHead: 0
   brushingFeet: 1
   brushingLeft: 0
   brushingRight: 0
   pushingLeft: 0
   pushingRight: 0
-  intent_moveLeft: 0
-  intent_moveRight: 0
   minGroundNormalY: 0.65
   minSideNormalX: 0.65
   gravityModifier: 1.4
@@ -266,6 +253,7 @@ GameObject:
   - component: {fileID: 2430776022666849405}
   - component: {fileID: 2430776022666849403}
   - component: {fileID: 775608751915950247}
+  - component: {fileID: 6718127730266411542}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -452,6 +440,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6718127730266411542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430776022666849406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb095f9f4fb25af4eace04a5bf424e7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3189550605956422025
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +661,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AttackOrb
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: speed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: distancefactor
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7e04daea270274480cd156167d57b0, type: 3}

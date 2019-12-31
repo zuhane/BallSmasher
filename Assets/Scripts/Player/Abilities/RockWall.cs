@@ -13,7 +13,7 @@ public class RockWall : BaseAbility
 
         GameObject RockWall = Resources.Load<GameObject>("Rock Wall");
 
-        if (player.GetComponent<Movement>().facingLeft) RockWall = Instantiate(RockWall, player.transform.position + new Vector3(-1, 0), Quaternion.identity);
+        if (player.GetComponent<IntentToAction>().state.facingLeft) RockWall = Instantiate(RockWall, player.transform.position + new Vector3(-1, 0), Quaternion.identity);
         else
             RockWall = Instantiate(RockWall, player.transform.position + new Vector3(1, 0), Quaternion.identity);
 

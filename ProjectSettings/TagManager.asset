@@ -21,8 +21,8 @@ TagManager:
   - Ball
   - HitsBallsOnly
   - Player
-  - 
-  - 
+  - SafeZone
+  - AttackOrb
   - 
   - 
   - 

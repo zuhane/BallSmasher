@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(IntentToAction))]
 public class PlayerPhysicsMovement : PhysicsObject
 {
     //Animator stuff
@@ -12,6 +14,11 @@ public class PlayerPhysicsMovement : PhysicsObject
     [HideInInspector] public bool crouching;
     [HideInInspector] public bool wallSliding;
     [HideInInspector] public bool sliding;
+
+
+    public IntentToAction.Intent intent;
+    //TODO:
+    public IntentToAction.State state;
 
     //Modifiable
     [SerializeField] [Range(0, 10)] private int maxJumps = 2;
@@ -25,6 +32,8 @@ public class PlayerPhysicsMovement : PhysicsObject
         targetVelocity = inVelocity;
     }
 
+
+
     protected override void ComputeVelocity()
     {
         if (brushingFeet || brushingLeft || brushingRight)
@@ -32,28 +41,28 @@ public class PlayerPhysicsMovement : PhysicsObject
             currJump = 0;
         }
 
-        intent_moveLeft = false;
-        intent_moveRight = false;
+        movingLeft = false;
+        movingRight = false;
 
         if (!crouching)
         {
-            if (Input.GetKey(KeyCode.A))
+            if (intent.left)
             {
                 targetVelocity.x -= acceleration;
-                intent_moveLeft = true;
+                movingLeft = true;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (intent.right)
             {
                 targetVelocity.x += acceleration;
-                intent_moveRight = true;
+                movingRight = true;
             }
         }
 
-        if (Input.GetKey(KeyCode.S) && brushingFeet) crouching = true; else crouching = false;
+        if (intent.crouch && brushingFeet) crouching = true; else crouching = false;
 
         if ((pushingLeft || pushingRight) && aerial) wallSliding = true; else wallSliding = false;
 
-        if ((intent_moveLeft && !brushingLeft) || (intent_moveRight && !brushingRight) && brushingFeet)
+        if ((movingLeft && !brushingLeft) || (movingRight && !brushingRight) && brushingFeet)
         {
             running = true;
         }
@@ -79,23 +88,23 @@ public class PlayerPhysicsMovement : PhysicsObject
             aerial = false;
         }
 
-        if (Input.GetButtonDown("JumpP1") && currJump < maxJumps)
+        if (intent.jump && currJump < maxJumps)
         {
             velocity.y = jumpTakeOffSpeed;
 
             //Wall jumping
             if (brushingLeft && !brushingFeet && !pushingLeft)
             {
-                intent_moveRight = true;
+                movingRight = true;
                 targetVelocity.x += jumpTakeOffSpeed;
             }
             if (brushingRight && !brushingFeet && !pushingRight)
             {
-                intent_moveLeft = true;
+                movingLeft = true;
                 targetVelocity.x -= jumpTakeOffSpeed;
             }
         }
-        else if (Input.GetButtonUp("JumpP1"))
+        else if (intent.releaseJump)
         {
             currJump++;
             if (velocity.y > 0)
@@ -104,8 +113,8 @@ public class PlayerPhysicsMovement : PhysicsObject
             }
         }
 
-        if (intent_moveLeft) facingLeft = true;
-        if (intent_moveRight) facingLeft = false;
+        if (movingLeft) facingLeft = true;
+        if (movingRight) facingLeft = false;
 
     }
 

@@ -16,6 +16,6 @@ MonoBehaviour:
   fileName: Dash
   description: Horse shit
   cooldown: 0
-  cooldownLimit: 0
+  cooldownLimit: 1
   shardCost: 0
   icon: {fileID: 21300000, guid: cc3bd32c344c95b40bf998065d310e9e, type: 3}

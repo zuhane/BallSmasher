@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Movement))]
-public class PlayerManager : MonoBehaviour
+[RequireComponent(typeof(IntentToAction))]
+public class InputToIntent : MonoBehaviour
 { 
 
     public Animator animator;
     public SpriteRenderer playerRenderer;
-    [SerializeField] private Movement movement;
+    private IntentToAction intentToAction;
     [HideInInspector] public int playerNumber = 1;
     [HideInInspector] public int team = 1;
 
@@ -28,9 +28,9 @@ public class PlayerManager : MonoBehaviour
 
     void Start()
     {
-        
+
         //playerControls.Gameplay.Enable();
-        
+        intentToAction = GetComponent<IntentToAction>();
 
     }
 
@@ -43,9 +43,9 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
 
-        Movement.Intent prevIntent = movement.intent;
+        IntentToAction.Intent prevIntent = intentToAction.intent;
 
-        movement.intent = new Movement.Intent();
+        intentToAction.intent = new IntentToAction.Intent();
 
         //if (playerControls.Gameplay.Move.ReadValue<Vector2>().x > 0)
         //{
@@ -58,76 +58,83 @@ public class PlayerManager : MonoBehaviour
 
         
         if (Input.GetAxis("HorizontalP" + (int)controllerType) < 0)
-            movement.intent.left = true;
+            intentToAction.intent.left = true;
         if (Input.GetAxis("HorizontalP" + (int)controllerType) > 0)
-            movement.intent.right = true;
+            intentToAction.intent.right = true;
 
 
         if (Input.GetButtonDown("JumpP" + (int)controllerType))
-            movement.intent.jump = true;
+        {
+            intentToAction.intent.jump = true;
+        }
+        if (Input.GetButtonUp("JumpP" + (int)controllerType))
+        {
+            intentToAction.intent.releaseJump = true;
+        }
+
         if (Input.GetAxis("VerticalP" + (int)controllerType) < 0)
-            movement.intent.crouch = true;
+            intentToAction.intent.crouch = true;
 
         if (Input.GetButtonDown("Ability1P" + (int)controllerType))
-            movement.intent.useAbility1 = true;
+            intentToAction.intent.useAbility1 = true;
         if (Input.GetButtonDown("Ability2P" + (int)controllerType))
-            movement.intent.useAbility2 = true;
+            intentToAction.intent.useAbility2 = true;
         if (Input.GetButtonDown("Ability3P" + (int)controllerType))
-            movement.intent.useAbility3 = true;
+            intentToAction.intent.useAbility3 = true;
 
 
         if (Input.GetButton("ClockwiseHitP" + (int)controllerType))
         {
-            movement.intent.holdClockwiseAttack = movement.intent.attack = true;
+            intentToAction.intent.holdClockwiseAttack = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdClockwiseAttack)
         {
-            movement.intent.releaseClockwiseAttack = movement.intent.release = true;
+            intentToAction.intent.releaseClockwiseAttack = intentToAction.intent.release = true;
         }
 
         if (Input.GetButton("AntiClockwiseHitP" + (int)controllerType))
         {
-            movement.intent.holdAnticlockwiseAttack = movement.intent.attack = true;
+            intentToAction.intent.holdAnticlockwiseAttack = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdAnticlockwiseAttack)
         {
-            movement.intent.releaseAnticlockwiseAttack = movement.intent.release = true;
+            intentToAction.intent.releaseAnticlockwiseAttack = intentToAction.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) < 0)
         {
-            movement.intent.holdLeft = movement.intent.attack = true;
+            intentToAction.intent.holdLeft = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdLeft)
         {
-            movement.intent.releaseLeft = movement.intent.release = true;
+            intentToAction.intent.releaseLeft = intentToAction.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeHorizontal" + (int)controllerType) > 0)
         {
-            movement.intent.holdRight = movement.intent.attack = true;
+            intentToAction.intent.holdRight = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdRight)
         {
-            movement.intent.releaseRight = movement.intent.release = true;
+            intentToAction.intent.releaseRight = intentToAction.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) < 0)
         {
-            movement.intent.holdDown = movement.intent.attack = true;
+            intentToAction.intent.holdDown = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdDown)
         {
-            movement.intent.releaseDown = movement.intent.release = true;
+            intentToAction.intent.releaseDown = intentToAction.intent.release = true;
         }
 
         if (Input.GetAxisRaw("StrikeVertical" + (int)controllerType) > 0)
         {
-            movement.intent.holdUp = movement.intent.attack = true;
+            intentToAction.intent.holdUp = intentToAction.intent.attack = true;
         }
         else if (prevIntent.holdUp)
         {
-            movement.intent.releaseUp = movement.intent.release = true;
+            intentToAction.intent.releaseUp = intentToAction.intent.release = true;
         }
         
     }
@@ -135,18 +142,18 @@ public class PlayerManager : MonoBehaviour
     private void LateUpdate()
     {
 
-        animator.SetBool("Descending", movement.descending);
-        animator.SetBool("Ascending", movement.ascending);
-        animator.SetBool("IsRunning", movement.moving);
-        animator.SetInteger("JumpCount", movement.currJump);
-        animator.SetBool("Crouching", movement.crouching);
-        animator.SetBool("WallSliding", movement.wallSliding);
+        //animator.SetBool("Descending", movement.descending);
+        //animator.SetBool("Ascending", movement.ascending);
+        //animator.SetBool("IsRunning", movement.moving);
+        //animator.SetInteger("JumpCount", movement.currJump);
+        //animator.SetBool("Crouching", movement.crouching);
+        //animator.SetBool("WallSliding", movement.wallSliding);
 
     }
 
     private void OnJump()
     {
         Debug.Log("Growing " + playerNumber);
-        movement.intent.jump = true;
+        intentToAction.intent.jump = true;
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(IntentToAction))]
 public class FollowPlayer : MonoBehaviour
 {
 
     private Transform playerPos;
-    [SerializeField] private Movement movement;
+    [SerializeField] private IntentToAction movement;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.intent = new Movement.Intent();
+        movement.intent = new IntentToAction.Intent();
 
         if (playerPos != null)
         {

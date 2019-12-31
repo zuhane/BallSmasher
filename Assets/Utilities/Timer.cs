@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-class Timer : MonoBehaviour
+public class Timer : MonoBehaviour
 {
     int secondLimit;
     private float timercount;
@@ -39,6 +39,11 @@ class Timer : MonoBehaviour
     void Update()
     {
         timercount += Time.deltaTime;
+    }
+
+    public void Reset()
+    {
+        timercount = 0;
     }
 
     /// <summary>

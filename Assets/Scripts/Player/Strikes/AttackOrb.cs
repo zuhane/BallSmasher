@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackOrb : MonoBehaviour
 {
 
-    private float rotateFrequency = 60f;
+    private float rotateFrequency = 120f;
     [Range(1f, 10f)] public float strikeForce = 5f;
     [HideInInspector] public FacingDirection thisFacingDirection;
 
@@ -19,10 +19,13 @@ public class AttackOrb : MonoBehaviour
 
     [HideInInspector] public int lifeTimeCounter, lifeTimeLimit;
     [Range(1, 20)] public int distancefactor = 5;
-    [Range(0f, 5f)] public float speed;
+    [Range(0f, 5000f)] public float speed;
 
+    private Rigidbody2D rb;
 
     private SpawnEcho spawnEcho;
+
+    private GameObject player;
 
     private float returningTimeStrength = 0.2f;
 
@@ -124,6 +127,8 @@ public class AttackOrb : MonoBehaviour
         playerPos = transform.parent.transform.position;
         spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         SetDirection(thisFacingDirection);
+        rb = GetComponent<Rigidbody2D>();
+        player = transform.root.gameObject;
     }
 
     public void Update()
@@ -135,23 +140,23 @@ public class AttackOrb : MonoBehaviour
             if (lifeTimeCounter >= lifeTimeLimit)
                 fireState = FireState.Returning;
             else
-                transform.position += new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed);
+                rb.transform.position += (new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed));
         }
 
         if (fireState == FireState.Returning)
         {
             GetComponent<TrailRenderer>().time -= 0.08f;
 
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, transform.parent.transform.position.x, speed), Mathf.Lerp(transform.position.y, transform.parent.transform.position.y, speed));
+            rb.transform.position = new Vector2(Mathf.Lerp(rb.transform.position.x, transform.parent.transform.position.x, speed), Mathf.Lerp(rb.transform.position.y, transform.parent.transform.position.y, speed));
 
-            if (transform.position.x < transform.parent.transform.position.x + 0.01f && transform.position.x > transform.parent.transform.position.x - 0.01f &&
-                transform.position.y < transform.parent.transform.position.y + 0.01f && transform.position.y > transform.parent.transform.position.y - 0.01f)
+            if (rb.transform.position.x < transform.parent.transform.position.x + 0.01f && rb.transform.position.x > transform.parent.transform.position.x - 0.01f &&
+                rb.transform.position.y < transform.parent.transform.position.y + 0.01f && rb.transform.position.y > transform.parent.transform.position.y - 0.01f)
             {
                 //If returning orb is near the sender
                 fireState = FireState.Idling;
                 GetComponent<TrailRenderer>().time = 0.4f;
                 GetComponent<TrailRenderer>().enabled = false;
-                transform.position = transform.parent.transform.position;
+                rb.position = transform.parent.transform.position;
             }
         }
     }
@@ -159,7 +164,7 @@ public class AttackOrb : MonoBehaviour
     public void Rotate()
     {
         float angle = (180 / rotateFrequency) * (thisFacingDirection == FacingDirection.Clockwise ? -1 : 1);
-        transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
+        rb.transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
         transform.parent.Find("AttackOrb").RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
     }
 
@@ -174,37 +179,37 @@ public class AttackOrb : MonoBehaviour
         {
             case FacingDirection.Up:
                 flingDirection = new Vector2(0, 1);
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset, transform.localPosition.z);
+                rb.transform.localPosition = new Vector3(rb.transform.localPosition.x, rb.transform.localPosition.y + yOffset, rb.transform.localPosition.z);
                 break;
             case FacingDirection.Right:
                 flingDirection = new Vector2(1, 0);
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 270);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 270);
                 transform.localPosition = new Vector3(transform.localPosition.x + xOffset, transform.localPosition.y, transform.localPosition.z);
                 break;
             case FacingDirection.Left:
                 flingDirection = new Vector2(-1, 0);
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 90);
                 transform.localPosition = new Vector3(transform.localPosition.x - xOffset, transform.localPosition.y, transform.localPosition.z);
                 break;
             case FacingDirection.Down:
                 flingDirection = new Vector2(0, -1);
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset, transform.localPosition.z);
                 break;
             case FacingDirection.DownOut:
                 flingDirection = new Vector2(0.5f, 0.5f);
-                if (transform.parent.GetComponent<Movement>().facingLeft) flingDirection.x *= -1;
+                if (transform.parent.GetComponent<IntentToAction>().state.facingLeft) flingDirection.x *= -1;
                 force *= 5;
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset - 0.1f, transform.localPosition.z);
                 break;
 
             case FacingDirection.Clockwise:
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset, transform.localPosition.z);
                 break;
             case FacingDirection.Anticlockwise:
-                transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
+                //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 0);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset, transform.localPosition.z);
                 break;
         }
@@ -237,10 +242,13 @@ public class AttackOrb : MonoBehaviour
 
     private void BallhitTrigger(Collider2D collision)
     {
-        if (_fireState == FireState.Live && (collision.gameObject.layer == 10 || collision.gameObject.layer == 12))
-        {
+        GameObject goCollisionRoot = collision.transform.root.gameObject;
+        if (goCollisionRoot == player) { return; }
+        
 
-            Rigidbody2D rigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
+        if (_fireState == FireState.Live)
+        {
+            Rigidbody2D rigidBody = goCollisionRoot.GetComponent<Rigidbody2D>();
             if (rigidBody != null)
             {
                 if (charged)
@@ -254,7 +262,9 @@ public class AttackOrb : MonoBehaviour
                     AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
                 }
 
-                Ball ballHit = rigidBody.gameObject.GetComponent<Ball>();
+                if (collision.gameObject.layer == (int)Layer.AttackOrb) { return; }
+
+                Ball ballHit = goCollisionRoot.GetComponent<Ball>();
                 if (ballHit != null)
                 {
                     ballHit.TakeDamage(damage);
@@ -268,7 +278,7 @@ public class AttackOrb : MonoBehaviour
                 //rigidBody.addX(finalFlingDirection.x);
                 //rigidBody.addY(finalFlingDirection.y);
 
-                StatsRPG stats = collision.gameObject.GetComponent<StatsRPG>();
+                StatsRPG stats = goCollisionRoot.GetComponent<StatsRPG>();
 
                 if (stats != null)
                 {

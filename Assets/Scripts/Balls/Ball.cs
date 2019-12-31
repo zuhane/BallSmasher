@@ -62,7 +62,7 @@ public class Ball : MonoBehaviour
         //{
         //    UnelectrifyBall();
         //}
-        if(electricTimer?.LimitReached() == true)
+        if (electricTimer?.LimitReached() == true)
         {
             UnelectrifyBall();
         }
@@ -124,11 +124,13 @@ public class Ball : MonoBehaviour
         audioSource.pitch = Random.Range(.9f, 1.5f);
         audioSource.Play();
 
-        if (collision.gameObject.tag == "Player")
+        GameObject goCollisionRoot = collision.transform.root.gameObject;
+
+        if (goCollisionRoot.tag == "Player")
         {
             if (playerDamage > 0)
-                collision.gameObject.GetComponent<StatsRPG>().TakeDamage(playerDamage);
-            else if (playerDamage < 0) collision.gameObject.GetComponent<StatsRPG>().Heal(-playerDamage);
+                goCollisionRoot.GetComponent<StatsRPG>().TakeDamage(playerDamage);
+            else if (playerDamage < 0) goCollisionRoot.GetComponent<StatsRPG>().Heal(-playerDamage);
         }
     }
 }

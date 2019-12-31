@@ -14,8 +14,8 @@ public static class LevelData
 
 
     public static int levelIndex = 1;
-    public static int playerCount = 1;
-    public static int player1Team = 1, player2Team = 1, player3Team = 1, player4Team = 1;
+    public static int playerCount = 2;
+    public static int player1Team = 1, player2Team = 2, player3Team = 1, player4Team = 2;
     public static GameMode gameMode = GameMode.Goals;
     public static int GoalsToWin = 3, MatchTime = 300;
 }

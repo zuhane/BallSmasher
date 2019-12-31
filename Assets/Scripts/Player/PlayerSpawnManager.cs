@@ -18,13 +18,13 @@ public class PlayerSpawnManager : MonoBehaviour
         for (int i = 0; i < LevelData.playerCount; i++)
         {
             GameObject player = Resources.Load<GameObject>("Player");
-            player.GetComponent<PlayerManager>().playerNumber = i + 1;
-            player.GetComponent<PlayerManager>().controllerType = (PlayerManager.ControllerType)i + 1;
+            player.GetComponent<InputToIntent>().playerNumber = i + 1;
+            player.GetComponent<InputToIntent>().controllerType = (InputToIntent.ControllerType)i + 1;
 
-            if (i == 0) player.GetComponent<PlayerManager>().team = LevelData.player1Team;
-            if (i == 1) player.GetComponent<PlayerManager>().team = LevelData.player2Team;
-            if (i == 2) player.GetComponent<PlayerManager>().team = LevelData.player3Team;
-            if (i == 3) player.GetComponent<PlayerManager>().team = LevelData.player4Team;
+            if (i == 0) player.GetComponent<InputToIntent>().team = LevelData.player1Team;
+            if (i == 1) player.GetComponent<InputToIntent>().team = LevelData.player2Team;
+            if (i == 2) player.GetComponent<InputToIntent>().team = LevelData.player3Team;
+            if (i == 3) player.GetComponent<InputToIntent>().team = LevelData.player4Team;
 
             player.GetComponent<PlayerProfile>().SetColour();
             players.Add(Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity));
@@ -65,7 +65,7 @@ public class PlayerSpawnManager : MonoBehaviour
 
         foreach (GameObject p in players)
         {
-            if (p.GetComponent<PlayerManager>().playerNumber == playerNumber) p.transform.position = Vector3.zero;
+            if (p.GetComponent<InputToIntent>().playerNumber == playerNumber) p.transform.position = Vector3.zero;
             //playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position;
         }
 
