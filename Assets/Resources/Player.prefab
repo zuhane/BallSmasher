@@ -213,8 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c9d8b760f1fa2c4c9499d87f32849c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topSpeedX: 5
-  topSpeedY: 0
+  maxRunSpeedX: 6
+  maxTotalSpeed: {x: 15, y: 15}
   velocityXDecayGrounded: 0.92
   velocityXDecayAerial: 0.98
   enabled: 1
@@ -661,16 +661,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AttackOrb
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: speed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343826703721570159, guid: 8c7e04daea270274480cd156167d57b0,
-        type: 3}
-      propertyPath: distancefactor
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7e04daea270274480cd156167d57b0, type: 3}
