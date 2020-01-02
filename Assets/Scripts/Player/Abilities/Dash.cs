@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dash : BaseAbility
 {
-    private float dashSpeed = 2000;
+    private float dashSpeed = 10;
 
 
     public Dash()

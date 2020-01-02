@@ -6,7 +6,7 @@ using UnityEngine;
 public class AttackOrb : MonoBehaviour
 {
 
-    private float rotateFrequency = 120f;
+    [SerializeField][Range(1, 10)] private float rotateFrequency = 2;
     [Range(1f, 10f)] public float strikeForce = 5f;
     [HideInInspector] public FacingDirection thisFacingDirection;
 
@@ -19,7 +19,7 @@ public class AttackOrb : MonoBehaviour
 
     [HideInInspector] public int lifeTimeCounter, lifeTimeLimit;
     [Range(1, 20)] public int distancefactor = 5;
-    [Range(0f, 5000f)] public float speed;
+    [Range(0f, 1f)] public float speed;
 
     private Rigidbody2D rb;
 
@@ -90,13 +90,15 @@ public class AttackOrb : MonoBehaviour
                 case FireState.Live:
                     anim.SetBool("Charging", false);
                     GetComponent<TrailRenderer>().enabled = true;
-                    if (spawnEcho != null) spawnEcho.enabled = true;
+                    //if (spawnEcho != null) spawnEcho.enabled = true;
+                    transform.SetParent(null);
                     break;
                 case FireState.Returning:
                     anim.SetBool("Returning", true);
-                    if (spawnEcho != null) spawnEcho.enabled = false;
+                    //if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
+                    transform.SetParent(player.transform);
                     break;
             }
         }
@@ -163,7 +165,7 @@ public class AttackOrb : MonoBehaviour
 
     public void Rotate()
     {
-        float angle = (180 / rotateFrequency) * (thisFacingDirection == FacingDirection.Clockwise ? -1 : 1);
+        float angle = rotateFrequency * (thisFacingDirection == FacingDirection.Clockwise ? -1 : 1);
         rb.transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
         transform.parent.Find("AttackOrb").RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
     }

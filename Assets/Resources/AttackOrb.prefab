@@ -343,16 +343,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba99ecb435bc574084b778c3b9c51c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateFrequency: 6
   strikeForce: 5
-  thisFacingDirection: 0
+  thisFacingDirection: 2
   attacking: 0
-  finalFlingDirection: {x: 0, y: 0}
-  xOffset: 0
-  yOffset: 0
+  finalFlingDirection: {x: 0, y: -10.5}
+  xOffset: 0.25
+  yOffset: 0.25
   lifeTimeCounter: 0
-  lifeTimeLimit: 0
-  distancefactor: 20
-  speed: 4
+  lifeTimeLimit: 5
+  distancefactor: 5
+  speed: 0.32
   chargeUpSound: {fileID: 8300000, guid: ba9407ab328f0b74db8205d4d9d19ec4, type: 3}
   chargedFullySound: {fileID: 8300000, guid: 2f846ce7b011b4447b7164620357d799, type: 3}
   attackReleaseSound: {fileID: 8300000, guid: 8c0ce1455ba838c498ca6fd0a1cc8e3b, type: 3}
@@ -392,7 +393,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &4953624384292263635
 GameObject:
