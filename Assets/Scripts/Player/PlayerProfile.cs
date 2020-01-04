@@ -26,7 +26,7 @@ public class PlayerProfile : MonoBehaviour
                 //instancedMaterial2.SetVector("_HSLAAdjust", new Vector4(0f, 0, 0, 0));
                 break;
             case 2:
-                instancedMaterial.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, 0));
+                instancedMaterial.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, -0.5f));
                 instancedMaterial2.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, 0));
                 break;
                 //case 3:
