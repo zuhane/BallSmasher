@@ -16,6 +16,16 @@ public class DebugManager : MonoBehaviour
 
     }
 
+    public void ChangeTime(float speed)
+    {
+        Time.timeScale += speed;
+    }
+    public void ResetTime()
+    {
+
+        Time.timeScale = 1;
+    }
+
     public void SpawnBall(string ball)
     {
         if (ball == null || ball == "")

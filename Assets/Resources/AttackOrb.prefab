@@ -92,7 +92,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3573619596765284886}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2b77debf1905a8f4aafbec7d14a54f2d, type: 2}
   m_CullingMode: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
   lifeTimeCounter: 0
   lifeTimeLimit: 5
   distancefactor: 5
-  speed: 0.32
+  speed: 0.768
   chargeUpSound: {fileID: 8300000, guid: ba9407ab328f0b74db8205d4d9d19ec4, type: 3}
   chargedFullySound: {fileID: 8300000, guid: 2f846ce7b011b4447b7164620357d799, type: 3}
   attackReleaseSound: {fileID: 8300000, guid: 8c0ce1455ba838c498ca6fd0a1cc8e3b, type: 3}
@@ -388,8 +388,8 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1

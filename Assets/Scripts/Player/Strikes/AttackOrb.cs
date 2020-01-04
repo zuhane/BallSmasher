@@ -21,6 +21,8 @@ public class AttackOrb : MonoBehaviour
     [Range(1, 20)] public int distancefactor = 5;
     [Range(0f, 1f)] public float speed;
 
+    private PhysicsObject physicsObject;
+
     private Rigidbody2D rb;
 
     private SpawnEcho spawnEcho;
@@ -90,12 +92,12 @@ public class AttackOrb : MonoBehaviour
                 case FireState.Live:
                     anim.SetBool("Charging", false);
                     GetComponent<TrailRenderer>().enabled = true;
-                    //if (spawnEcho != null) spawnEcho.enabled = true;
+                    if (spawnEcho != null) spawnEcho.enabled = true;
                     transform.SetParent(null);
                     break;
                 case FireState.Returning:
                     anim.SetBool("Returning", true);
-                    //if (spawnEcho != null) spawnEcho.enabled = false;
+                    if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
                     transform.SetParent(player.transform);
@@ -131,6 +133,7 @@ public class AttackOrb : MonoBehaviour
         SetDirection(thisFacingDirection);
         rb = GetComponent<Rigidbody2D>();
         player = transform.root.gameObject;
+        //physicsObject = GetComponent<PhysicsObject>();
     }
 
     public void Update()
@@ -142,7 +145,7 @@ public class AttackOrb : MonoBehaviour
             if (lifeTimeCounter >= lifeTimeLimit)
                 fireState = FireState.Returning;
             else
-                rb.transform.position += (new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed));
+                rb.velocity = (new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed) * 100);
         }
 
         if (fireState == FireState.Returning)
@@ -180,7 +183,7 @@ public class AttackOrb : MonoBehaviour
         switch (facingDirection)
         {
             case FacingDirection.Up:
-                flingDirection = new Vector2(0, 1);
+                flingDirection = new Vector2(0, 1f);
                 rb.transform.localPosition = new Vector3(rb.transform.localPosition.x, rb.transform.localPosition.y + yOffset, rb.transform.localPosition.z);
                 break;
             case FacingDirection.Right:
@@ -199,9 +202,9 @@ public class AttackOrb : MonoBehaviour
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset, transform.localPosition.z);
                 break;
             case FacingDirection.DownOut:
-                flingDirection = new Vector2(0.5f, 0.5f);
+                flingDirection = new Vector2(1, .85f);
                 if (transform.parent.GetComponent<IntentToAction>().state.facingLeft) flingDirection.x *= -1;
-                force *= 5;
+                //force *= 5;
                 //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, 180);
                 transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - yOffset - 0.1f, transform.localPosition.z);
                 break;
@@ -277,8 +280,9 @@ public class AttackOrb : MonoBehaviour
                 }
 
                 rigidBody.AddForce(new Vector2(finalFlingDirection.x, finalFlingDirection.y) * strikeForce);
-                //rigidBody.addX(finalFlingDirection.x);
-                //rigidBody.addY(finalFlingDirection.y);
+
+                if (rigidBody.gameObject.layer == (int)Layer.Player) 
+                    rigidBody.gameObject.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(finalFlingDirection.x, finalFlingDirection.y) * strikeForce / 5);
 
                 StatsRPG stats = goCollisionRoot.GetComponent<StatsRPG>();
 
