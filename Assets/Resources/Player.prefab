@@ -662,6 +662,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackOrb
       objectReference: {fileID: 0}
+    - target: {fileID: 6884574825524571333, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c7e04daea270274480cd156167d57b0, type: 3}
 --- !u!4 &5669393226998340586 stripped

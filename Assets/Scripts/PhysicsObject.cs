@@ -51,6 +51,7 @@ public class PhysicsObject : MonoBehaviour
 
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -75,17 +76,6 @@ public class PhysicsObject : MonoBehaviour
     {
         targetVelocity = new Vector2(Mathf.Clamp(targetVelocity.x, -maxTotalSpeed.x, maxTotalSpeed.x),
                                      Mathf.Clamp(targetVelocity.y, -maxTotalSpeed.y, maxTotalSpeed.y));
-
-        //Mathf.Clamp(velocity.x, -maxTotalSpeed.x, maxTotalSpeed.x);
-        //Mathf.Clamp(velocity.y, -maxTotalSpeed.y, maxTotalSpeed.y);
-        //if (targetVelocity.x > maxTotalSpeed.x)
-        //    targetVelocity.x = maxTotalSpeed.x;
-        //if (targetVelocity.x < -(maxTotalSpeed.x))
-        //    targetVelocity.x = -(maxTotalSpeed.x);
-        //if (targetVelocity.y > maxTotalSpeed.y)
-        //    targetVelocity.y = maxTotalSpeed.y;
-        //if (targetVelocity.y < -(maxTotalSpeed.y))
-        //    targetVelocity.y  = - (maxTotalSpeed.y);
     }
 
     private void DebugContacts()
