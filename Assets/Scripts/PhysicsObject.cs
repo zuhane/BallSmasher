@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PhysicsObject : MonoBehaviour
 {
-    [SerializeField] [Range(0, 10)] protected float topSpeedX = 6f, topSpeedY = 5f;
+    [SerializeField] [Range(0, 10)] protected float maxRunSpeedX = 6f;
+    [SerializeField] protected Vector2 maxTotalSpeed = new Vector2(15, 15);
     [SerializeField] [Range(0, 1)] protected float velocityXDecayGrounded = 0.87f;
     [SerializeField] [Range(0, 1)] protected float velocityXDecayAerial = 0.97f;
 
@@ -47,6 +48,7 @@ public class PhysicsObject : MonoBehaviour
         contactFilter.useLayerMask = true;
         boxCollider = GetComponent<BoxCollider2D>();
         Debug.Log(boxCollider);
+
     }
 
     // Update is called once per frame
@@ -63,13 +65,27 @@ public class PhysicsObject : MonoBehaviour
                 else targetVelocity.x *= velocityXDecayAerial;
             }
 
-            if (targetVelocity.x > topSpeedX) targetVelocity.x = topSpeedX;
-            if (targetVelocity.x < -topSpeedX) targetVelocity.x = -topSpeedX;
-            if (targetVelocity.y > topSpeedY) targetVelocity.y = topSpeedY;
-            if (targetVelocity.y < -topSpeedY) targetVelocity.y = -topSpeedY;
+            checkMaxSpeed();
 
             DebugContacts();
         }
+    }
+
+    protected void checkMaxSpeed()
+    {
+        targetVelocity = new Vector2(Mathf.Clamp(targetVelocity.x, -maxTotalSpeed.x, maxTotalSpeed.x),
+                                     Mathf.Clamp(targetVelocity.y, -maxTotalSpeed.y, maxTotalSpeed.y));
+
+        //Mathf.Clamp(velocity.x, -maxTotalSpeed.x, maxTotalSpeed.x);
+        //Mathf.Clamp(velocity.y, -maxTotalSpeed.y, maxTotalSpeed.y);
+        //if (targetVelocity.x > maxTotalSpeed.x)
+        //    targetVelocity.x = maxTotalSpeed.x;
+        //if (targetVelocity.x < -(maxTotalSpeed.x))
+        //    targetVelocity.x = -(maxTotalSpeed.x);
+        //if (targetVelocity.y > maxTotalSpeed.y)
+        //    targetVelocity.y = maxTotalSpeed.y;
+        //if (targetVelocity.y < -(maxTotalSpeed.y))
+        //    targetVelocity.y  = - (maxTotalSpeed.y);
     }
 
     private void DebugContacts()

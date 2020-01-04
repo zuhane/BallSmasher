@@ -27,7 +27,9 @@ public class PlayerSpawnManager : MonoBehaviour
             if (i == 3) player.GetComponent<InputToIntent>().team = LevelData.player4Team;
 
             player.GetComponent<PlayerProfile>().SetColour();
-            players.Add(Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity));
+            GameObject goPlayer = Instantiate(player, playerSpawners[Random.Range(0, playerSpawners.Count - 1)].transform.position, Quaternion.identity);
+            goPlayer.name = "Player" + (int)(i+1);
+            players.Add(goPlayer);
 
 
 

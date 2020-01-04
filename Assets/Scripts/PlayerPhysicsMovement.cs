@@ -48,12 +48,14 @@ public class PlayerPhysicsMovement : PhysicsObject
         {
             if (intent.left)
             {
-                targetVelocity.x -= acceleration;
+                if (targetVelocity.x > -maxRunSpeedX)
+                    targetVelocity.x -= acceleration;
                 movingLeft = true;
             }
             else if (intent.right)
             {
-                targetVelocity.x += acceleration;
+                if (targetVelocity.x < maxRunSpeedX)
+                    targetVelocity.x += acceleration;
                 movingRight = true;
             }
         }
