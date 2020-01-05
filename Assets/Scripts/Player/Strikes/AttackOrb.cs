@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AttackOrb : MonoBehaviour
 {
+    Vector2 previousPos;
+
 
     [SerializeField][Range(1, 10)] private float rotateFrequency = 2;
     [Range(1f, 10f)] public float strikeForce = 5f;
@@ -22,8 +24,6 @@ public class AttackOrb : MonoBehaviour
     [Range(0f, 1f)] public float speed;
 
     private PhysicsObject physicsObject;
-
-    private Rigidbody2D rb;
 
     private SpawnEcho spawnEcho;
 
@@ -131,13 +131,15 @@ public class AttackOrb : MonoBehaviour
         playerPos = transform.parent.transform.position;
         spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         SetDirection(thisFacingDirection);
-        rb = GetComponent<Rigidbody2D>();
         player = transform.root.gameObject;
         //physicsObject = GetComponent<PhysicsObject>();
+        previousPos = transform.position;
     }
 
     public void Update()
     {
+        previousPos = transform.position;
+
         if (fireState == FireState.Live)
         {
             lifeTimeCounter++;
@@ -145,31 +147,49 @@ public class AttackOrb : MonoBehaviour
             if (lifeTimeCounter >= lifeTimeLimit)
                 fireState = FireState.Returning;
             else
-                rb.velocity = (new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed) * 100);
+                transform.position += new Vector3(finalFlingDirection.normalized.x * speed, finalFlingDirection.normalized.y * speed);
         }
 
         if (fireState == FireState.Returning)
         {
             GetComponent<TrailRenderer>().time -= 0.08f;
 
-            rb.transform.position = new Vector2(Mathf.Lerp(rb.transform.position.x, transform.parent.transform.position.x, speed), Mathf.Lerp(rb.transform.position.y, transform.parent.transform.position.y, speed));
+            transform.position = new Vector2(Mathf.Lerp(transform.position.x, transform.parent.transform.position.x, speed), Mathf.Lerp(transform.position.y, transform.parent.transform.position.y, speed));
 
-            if (rb.transform.position.x < transform.parent.transform.position.x + 0.01f && rb.transform.position.x > transform.parent.transform.position.x - 0.01f &&
-                rb.transform.position.y < transform.parent.transform.position.y + 0.01f && rb.transform.position.y > transform.parent.transform.position.y - 0.01f)
+            if (transform.position.x < transform.parent.transform.position.x + 0.01f && transform.position.x > transform.parent.transform.position.x - 0.01f &&
+                transform.position.y < transform.parent.transform.position.y + 0.01f && transform.position.y > transform.parent.transform.position.y - 0.01f)
             {
                 //If returning orb is near the sender
                 fireState = FireState.Idling;
                 GetComponent<TrailRenderer>().time = 0.4f;
                 GetComponent<TrailRenderer>().enabled = false;
-                rb.position = transform.parent.transform.position;
+                transform.position = transform.parent.transform.position;
             }
         }
+
+        CheckForHits();
+    }
+
+    private void CheckForHits()
+    {
+        //Simply checks the distance between the ball before and after moving in this same update cycle.
+        //If the ball hits something, the first thing hit is checked, then the next, etc. If it hits something,
+        //it returns, not hitting any other targets.
+        if (fireState != FireState.Live) return;
+
+        Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(previousPos, (currentPos - previousPos).normalized, (currentPos - previousPos).magnitude);
+            
+        for (int i = 0; i < hits.Length; i++)
+        {
+            BallhitTrigger(hits[i].collider);
+        }          
     }
 
     public void Rotate()
     {
         float angle = rotateFrequency * (thisFacingDirection == FacingDirection.Clockwise ? -1 : 1);
-        rb.transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
+        transform.RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
         transform.parent.Find("AttackOrb").RotateAround(transform.parent.transform.position, new Vector3(0, 0, 1), angle);
     }
 
@@ -184,7 +204,7 @@ public class AttackOrb : MonoBehaviour
         {
             case FacingDirection.Up:
                 flingDirection = new Vector2(0, 1f);
-                rb.transform.localPosition = new Vector3(rb.transform.localPosition.x, rb.transform.localPosition.y + yOffset, rb.transform.localPosition.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + yOffset, transform.localPosition.z);
                 break;
             case FacingDirection.Right:
                 flingDirection = new Vector2(1, 0);
@@ -235,16 +255,6 @@ public class AttackOrb : MonoBehaviour
 
     }
 
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        BallhitTrigger(collision);
-    }
-
-    protected void OnTriggerStay2D(Collider2D collision)
-    {
-        BallhitTrigger(collision);
-    }
-
     private void BallhitTrigger(Collider2D collision)
     {
         GameObject goCollisionRoot = collision.transform.root.gameObject;
@@ -258,12 +268,12 @@ public class AttackOrb : MonoBehaviour
             {
                 if (charged)
                 {
-                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), transform.position, Quaternion.identity);
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), collision.gameObject.transform.position, Quaternion.identity);
                     AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
                 }
                 else
                 {
-                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), transform.position, Quaternion.identity);
+                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), collision.gameObject.transform.position, Quaternion.identity);
                     AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
                 }
 

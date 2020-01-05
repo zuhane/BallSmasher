@@ -30,6 +30,7 @@ public class PlayerPhysicsMovement : PhysicsObject
     public void AddVelocity(Vector2 inVelocity)
     {
         targetVelocity = inVelocity;
+        velocity = inVelocity;
     }
 
 
