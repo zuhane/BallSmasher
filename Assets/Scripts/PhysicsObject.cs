@@ -149,7 +149,7 @@ public class PhysicsObject : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            if (hitListLeft[i].transform.gameObject.layer == 9)
+            if (hitBufferLeft[i].transform.gameObject.layer == (int)Layer.Wall)
             {
                 hitListLeft.Add(hitBufferLeft[i]);
             }

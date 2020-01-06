@@ -47,11 +47,11 @@ public class MembraneBall : MonoBehaviour
             rigid.AddForce(VectorMath.Random() * Random.Range(6, 12));
         }
 
-        foreach (CapturedPlayer capturedPlayer in capturedPlayers)
+        for (int i = 0; i < capturedPlayers.Count; i++)
         {
-            if (capturedPlayer.timer.LimitReached())
+            if (capturedPlayers[i].timer.LimitReached())
             {
-                releasePlayer(capturedPlayer);
+                releasePlayer(capturedPlayers[i]);
             }
         }
     }

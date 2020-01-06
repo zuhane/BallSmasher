@@ -8,6 +8,7 @@ public class AttackOrb : MonoBehaviour
     Vector2 previousPos;
 
 
+
     [SerializeField][Range(1, 10)] private float rotateFrequency = 2;
     [Range(1f, 10f)] public float strikeForce = 5f;
     [HideInInspector] public FacingDirection thisFacingDirection;
@@ -186,7 +187,12 @@ public class AttackOrb : MonoBehaviour
         if (fireState != FireState.Live) return;
 
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
-        RaycastHit2D[] hits = Physics2D.RaycastAll(previousPos, (currentPos - previousPos).normalized, (currentPos - previousPos).magnitude);
+        //RaycastHit2D[] hits = Physics2D.RaycastAll(previousPos, (currentPos - previousPos).normalized, (currentPos - previousPos).magnitude);
+
+        SpriteRenderer tempRend = GetComponentInChildren<SpriteRenderer>();
+
+        RaycastHit2D[] hits = Physics2D.CapsuleCastAll(previousPos, new Vector2(tempRend.size.x / 2, tempRend.size.y / 2), CapsuleDirection2D.Horizontal, 0, finalFlingDirection, (currentPos - previousPos).magnitude);
+
             
         for (int i = 0; i < hits.Length; i++)
         {

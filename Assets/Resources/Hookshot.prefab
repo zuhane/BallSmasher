@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: -8068626947570394026}
   - component: {fileID: 905770123211429646}
   - component: {fileID: 5709316652452031154}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Hookshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
