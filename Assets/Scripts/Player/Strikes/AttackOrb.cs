@@ -38,6 +38,8 @@ public class AttackOrb : MonoBehaviour
 
     private Vector3 playerPos;
 
+    private HookshotGO hookshot;
+
     public float force
     {
         get
@@ -134,6 +136,7 @@ public class AttackOrb : MonoBehaviour
         player = transform.root.gameObject;
         //physicsObject = GetComponent<PhysicsObject>();
         previousPos = transform.position;
+        hookshot = GetComponent<HookshotGO>();
     }
 
     public void Update()
@@ -164,6 +167,11 @@ public class AttackOrb : MonoBehaviour
                 GetComponent<TrailRenderer>().time = 0.4f;
                 GetComponent<TrailRenderer>().enabled = false;
                 transform.position = transform.parent.transform.position;
+
+                if (hookshot != null)
+                {
+                    hookshot.HookshotReturned();
+                }
             }
         }
 
@@ -183,6 +191,10 @@ public class AttackOrb : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             BallhitTrigger(hits[i].collider);
+            if (hookshot != null)
+            {
+                hookshot.BallhitTrigger(hits[i].collider);
+            }
         }          
     }
 

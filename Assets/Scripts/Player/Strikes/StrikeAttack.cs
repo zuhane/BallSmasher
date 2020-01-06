@@ -138,4 +138,9 @@ public class StrikeAttack : MonoBehaviour
         }
     }
 
+    public void SwitchAttackOrb()
+    {
+        attackOrb = gameObject.GetComponentInChildren<AttackOrb>();
+    }
+
 }
