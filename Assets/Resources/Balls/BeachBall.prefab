@@ -184,15 +184,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockDamage: 1
   maxHealth: 0
-  playerDamage: 0
   startingBlockDamage: 1
+  playerDamage: 0
   startingPlayerDamage: 0
   goalPoints: 1
-  electrified: 0
   lifespan: 0
+  canElectrify: 1
   explosionParticle: {fileID: 2256027101055837489, guid: bea3b9be1378b9f499af136d5f9a88ed,
     type: 3}
   explodeNoise: {fileID: 8300000, guid: 0f3fa5845b0fad94aaef434d6333d41f, type: 3}
+  electrified: 0
 --- !u!114 &-8108177899108508469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f466c9271efe2b541802ced128f9b0a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 5890447240127578226, guid: 6de0538b220bf5646bfb6feb96cd1c9d,
+    type: 3}
 --- !u!1 &7489737379271426557
 GameObject:
   m_ObjectHideFlags: 0

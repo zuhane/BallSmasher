@@ -57,11 +57,6 @@ public class Ball : MonoBehaviour
             DestroyBall();
         }
 
-        //TODO: check if this is possible with AddForce
-        //if (rigid.velocity.magnitude < 3 && electrified)
-        //{
-        //    UnelectrifyBall();
-        //}
         if (electricTimer?.LimitReached() == true)
         {
             UnelectrifyBall();
@@ -79,7 +74,9 @@ public class Ball : MonoBehaviour
             Instantiate(explosionParticle, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
-        goalManager.SpawnRandomBall(transform.position);
+
+        //TODO: Make balls spawn from destroyed rock ball 
+        goalManager.SpawnRandomBall();
         blockDamage = startingBlockDamage;
         playerDamage = startingPlayerDamage;
     }
