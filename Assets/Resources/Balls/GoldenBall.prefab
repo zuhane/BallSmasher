@@ -67,7 +67,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 7489737378105079963}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 2dea6fb8dc627214f86648c0e83d0384, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -184,15 +184,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockDamage: 1
   maxHealth: 0
-  playerDamage: 0
   startingBlockDamage: 2
+  playerDamage: 0
   startingPlayerDamage: 0
   goalPoints: 1
-  electrified: 0
   lifespan: 0
+  canElectrify: 1
   explosionParticle: {fileID: 3478010183448093419, guid: fa51241c77fdb7b4082293a1b89f1168,
     type: 3}
   explodeNoise: {fileID: 0}
+  electrified: 0
 --- !u!114 &-528667500983806878
 MonoBehaviour:
   m_ObjectHideFlags: 0
