@@ -5,21 +5,27 @@ public static class AudioSourceExtension
 
     public static void PlayLooped(this AudioSource audio, AudioClip clip)
     {
-        if (audio.isPlaying)
-            audio.Stop();
+        if (audio.enabled)
+        {
+            if (audio.isPlaying)
+                audio.Stop();
 
-        audio.clip = clip;
-        audio.loop = true;
-        audio.Play();
+            audio.clip = clip;
+            audio.loop = true;
+            audio.Play();
+        }
     }
 
     public static void PlayOnce(this AudioSource audio, AudioClip clip)
     {
-        if (audio.isPlaying)
-            audio.Stop();
+        if (audio.enabled)
+        {
+            if (audio.isPlaying)
+                audio.Stop();
 
-        audio.clip = clip;
-        audio.loop = false;
-        audio.Play();
+            audio.clip = clip;
+            audio.loop = false;
+            audio.Play();
+        }
     }
 }
