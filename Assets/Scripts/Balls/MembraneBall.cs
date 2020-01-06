@@ -17,6 +17,7 @@ public class MembraneBall : MonoBehaviour
     {
         public GameObject player;
         public Timer timer;
+        public SpriteRenderer spriteRend; //TODO: Draw player stuck inside? Optional init!
     }
 
     public List<CapturedPlayer> capturedPlayers = new List<CapturedPlayer>();
@@ -58,6 +59,8 @@ public class MembraneBall : MonoBehaviour
 
     private void EnableSlurp()
     {
+        AudioManager.PlaySound("MembraneRelease", UnityEngine.Random.Range(0.8f, 1.2f));
+        Instantiate(Resources.Load<GameObject>("Effects/MembraneSplat"), transform.position, Quaternion.identity, transform);
         disabledCounter = 0;
         disabled = false;
         animator.SetBool("Dormant", disabled);
@@ -83,16 +86,11 @@ public class MembraneBall : MonoBehaviour
 
     private void consumePlayer(GameObject player)
     {
-        rigid.velocity = Vector2.zero;
         AudioManager.PlaySound("MembraneRelease", UnityEngine.Random.Range(0.8f, 1.2f));
         Instantiate(Resources.Load<GameObject>("Effects/MembraneSplat"), transform.position, Quaternion.identity, transform);
-        player.transform.parent = transform;
-        player.transform.localPosition = new Vector3(0, 0, 0);
-        foreach (Rigidbody2D rigid in player.GetComponentsInChildren<Rigidbody2D>())
-        {
-            player.gameObject.GetComponent<Rigidbody2D>().simulated = false;
-        }
-        player.GetComponent<PlayerPhysicsMovement>().enabled = false;
+        animator.SetTrigger("Wobble");
+
+        player.SetActive(false);
 
         CapturedPlayer capturedPlayer = new CapturedPlayer();
         capturedPlayer.player = player;
@@ -104,15 +102,13 @@ public class MembraneBall : MonoBehaviour
     {
         AudioManager.PlaySound("MembraneRelease", UnityEngine.Random.Range(0.8f, 1.2f));
         Instantiate(Resources.Load<GameObject>("Effects/MembraneSplat"), transform.position, Quaternion.identity, transform);
-        DisableSlurp();
-        cp.player.transform.parent = null;
-        foreach (Rigidbody2D rigid in cp.player.GetComponentsInChildren<Rigidbody2D>())
-        {
-            cp.player.gameObject.GetComponent<Rigidbody2D>().simulated = true;
-        }
 
-        cp.player.transform.rotation = new Quaternion(0, 0, 0, 0);
-        cp.player.GetComponent<PlayerPhysicsMovement>().enabled = true;
+        cp.player.SetActive(true);
+        cp.player.transform.position = transform.position;
+        cp.player.transform.rotation = Quaternion.identity;
+        
         capturedPlayers.Remove(cp);
+
+        DisableSlurp();
     }
 }

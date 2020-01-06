@@ -39,7 +39,7 @@ public class HookshotGO : MonoBehaviour
         grabbedObject = goCollisionRoot.transform;
         grabbedObjectParent = goCollisionRoot.transform.parent;
         grabbedObject.transform.SetParent(gameObject.transform);
-        grabbedObject.transform.localPosition = new Vector3(0, 0);
+        //grabbedObject.transform.localPosition = new Vector3(0, 0);
 
     }
 
@@ -48,7 +48,13 @@ public class HookshotGO : MonoBehaviour
         if (grabbedObject != null)
         {
             grabbedObject.parent = grabbedObjectParent;
-            grabbedObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            Rigidbody2D tempRigid = GetComponent<Rigidbody2D>();
+            Collider2D tempColl = GetComponent<Collider2D>();
+
+            tempRigid.velocity = Vector2.zero;
+
+            //tempRigid.position = player.transform.position - new Vector3(tempColl.bounds.size.x / 2, 0, 0);
+
         }
         
         attackOrb.SetActive(true);

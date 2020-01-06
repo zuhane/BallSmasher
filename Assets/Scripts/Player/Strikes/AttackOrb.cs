@@ -191,9 +191,8 @@ public class AttackOrb : MonoBehaviour
 
         SpriteRenderer tempRend = GetComponentInChildren<SpriteRenderer>();
 
-        RaycastHit2D[] hits = Physics2D.CapsuleCastAll(previousPos, new Vector2(tempRend.size.x / 2, tempRend.size.y / 2), CapsuleDirection2D.Horizontal, 0, finalFlingDirection, (currentPos - previousPos).magnitude);
+        RaycastHit2D[] hits = Physics2D.CapsuleCastAll(previousPos, new Vector2(tempRend.size.x / 2, tempRend.size.y / 2), CapsuleDirection2D.Horizontal, 0, finalFlingDirection, (currentPos - previousPos).magnitude, (int)LayerMask.Ball | (int)LayerMask.Player | (int)LayerMask.AttackOrb);
 
-            
         for (int i = 0; i < hits.Length; i++)
         {
             BallhitTrigger(hits[i].collider);
@@ -276,9 +275,8 @@ public class AttackOrb : MonoBehaviour
     private void BallhitTrigger(Collider2D collision)
     {
         GameObject goCollisionRoot = collision.transform.root.gameObject;
-        if (goCollisionRoot == player) { return; }
+        if (goCollisionRoot == player) { return; } //If ball hits self, ignore it.
         
-
         if (_fireState == FireState.Live)
         {
             Rigidbody2D rigidBody = goCollisionRoot.GetComponent<Rigidbody2D>();
@@ -295,7 +293,10 @@ public class AttackOrb : MonoBehaviour
                     AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
                 }
 
-                if (collision.gameObject.layer == (int)Layer.AttackOrb) { return; }
+                if (collision.gameObject.layer == (int)Layer.AttackOrb)
+                {
+                    //TODO: Maybe add attack orb shields?
+                }
 
                 Ball ballHit = goCollisionRoot.GetComponent<Ball>();
                 if (ballHit != null)
@@ -320,6 +321,10 @@ public class AttackOrb : MonoBehaviour
                     stats.TakeDamage(damage);
                 }
                 fireState = FireState.Returning;
+            }
+            else
+            {
+                Debug.LogError($"Missing rigidbody!!!! You fucking idiot!! {goCollisionRoot.name}");
             }
         }
     }
