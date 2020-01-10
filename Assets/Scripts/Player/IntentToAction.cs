@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PlayerPhysicsMovement))]
 public class IntentToAction : MonoBehaviour
 {
     public class Intent

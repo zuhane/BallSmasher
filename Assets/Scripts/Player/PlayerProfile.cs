@@ -14,10 +14,10 @@ public class PlayerProfile : MonoBehaviour
     {
         playerManager = GetComponent<InputToIntent>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        SpriteRenderer ballRenderer = transform.Find("AttackOrb").GetComponentInChildren<SpriteRenderer>();
+        //SpriteRenderer ballRenderer = transform.Find("AttackOrb").GetComponentInChildren<SpriteRenderer>();
 
         Material instancedMaterial = spriteRenderer.material;
-        Material instancedMaterial2 = ballRenderer.material;
+        //Material instancedMaterial2 = ballRenderer.material;
 
         switch (playerManager.team)
         {
@@ -27,7 +27,7 @@ public class PlayerProfile : MonoBehaviour
                 break;
             case 2:
                 instancedMaterial.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, -0.5f));
-                instancedMaterial2.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, 0));
+                //instancedMaterial2.SetVector("_HSLAAdjust", new Vector4(0.3f, 0, 0, 0));
                 break;
                 //case 3:
                 //    spriteRenderer.color = Color.magenta;
