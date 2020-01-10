@@ -2,7 +2,7 @@
 
 public class Timer : MonoBehaviour
 {
-    int secondLimit;
+    float secondLimit;
     private float timercount;
 
     /// <summary>
@@ -27,7 +27,7 @@ public class Timer : MonoBehaviour
     /// <param name="go"></param>
     /// <param name="limit"></param>
     /// <returns></returns>
-    public static Timer CreateComponent(GameObject go, int limit)
+    public static Timer CreateComponent(GameObject go, float limit)
     {
         Timer timer = go.AddComponent<Timer>();
         timer.secondLimit = limit;

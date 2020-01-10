@@ -7,7 +7,7 @@ public class HookshotGO : MonoBehaviour
     private LineRenderer line;
     private GameObject player;
     private GameObject attackOrb;
-    private StrikeAttack strikeAttack;
+    //private StrikeAttack strikeAttack;
 
     private Transform grabbedObject;
     private Transform grabbedObjectParent;
@@ -19,9 +19,9 @@ public class HookshotGO : MonoBehaviour
         attackOrb = player.transform.Find("AttackOrb").gameObject;
         attackOrb.SetActive(false);
         attackOrb.transform.SetParent(null);
-        strikeAttack = player.GetComponent<StrikeAttack>();
+        //strikeAttack = player.GetComponent<StrikeAttack>();
 
-        strikeAttack.SwitchAttackOrb();
+        //strikeAttack.SwitchAttackOrb();
     }
 
     // Update is called once per frame
@@ -62,6 +62,6 @@ public class HookshotGO : MonoBehaviour
         attackOrb.transform.localPosition = new Vector3(0,0);
 
         Destroy(gameObject);
-        strikeAttack.SwitchAttackOrb();
+        //strikeAttack.SwitchAttackOrb();
     }
 }
