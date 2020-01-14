@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseAttackObject : MonoBehaviour
+public class BaseBoomerang : MonoBehaviour
 {
 
     protected Animator anim;
@@ -12,13 +12,14 @@ public class BaseAttackObject : MonoBehaviour
     [Range(0, 3)] public float enabledTime = 1f;
     [Range(5, 20)] public float impactForce = 10f;
 
+    private float lerpReturnSpeed;
+    private Rect rekt;
     private Vector3 velocity;
     private Timer enabledTimer;
 
-
     private Vector2 previousPos;
     private SpawnEcho spawnEcho;
-    private GameObject player;
+    private GameObject player, attackContainer;
 
     [SerializeField] public AudioClip chargeUpSound, chargedFullySound, attackReleaseSound;
     private GameObject smashEffect;
@@ -54,9 +55,11 @@ public class BaseAttackObject : MonoBehaviour
         playerPos = transform.parent.transform.position;
         spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         player = transform.root.gameObject;
+        attackContainer = transform.parent.gameObject;
         //physicsObject = GetComponent<PhysicsObject>();
         previousPos = transform.position;
 
+        rekt = new Rect(transform.position, new Vector2(0.1f, 0.1f));
         enabledTimer = Timer.CreateComponent(gameObject, enabledTime);
     }
 
@@ -66,7 +69,7 @@ public class BaseAttackObject : MonoBehaviour
         Charging,
         FullyCharged,
         Live,
-        Disabled
+        Returning
     }
 
     private FireState _fireState = FireState.Idling;
@@ -87,7 +90,10 @@ public class BaseAttackObject : MonoBehaviour
             {
                 case FireState.Idling:
                     anim.SetBool("Returning", false);
-                    GetComponent<TrailRenderer>().enabled = false;
+                    //GetComponent<TrailRenderer>().enabled = false;
+                    transform.SetParent(attackContainer.transform);
+                    transform.localPosition = Vector2.zero;
+                    lerpReturnSpeed = 0.01f;
                     break;
                 case FireState.Charging:
                     anim.SetBool("Charging", true);
@@ -97,16 +103,16 @@ public class BaseAttackObject : MonoBehaviour
                     break;
                 case FireState.Live:
                     anim.SetBool("Charging", false);
-                    GetComponent<TrailRenderer>().enabled = true;
-                    if (spawnEcho != null) spawnEcho.enabled = true;
+                    //GetComponent<TrailRenderer>().enabled = true;
+                    //if (spawnEcho != null) spawnEcho.enabled = true;
                     transform.SetParent(null);
                     break;
-                case FireState.Disabled:
+                case FireState.Returning:
                     anim.SetBool("Returning", true);
-                    if (spawnEcho != null) spawnEcho.enabled = false;
+                    //if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
-                    transform.SetParent(player.transform);
+                    velocity = Vector2.zero;
                     break;
             }
         }
@@ -117,6 +123,7 @@ public class BaseAttackObject : MonoBehaviour
     {
 
         previousPos = transform.position;
+        rekt.center = transform.position;
         if (enabledTimer?.LimitReached() == true)
         {
             Return();
@@ -124,14 +131,32 @@ public class BaseAttackObject : MonoBehaviour
 
         transform.position += velocity;
 
+
+
         CheckForHits();
+
+        if (fireState == FireState.Returning)
+        {
+            TrailRenderer trail = GetComponent<TrailRenderer>();
+            //GetComponent<TrailRenderer>().time -= 0.08f;
+            //trail.startColor = new Color(trail.startColor.r, trail.startColor.g, trail.startColor.b, 0f);
+
+            lerpReturnSpeed += 0.01f; //TODO: Implement proper delta time
+            Vector2 lerp = new Vector2(Mathf.Lerp(transform.position.x, attackContainer.transform.position.x, lerpReturnSpeed), Mathf.Lerp(transform.position.y, attackContainer.transform.position.y, lerpReturnSpeed));
+
+            //Debug.Log($"BallPos: {transform.position}, ContainerPos: {attackContainer.transform.position}, lerp: {lerp} lerpSpeed {lerpReturnSpeed}");
+
+            transform.position = lerp;
+
+            if (lerpReturnSpeed >= 1) fireState = FireState.Idling;
+
+        }
 
     }
 
     private void Return()
     {
-        transform.localPosition = Vector3.zero;
-        velocity = Vector3.zero;
+        fireState = FireState.Returning;
         Destroy(enabledTimer);
     }
 
@@ -163,6 +188,7 @@ public class BaseAttackObject : MonoBehaviour
 
     public virtual void Release(Vector3 attackDirectionVector, float charge)
     {
+        fireState = FireState.Live;
         charge = Mathf.Clamp(charge, 1, chargeLimit);
         velocity = attackDirectionVector * velocityModifier * charge;
         enabledTimer = Timer.CreateComponent(gameObject, enabledTime);
@@ -174,57 +200,56 @@ public class BaseAttackObject : MonoBehaviour
         GameObject goCollisionRoot = collision.transform.root.gameObject;
         if (goCollisionRoot == player) { return; } //If ball hits self, ignore it.
 
-        //TODO: Move this into a child class
-        if (_fireState == FireState.Live)
+        Rigidbody2D rigidBody = goCollisionRoot.GetComponent<Rigidbody2D>();
+        if (rigidBody != null)
         {
-            Rigidbody2D rigidBody = goCollisionRoot.GetComponent<Rigidbody2D>();
-            if (rigidBody != null)
+            transform.position = collision.transform.position;
+
+            if (charged)
             {
-                if (charged)
-                {
-                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), collision.gameObject.transform.position, Quaternion.identity);
-                    AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
-                }
-                else
-                {
-                    Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), collision.gameObject.transform.position, Quaternion.identity);
-                    AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
-                }
-
-                if (collision.gameObject.layer == (int)Layer.AttackOrb)
-                {
-                    //TODO: Maybe add attack orb shields?
-                }
-
-                Ball ballHit = goCollisionRoot.GetComponent<Ball>();
-                if (ballHit != null)
-                {
-                    rigidBody.AddForce(velocity.normalized * impactForce);
-                    ballHit.TakeDamage(damage);
-                    if (charged)
-                    {
-                        ballHit.ElectrifyBall();
-                    }
-                }
-
-                PlayerPhysicsMovement playerPhysics = goCollisionRoot.GetComponent<PlayerPhysicsMovement>();
-                if (playerPhysics != null)
-                {
-                    playerPhysics.AddVelocity(velocity.normalized * impactForce / 5);
-                }
-
-                StatsRPG stats = goCollisionRoot.GetComponent<StatsRPG>();
-                if (stats != null)
-                {
-                    Debug.Log(damage);
-                    stats.TakeDamage(damage);
-                }
-                fireState = FireState.Disabled;
+                Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), collision.gameObject.transform.position, Quaternion.identity);
+                AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
             }
             else
             {
-                Debug.LogError($"Missing rigidbody!!!! You fucking idiot!! {goCollisionRoot.name}");
+                Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), collision.gameObject.transform.position, Quaternion.identity);
+                AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
             }
+
+            if (collision.gameObject.layer == (int)Layer.AttackOrb)
+            {
+                //TODO: Maybe add attack orb shields?
+            }
+
+            Ball ballHit = goCollisionRoot.GetComponent<Ball>();
+            if (ballHit != null)
+            {
+                rigidBody.AddForce(velocity.normalized * impactForce);
+                ballHit.TakeDamage(damage);
+                if (charged)
+                {
+                    ballHit.ElectrifyBall();
+                }
+            }
+
+            PlayerPhysicsMovement playerPhysics = goCollisionRoot.GetComponent<PlayerPhysicsMovement>();
+            if (playerPhysics != null)
+            {
+                playerPhysics.AddVelocity(velocity.normalized * impactForce / 5);
+            }
+
+            StatsRPG stats = goCollisionRoot.GetComponent<StatsRPG>();
+            if (stats != null)
+            {
+                Debug.Log(damage);
+                stats.TakeDamage(damage);
+            }
+            fireState = FireState.Returning;
         }
+        else
+        {
+            Debug.LogError($"Missing rigidbody!!!! You fucking idiot!! {goCollisionRoot.name}");
+        }
+
     }
 }

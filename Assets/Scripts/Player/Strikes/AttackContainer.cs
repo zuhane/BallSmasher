@@ -8,7 +8,7 @@ public class AttackContainer : MonoBehaviour
         ReadyToFire,
         Charging,
         FullyCharged,
-        Recharging
+        Returning
     }
     private enum AttackDirection
     {
@@ -22,17 +22,14 @@ public class AttackContainer : MonoBehaviour
         Anticlockwise
     }
 
-    [SerializeField][Range(0, 5f)] private float cooldown = .2f;
     [SerializeField][Range(0, 5f)] private float rotateFrequency = 5f;
-
-    private Timer cooldownTimer;
 
     private AttackDirection attackDirection = AttackDirection.None;
     private ChargeState chargeState = ChargeState.ReadyToFire;
 
     private GameObject player;
     private IntentToAction intentToAction;
-    BaseAttackObject baseAttackObject; //The artifact attached to the attack container, i.e. orb, hook, gun, etc
+    BaseBoomerang baseBoomerang; //The artifact attached to the attack container, i.e. orb, hook, gun, etc
 
     private Vector2 attackDirectionVector;
     private Vector2 initialAttackDisplacement;
@@ -47,9 +44,7 @@ public class AttackContainer : MonoBehaviour
         initialAttackDisplacement = player.GetComponent<Collider2D>().bounds.size;
         initialAttackDisplacement.y /= 2;
 
-        cooldownTimer = Timer.CreateComponent(gameObject, (int)cooldown);
-
-        baseAttackObject = gameObject.GetComponentInChildren<BaseAttackObject>();
+        baseBoomerang = gameObject.GetComponentInChildren<BaseBoomerang>();
     }
 
     void Update()
@@ -59,11 +54,17 @@ public class AttackContainer : MonoBehaviour
         ModifyAttackObject();
     }
 
+    private bool HoldingWeapon()
+    {
+        if (GetComponentInChildren<BaseBoomerang>() != null) return true;
+        return false;
+    }
+
     private void ModifyContainer()
     {
-        if (chargeState == ChargeState.Recharging)
+        if (chargeState == ChargeState.Returning)
         {
-            if (cooldownTimer.LimitReached())
+            if (HoldingWeapon())
             {
                 chargeState = ChargeState.ReadyToFire;
                 transform.localPosition = Vector3.zero;
@@ -92,13 +93,13 @@ public class AttackContainer : MonoBehaviour
             {
                 currentForceChargeAmount += Time.deltaTime;
 
-                if (currentForceChargeAmount > baseAttackObject.chargeLimit)
+                if (currentForceChargeAmount > baseBoomerang.chargeLimit)
                 {
                     chargeState = ChargeState.FullyCharged;
-                    baseAttackObject.fireState = BaseAttackObject.FireState.FullyCharged;
+                    baseBoomerang.fireState = BaseBoomerang.FireState.FullyCharged;
                 }
 
-                baseAttackObject.fireState = BaseAttackObject.FireState.Charging;
+                baseBoomerang.fireState = BaseBoomerang.FireState.Charging;
             }
 
             if (chargeState == ChargeState.Charging || chargeState == ChargeState.FullyCharged)
@@ -126,10 +127,9 @@ public class AttackContainer : MonoBehaviour
                     attackDirectionVector = new Vector2(-(float)Math.Sin(inputValue), (float)Math.Cos(inputValue)).normalized;
                 }
 
-                baseAttackObject.Release(attackDirectionVector, currentForceChargeAmount);
-
-                chargeState = ChargeState.Recharging;
-                cooldownTimer.Reset();
+                baseBoomerang.Release(attackDirectionVector, currentForceChargeAmount);
+                transform.localPosition = Vector2.zero;
+                chargeState = ChargeState.Returning;
             }
         }
     }

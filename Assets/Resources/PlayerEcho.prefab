@@ -73,8 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6808205469259210545, guid: ad8a4316c2f79c24aa248c8b083ea5ed,
-    type: 3}
+  m_Sprite: {fileID: 21300040, guid: 2f9eda8eaa1fd504bb0613389af5c7a7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,7 +92,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696704514843677417}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f1dde92ca5a6b53428ef0a854f119e72, type: 2}
   m_CullingMode: 0
@@ -129,4 +128,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6873d9685bbce874c924d7d790438ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alpha: 0
+  alpha: -0.03

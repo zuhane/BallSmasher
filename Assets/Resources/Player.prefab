@@ -627,7 +627,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec6924da51f96a43a1d67766d436327, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 2
   rotateFrequency: 5
 --- !u!212 &6176650463867773506
 SpriteRenderer:
@@ -636,7 +635,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4851514473392383607}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -668,7 +667,7 @@ SpriteRenderer:
   m_SortingLayerID: 551469179
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: d31ef7e4c318b2240889c83740943596, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e677a5698f738041806e798dd3ed20d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -686,6 +685,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 425641250105451400}
     m_Modifications:
+    - target: {fileID: 23858225676191460, guid: 8c7e04daea270274480cd156167d57b0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2761361259800092659, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}
       propertyPath: impactForce
@@ -694,12 +698,12 @@ PrefabInstance:
     - target: {fileID: 2761361259800092659, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}
       propertyPath: enabledTime
-      value: 0.66
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 2761361259800092659, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}
       propertyPath: velocityModifier
-      value: 0.224
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4441261147921284305, guid: 8c7e04daea270274480cd156167d57b0,
         type: 3}

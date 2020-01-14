@@ -6,21 +6,26 @@ public class SpawnEcho : MonoBehaviour
 {
     private float timeBetweenSpawns;
     public float startTimeBetweenSpawns = 0.005f;
-    private SpriteRenderer parentRenderer;
+    private SpriteRenderer parentRenderer, echoRenderer;
     public Sprite sprite;
+    private GameObject echo;
+
+    private void Start()
+    {
+        parentRenderer = transform.parent.GetComponent<SpriteRenderer>();
+        echo = Resources.Load<GameObject>("PlayerEcho");
+        echoRenderer = echo.GetComponent<SpriteRenderer>();
+    }
 
     private void Update()
     {
 
         if (timeBetweenSpawns <= 0)
         {
-            GameObject echo = Resources.Load<GameObject>("PlayerEcho");
-
-            parentRenderer = transform.parent.GetComponent<SpriteRenderer>();
-            sprite = parentRenderer.sprite;
+            echoRenderer.sprite = parentRenderer.sprite;
             echo.transform.localScale = transform.parent.localScale;
-            echo.GetComponent<SpriteRenderer>().material = parentRenderer.material;
-            echo.GetComponent<SpriteRenderer>().sprite = sprite;
+            //echo.GetComponent<SpriteRenderer>().material = parentRenderer.material;
+            echoRenderer.flipX = parentRenderer.flipX;
             Instantiate(echo, transform.position, Quaternion.identity);
 
             timeBetweenSpawns = startTimeBetweenSpawns;
