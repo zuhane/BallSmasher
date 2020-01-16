@@ -89,8 +89,8 @@ public class SmashBrick : MonoBehaviour
                 audioSource.pitch = Random.Range(1.2f, 1.8f);
                 audioSource.Play();
                 animator.SetTrigger("Hit");
-                collision.gameObject.GetComponent<Rigidbody2D>().setX(-collision.GetContact(0).normal.x * collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
-                collision.gameObject.GetComponent<Rigidbody2D>().setY(-collision.GetContact(0).normal.y * collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                collision.gameObject.GetComponent<Rigidbody2D>().setX(collision.GetContact(0).normal.x * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
+                collision.gameObject.GetComponent<Rigidbody2D>().setY(collision.GetContact(0).normal.y * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
                 Damage(damageToDeal);
             }

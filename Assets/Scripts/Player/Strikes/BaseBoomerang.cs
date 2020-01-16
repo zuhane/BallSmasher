@@ -60,7 +60,6 @@ public class BaseBoomerang : MonoBehaviour
         previousPos = transform.position;
 
         rekt = new Rect(transform.position, new Vector2(0.1f, 0.1f));
-        enabledTimer = Timer.CreateComponent(gameObject, enabledTime);
     }
 
     public enum FireState
@@ -172,7 +171,7 @@ public class BaseBoomerang : MonoBehaviour
 
         SpriteRenderer tempRend = GetComponentInChildren<SpriteRenderer>();
 
-        RaycastHit2D[] hits = Physics2D.CapsuleCastAll(previousPos, new Vector2(tempRend.size.x / 2, tempRend.size.y / 2), CapsuleDirection2D.Horizontal, 0, velocity, (currentPos - previousPos).magnitude, (int)LayerMask.Ball | (int)LayerMask.Player | (int)LayerMask.AttackOrb);
+        RaycastHit2D[] hits = Physics2D.CapsuleCastAll(previousPos, new Vector2(tempRend.size.x / 2, tempRend.size.y / 2), CapsuleDirection2D.Horizontal, 0, velocity, (currentPos - previousPos).magnitude, PhysicsLayers.LayerMask((int)Layer.AttackOrb));
 
         for (int i = 0; i < hits.Length; i++)
         {
