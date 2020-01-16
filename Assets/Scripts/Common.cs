@@ -1,4 +1,6 @@
-﻿
+﻿using UnityEngine;
+using System.Collections.Generic;
+
 enum Layer
 {
     Default = 0,
@@ -15,19 +17,35 @@ enum Layer
     AttackOrb = 14
 }
 
-
-enum LayerMask
+public static class PhysicsLayers
 {
-    Default = 1 << 0,
-    TransparentFX = 1 << 1,
-    IgnoreRaycast = 1 << 2,
-    Water = 1 << 4,
-    UI = 1 << 5,
-    PostProcessing = 1 << 8,
-    Wall = 1 << 9,
-    Ball = 1 << 10,
-    HitBallsOnly = 1 << 11,
-    Player = 1 << 12,
-    SafeZone = 1 << 13,
-    AttackOrb = 1 << 14
+    private static Dictionary<int, int> _collisionMatrix;
+
+
+    public static void PopulateCollisionMatrix()
+    {
+        _collisionMatrix = new Dictionary<int, int>();
+        for (int i = 0; i < 32; i++)
+        {
+            int mask = 0;
+            for (int j = 0; j < 32; j++)
+            {
+                if (!Physics2D.GetIgnoreLayerCollision(i, j))
+                {
+                    mask |= 1 << j;
+                }
+            }
+            _collisionMatrix.Add(i, mask);
+        }
+    }
+
+    public static int LayerMask(int layer)
+    {
+        if (_collisionMatrix == null)
+        {
+            PopulateCollisionMatrix();
+        }
+        return _collisionMatrix[layer];
+    }
 }
+
