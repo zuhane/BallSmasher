@@ -20,6 +20,8 @@ public class AudioManager : MonoBehaviour
 
     public static void PlaySound(AudioClip audioClip)
     {
+
+        if (audioClip == null) return;
         GameObject audiocube = Resources.Load<GameObject>("AudioCube");
 
         AudioSource audioSource = audiocube.GetComponent<AudioSource>();

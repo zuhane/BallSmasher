@@ -31,6 +31,7 @@ public class IntentToAction : MonoBehaviour
         public bool useAbility1 { get; set; }
         public bool useAbility2 { get; set; }
         public bool useAbility3 { get; set; }
+        public bool switchWeapon { get; set; }
     }
 
     public class State
@@ -52,6 +53,7 @@ public class IntentToAction : MonoBehaviour
     [HideInInspector] public PlayerPhysicsMovement playerPhysics;
     private AbilityManager abilities;
     private AnimationManager animationManager;
+    private AttackContainer attackContainer;
 
     //Bread and butter of the class
     [HideInInspector] public Intent intent = new Intent();
@@ -74,6 +76,7 @@ public class IntentToAction : MonoBehaviour
         sprRend = GetComponentInChildren<SpriteRenderer>();
         abilities = GetComponent<AbilityManager>();
         animationManager = GetComponentInChildren<AnimationManager>();
+        attackContainer = GetComponentInChildren<AttackContainer>();
     }
 
     // Update is called once per frame
@@ -105,6 +108,12 @@ public class IntentToAction : MonoBehaviour
             if (intent.useAbility1) abilities.ActivateAbility(1, gameObject);
             if (intent.useAbility2) abilities.ActivateAbility(2, gameObject);
             if (intent.useAbility3) abilities.ActivateAbility(3, gameObject);
+        }
+
+        if (intent.switchWeapon) 
+        { 
+            Debug.Log("You switched weapon yo");
+            attackContainer.SwitchWeapon();
         }
 
     }

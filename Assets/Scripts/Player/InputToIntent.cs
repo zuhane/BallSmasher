@@ -82,8 +82,10 @@ public class InputToIntent : MonoBehaviour
         if (Input.GetButtonDown("Ability3P" + (int)controllerType))
             intentToAction.intent.useAbility3 = true;
 
+        if (Input.GetButtonDown("SwitchWeaponP" + (int)controllerType))
+            intentToAction.intent.switchWeapon = true;
 
-        if (Input.GetButton("ClockwiseHitP" + (int)controllerType))
+        if (Input.GetAxisRaw("ClockwiseHitP" + (int)controllerType) > 0)
         {
             intentToAction.intent.holdClockwiseAttack = intentToAction.intent.attack = true;
         }
@@ -92,7 +94,7 @@ public class InputToIntent : MonoBehaviour
             intentToAction.intent.releaseClockwiseAttack = intentToAction.intent.release = true;
         }
 
-        if (Input.GetButton("AntiClockwiseHitP" + (int)controllerType))
+        if (Input.GetAxisRaw("AntiClockwiseHitP" + (int)controllerType) < 0 )
         {
             intentToAction.intent.holdAnticlockwiseAttack = intentToAction.intent.attack = true;
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackContainer : MonoBehaviour
@@ -36,6 +37,10 @@ public class AttackContainer : MonoBehaviour
 
     private float currentForceChargeAmount;
 
+    private StatsRPG statsRPG;
+    private List<GameObject> activeWeapons = new List<GameObject>();
+    private GameObject activeWeapon;
+    private int currWeaponIndex = 0;
     private void Start()
     {
         player = transform.root.gameObject;
@@ -44,7 +49,12 @@ public class AttackContainer : MonoBehaviour
         initialAttackDisplacement = player.GetComponent<Collider2D>().bounds.size;
         initialAttackDisplacement.y /= 2;
 
-        baseBoomerang = gameObject.GetComponentInChildren<BaseBoomerang>();
+        statsRPG = player.GetComponent<StatsRPG>();
+
+        LoadWeapon();
+        SwitchWeapon();
+
+
     }
 
     void Update()
@@ -75,6 +85,8 @@ public class AttackContainer : MonoBehaviour
         {
             if (chargeState == ChargeState.ReadyToFire)
             {
+                //AudioManager.PlaySound(baseBoomerang.chargeUpSound);
+
                 attackDirection =
                     (intentToAction.intent.holdLeft ? AttackDirection.Left :
                     (intentToAction.intent.holdRight ? AttackDirection.Right :
@@ -182,5 +194,30 @@ public class AttackContainer : MonoBehaviour
     }
 
 
+    private void LoadWeapon()
+    {
+        foreach(GameObject weapon in statsRPG.weapons)
+        {
+            GameObject tempObject = Instantiate(weapon, transform);
+            tempObject.SetActive(false);
+
+            activeWeapons.Add(tempObject);
+        }
+    }
+    public void SwitchWeapon()
+    {
+        if (chargeState != ChargeState.ReadyToFire) return;
+
+        if (activeWeapon != null) activeWeapon.SetActive(false);
+
+        activeWeapon = activeWeapons[currWeaponIndex];
+        activeWeapon.SetActive(true);
+        baseBoomerang = activeWeapon.GetComponent<BaseBoomerang>();
+
+        //currWeaponIndex = currWeaponIndex + 1 % activeWeapons.Count - 1;
+
+        currWeaponIndex++;
+        if (currWeaponIndex >= activeWeapons.Count) currWeaponIndex = 0;
+    }
 
 }

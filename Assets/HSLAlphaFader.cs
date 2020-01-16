@@ -18,10 +18,10 @@ public class HSLAlphaFader : MonoBehaviour
         alpha -= 0.01f;
 
         Material material = alphaRenderer.material;
-        material.SetVector("_HSLAAdjust", 
-            new Vector4(material.GetVector("_HSLAAdjust").x,
-            material.GetVector("_HSLAAdjust").y,
-            material.GetVector("_HSLAAdjust").z, alpha));
+        //material.SetVector("_HSLAAdjust", 
+        //    new Vector4(material.GetVector("_HSLAAdjust").x,
+        //    material.GetVector("_HSLAAdjust").y,
+        //    material.GetVector("_HSLAAdjust").z, alpha));
 
     }
 }

@@ -5,34 +5,34 @@ using UnityEngine;
 public class BaseBoomerang : MonoBehaviour
 {
 
-    protected Animator anim;
-
     [Range(1, 10)] public float chargeLimit = 2f;
     [Range(0, 1)] public float velocityModifier = 0.1f;
     [Range(0, 3)] public float enabledTime = 1f;
-    [Range(5, 20)] public float impactForce = 10f;
+    [Range(5, 40)] public float impactForce = 10f;
 
     private float lerpReturnSpeed;
     private Rect rekt;
-    private Vector3 velocity;
+    protected Vector3 velocity;
     private Timer enabledTimer;
 
     private Vector2 previousPos;
     private SpawnEcho spawnEcho;
-    private GameObject player, attackContainer;
+    protected GameObject player, attackContainer;
 
-    [SerializeField] public AudioClip chargeUpSound, chargedFullySound, attackReleaseSound;
-    private GameObject smashEffect;
+    [SerializeField] private AudioClip attackReleaseSound, hitSoundWeak, hitSoundStrong;
+    [SerializeField] public AudioClip chargeUpSound;
+    [SerializeField] public AudioClip chargedFullySound;
+    [SerializeField] private GameObject smashEffectWeak, smashEffectStrong;
 
     private Vector3 playerPos;
 
     [HideInInspector] public int lifeTimeCounter, lifeTimeLimit;
 
-    [Range(1, 20)] public int distancefactor = 5;
-    [Range(0f, 1f)] public float speed;
+    [Range(0.1f, 20)] public float distancefactor = 3;
+    [Range(0f, 1f)] public float speed = 0.4f;
 
     private bool _charged;
-    private bool charged
+    protected bool charged
     {
         get
         {
@@ -41,17 +41,17 @@ public class BaseBoomerang : MonoBehaviour
         set
         {
             _charged = value;
-            if (_charged) damage *= 2;
-            anim.SetBool("FullyCharged", _charged);
+            if (_charged) finalDamage = damage * 2;
+            else finalDamage = damage;
         }
     }
 
     public int damage = 1;
+    protected int finalDamage;
 
     public virtual void Start()
     {
-        anim = transform.GetComponentInChildren<Animator>();
-        smashEffect = Resources.Load<GameObject>("AttackEffect");
+        //anim = transform.GetComponentInChildren<Animator>()
         playerPos = transform.parent.transform.position;
         spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         player = transform.root.gameObject;
@@ -88,26 +88,22 @@ public class BaseBoomerang : MonoBehaviour
             switch (_fireState)
             {
                 case FireState.Idling:
-                    anim.SetBool("Returning", false);
                     //GetComponent<TrailRenderer>().enabled = false;
                     transform.SetParent(attackContainer.transform);
                     transform.localPosition = Vector2.zero;
                     lerpReturnSpeed = 0.01f;
                     break;
                 case FireState.Charging:
-                    anim.SetBool("Charging", true);
                     break;
                 case FireState.FullyCharged:
                     charged = true;
                     break;
                 case FireState.Live:
-                    anim.SetBool("Charging", false);
                     //GetComponent<TrailRenderer>().enabled = true;
                     //if (spawnEcho != null) spawnEcho.enabled = true;
                     transform.SetParent(null);
                     break;
                 case FireState.Returning:
-                    anim.SetBool("Returning", true);
                     //if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
@@ -147,7 +143,7 @@ public class BaseBoomerang : MonoBehaviour
 
             transform.position = lerp;
 
-            if (lerpReturnSpeed >= 1) fireState = FireState.Idling;
+            if (lerpReturnSpeed >= .2f) Returned();
 
         }
 
@@ -176,10 +172,6 @@ public class BaseBoomerang : MonoBehaviour
         for (int i = 0; i < hits.Length; i++)
         {
             HitTrigger(hits[i].collider);
-            ///if (hookshot != null)
-            ///{
-            ///hookshot.BallhitTrigger(hits[i].collider);
-            ///}
         }
 
 
@@ -187,6 +179,7 @@ public class BaseBoomerang : MonoBehaviour
 
     public virtual void Release(Vector3 attackDirectionVector, float charge)
     {
+        AudioManager.PlaySound(attackReleaseSound);
         fireState = FireState.Live;
         charge = Mathf.Clamp(charge, 1, chargeLimit);
         velocity = attackDirectionVector * velocityModifier * charge;
@@ -194,7 +187,7 @@ public class BaseBoomerang : MonoBehaviour
     }
 
 
-    protected virtual void HitTrigger(Collider2D collision)
+    private void HitTrigger(Collider2D collision)
     {
         GameObject goCollisionRoot = collision.transform.root.gameObject;
         if (goCollisionRoot == player) { return; } //If ball hits self, ignore it.
@@ -206,43 +199,17 @@ public class BaseBoomerang : MonoBehaviour
 
             if (charged)
             {
-                Instantiate(Resources.Load<GameObject>("Effects/ImpactHit"), collision.gameObject.transform.position, Quaternion.identity);
-                AudioManager.PlaySound("StrikeHit" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                if (smashEffectStrong != null) Instantiate(smashEffectStrong, goCollisionRoot.transform.position, Quaternion.identity);
+                if (hitSoundStrong != null) AudioManager.PlaySound(hitSoundStrong);
             }
             else
             {
-                Instantiate(Resources.Load<GameObject>("Effects/ImpactHitWeak"), collision.gameObject.transform.position, Quaternion.identity);
-                AudioManager.PlaySound("StrikeHitWeak" + UnityEngine.Random.Range(1, 3), UnityEngine.Random.Range(0.8f, 1.2f));
+                if (smashEffectWeak != null) Instantiate(smashEffectWeak, goCollisionRoot.transform.position, Quaternion.identity);
+                if (hitSoundWeak != null) AudioManager.PlaySound(hitSoundWeak);
             }
 
-            if (collision.gameObject.layer == (int)Layer.AttackOrb)
-            {
-                //TODO: Maybe add attack orb shields?
-            }
+            CollisionReaction(collision, goCollisionRoot, rigidBody);
 
-            Ball ballHit = goCollisionRoot.GetComponent<Ball>();
-            if (ballHit != null)
-            {
-                rigidBody.AddForce(velocity.normalized * impactForce);
-                ballHit.TakeDamage(damage);
-                if (charged)
-                {
-                    ballHit.ElectrifyBall();
-                }
-            }
-
-            PlayerPhysicsMovement playerPhysics = goCollisionRoot.GetComponent<PlayerPhysicsMovement>();
-            if (playerPhysics != null)
-            {
-                playerPhysics.AddVelocity(velocity.normalized * impactForce / 5);
-            }
-
-            StatsRPG stats = goCollisionRoot.GetComponent<StatsRPG>();
-            if (stats != null)
-            {
-                Debug.Log(damage);
-                stats.TakeDamage(damage);
-            }
             fireState = FireState.Returning;
         }
         else
@@ -250,5 +217,14 @@ public class BaseBoomerang : MonoBehaviour
             Debug.LogError($"Missing rigidbody!!!! You fucking idiot!! {goCollisionRoot.name}");
         }
 
+    }
+
+    protected virtual void CollisionReaction(Collider2D collision, GameObject collisionRoot, Rigidbody2D rigidbody)
+    {
+
+    }
+    protected virtual void Returned()
+    {
+        fireState = FireState.Idling;
     }
 }

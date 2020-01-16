@@ -11,6 +11,8 @@ public class StatsRPG : MonoBehaviour
     [SerializeField] public int attackDamage = 1;
     [SerializeField] private float knockbackForce = 6;
 
+    public List<GameObject> weapons = new List<GameObject>();
+
     [HideInInspector] public int damageCounter, damageLimit = 5;
     [HideInInspector] public bool hurt;
 
@@ -132,4 +134,5 @@ public class StatsRPG : MonoBehaviour
             spriteRenderer.color = originalColour;
         }
     }
+
 }
