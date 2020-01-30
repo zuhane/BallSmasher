@@ -13,7 +13,7 @@ public class SpawnEcho : MonoBehaviour
     private void Start()
     {
         parentRenderer = transform.parent.GetComponent<SpriteRenderer>();
-        echo = Resources.Load<GameObject>("PlayerEcho");
+        echo = Resources.Load<GameObject>("GraphicEcho");
         echoRenderer = echo.GetComponent<SpriteRenderer>();
     }
 

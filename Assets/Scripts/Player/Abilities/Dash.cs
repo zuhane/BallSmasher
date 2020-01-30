@@ -22,7 +22,7 @@ public class Dash : BaseAbility
         if (player.GetComponent<IntentToAction>().state.facingLeft) player.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(-dashSpeed, 0));
         else if (!player.GetComponent<IntentToAction>().state.facingLeft) player.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(dashSpeed, 0));
 
-        GameObject echo = Resources.Load<GameObject>("EchoSpawner");
+        GameObject echo = Resources.Load<GameObject>("EchoTrailSpawner");
         Instantiate(echo, player.transform.GetChild(0).transform);
     }
 }

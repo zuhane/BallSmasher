@@ -14,9 +14,10 @@ class GrabHook : BaseBoomerang
 
     
 
-    public GrabHook()
+    public void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 2;
     }
     
 
@@ -33,11 +34,11 @@ class GrabHook : BaseBoomerang
         hookedObject?.transform.SetParent(null);
         base.Returned();
     }
-
+    
     private void LateUpdate()
     {
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, attackContainer.transform.position);
+        lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y));
+        lineRenderer.SetPosition(1, new Vector2(attackContainer.transform.position.x, attackContainer.transform.position.y));
     }
 }
 

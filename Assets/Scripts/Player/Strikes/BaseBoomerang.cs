@@ -16,7 +16,6 @@ public class BaseBoomerang : MonoBehaviour
     private Timer enabledTimer;
 
     private Vector2 previousPos;
-    private SpawnEcho spawnEcho;
     protected GameObject player, attackContainer;
 
     [SerializeField] private AudioClip attackReleaseSound, hitSoundWeak, hitSoundStrong;
@@ -53,7 +52,6 @@ public class BaseBoomerang : MonoBehaviour
     {
         //anim = transform.GetComponentInChildren<Animator>()
         playerPos = transform.parent.transform.position;
-        spawnEcho = transform.GetComponentInChildren<SpawnEcho>();
         player = transform.root.gameObject;
         attackContainer = transform.parent.gameObject;
         //physicsObject = GetComponent<PhysicsObject>();
@@ -100,11 +98,9 @@ public class BaseBoomerang : MonoBehaviour
                     break;
                 case FireState.Live:
                     //GetComponent<TrailRenderer>().enabled = true;
-                    //if (spawnEcho != null) spawnEcho.enabled = true;
                     transform.SetParent(null);
                     break;
                 case FireState.Returning:
-                    //if (spawnEcho != null) spawnEcho.enabled = false;
                     lifeTimeCounter = 0;
                     charged = false;
                     velocity = Vector2.zero;

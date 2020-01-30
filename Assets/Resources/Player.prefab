@@ -217,7 +217,7 @@ MonoBehaviour:
   pushingRight: 0
   minGroundNormalY: 0.65
   minSideNormalX: 0.65
-  gravityModifier: 1.4
+  originalGravModifier: 1.1
   targetVelocity: {x: 0.000033025568, y: 0}
   velocity: {x: 0.000035897356, y: -0.000000059604645}
   running: 0
@@ -284,7 +284,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9971c7362455e0439b2a248a9e1a575, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306,7 +306,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300004, guid: 2f9eda8eaa1fd504bb0613389af5c7a7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

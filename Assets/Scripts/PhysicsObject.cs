@@ -21,7 +21,8 @@ public class PhysicsObject : MonoBehaviour
     [HideInInspector] protected bool movingLeft, movingRight;
 
     [HideInInspector] public float minGroundNormalY = 0.65f, minSideNormalX = 0.65f;
-    [Range(0, 10)] public float gravityModifier = 0.1f;
+    [Range(0, 10)] [SerializeField] protected float originalGravModifier = 0.1f;
+    protected float currentGravModifier;
 
     [HideInInspector] public Vector2 targetVelocity;
     protected Vector2 groundNormal;
@@ -47,6 +48,7 @@ public class PhysicsObject : MonoBehaviour
         contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(9));
         contactFilter.useLayerMask = true;
         boxCollider = GetComponent<BoxCollider2D>();
+        currentGravModifier = originalGravModifier;
         Debug.Log(boxCollider);
 
     }
@@ -55,6 +57,7 @@ public class PhysicsObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         //targetVelocity = Vector2.zero;
         if (enabled)
         {
@@ -116,7 +119,7 @@ public class PhysicsObject : MonoBehaviour
         brushingLeft = false;
         brushingRight = false;
 
-        velocity += gravityModifier * Physics2D.gravity * Time.deltaTime;
+        velocity += currentGravModifier * Physics2D.gravity * Time.deltaTime;
         velocity.x = targetVelocity.x;
 
         brushingFeet = false;

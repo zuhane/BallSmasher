@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 696704514843677419}
   - component: {fileID: 696704514843677418}
   - component: {fileID: 7056054667312946917}
-  - component: {fileID: 258627698621492676}
   m_Layer: 0
-  m_Name: PlayerEcho
+  m_Name: GraphicEcho
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,7 +91,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696704514843677417}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: f1dde92ca5a6b53428ef0a854f119e72, type: 2}
   m_CullingMode: 0
@@ -116,16 +115,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.5
---- !u!114 &258627698621492676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 696704514843677417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6873d9685bbce874c924d7d790438ffa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alpha: -0.03

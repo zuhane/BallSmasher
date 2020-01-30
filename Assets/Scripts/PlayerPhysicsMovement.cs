@@ -91,6 +91,10 @@ public class PlayerPhysicsMovement : PhysicsObject
             aerial = false;
         }
 
+        //Wall sliding
+        if (!brushingFeet && velocity.y < 0 && (pushingLeft || pushingRight)) currentGravModifier = 0.1f;
+        else currentGravModifier = originalGravModifier;
+
         if (intent.jump && currJump < maxJumps)
         {
             velocity.y = jumpTakeOffSpeed;
