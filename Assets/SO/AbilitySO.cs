@@ -10,7 +10,6 @@ public class AbilitySO : ScriptableObject
 
     [Multiline]
     public string description;
-    [HideInInspector] public int cooldown;
         
     public float cooldownLimitInSeconds;
     public int shardCost;

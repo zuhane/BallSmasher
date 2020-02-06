@@ -15,12 +15,12 @@ public abstract class BaseAbility : MonoBehaviour
 
         if (!CanActivate)
         {
-            Cooldown += Time.deltaTime;
+            Cooldown -= Time.deltaTime;
         }
 
-        if (Cooldown >= abilitySO.cooldownLimitInSeconds)
+        if (Cooldown <= 0)
         {
-            Cooldown = 0;
+            Cooldown = abilitySO.cooldownLimitInSeconds;
             CanActivate = true;
         }
     }
@@ -28,7 +28,6 @@ public abstract class BaseAbility : MonoBehaviour
     public void PassStatsFromSO(AbilitySO inAbilitySO)
     {
         abilitySO = inAbilitySO;
-        abilitySO.cooldown = 0;
     }
 
     public virtual void Activate(GameObject player)
