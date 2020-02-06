@@ -16,6 +16,6 @@ MonoBehaviour:
   fileName: RockWall
   description: Dog shit
   cooldown: 0
-  cooldownLimit: 40
+  cooldownLimitInSeconds: 6
   shardCost: 0
-  icon: {fileID: 8723956004275851022, guid: 99a0ff2f08e2e2b42a089783a873b74d, type: 3}
+  icon: {fileID: 21300000, guid: fa3c86df7b324204d885f4695635ba00, type: 3}

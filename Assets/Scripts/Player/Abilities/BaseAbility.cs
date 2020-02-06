@@ -5,17 +5,24 @@ using UnityEngine;
 public abstract class BaseAbility : MonoBehaviour
 {
     public AbilitySO abilitySO;
-    public BaseAbility()
-    {
 
-    }
-
+    public float Cooldown { get; private set; }
+    public bool CanActivate { get; set; } //TODO: Set inside here instead - having to set extenrally because of weird ordering shit going on
+    public bool justActivated;
 
     public virtual void Update()
-    {
-        
-        if (abilitySO.cooldown > 0)
-            abilitySO.cooldown--;
+    { 
+
+        if (!CanActivate)
+        {
+            Cooldown += Time.deltaTime;
+        }
+
+        if (Cooldown >= abilitySO.cooldownLimitInSeconds)
+        {
+            Cooldown = 0;
+            CanActivate = true;
+        }
     }
 
     public void PassStatsFromSO(AbilitySO inAbilitySO)
@@ -27,22 +34,15 @@ public abstract class BaseAbility : MonoBehaviour
     public virtual void Activate(GameObject player)
     {
         Debug.Log("Base worked!");
-        abilitySO.cooldown = abilitySO.cooldownLimit;
+        CanActivate = false;
+        justActivated = true;
     }
-        
 
-    public bool canActivate()
+    public virtual void LateUpdate()
     {
-
-
-        if(abilitySO.cooldown == 0)
-        {
-            return true;
-        }
-
-        return false;
-        
+        justActivated = false;
     }
+
 
 
 }

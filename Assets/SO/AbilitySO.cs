@@ -12,7 +12,7 @@ public class AbilitySO : ScriptableObject
     public string description;
     [HideInInspector] public int cooldown;
         
-    public int cooldownLimit;
+    public float cooldownLimitInSeconds;
     public int shardCost;
 
     public Sprite icon;

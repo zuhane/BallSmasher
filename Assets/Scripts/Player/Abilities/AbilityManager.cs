@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilityManager : MonoBehaviour
 {
-    [HideInInspector] private List<BaseAbility> abilities = new List<BaseAbility>();
+    [HideInInspector] public List<BaseAbility> abilities = new List<BaseAbility>();
     [SerializeField] public List<AbilitySO> AbilityObjects;
 
     void Start()
@@ -22,7 +22,10 @@ public class AbilityManager : MonoBehaviour
     public void ActivateAbility(int index, GameObject user)
     {
         index--;
-        if (abilities[index].canActivate())
+
+        if (abilities.Count-1 < index || abilities[index] != null) return;
+
+        if (abilities[index].CanActivate) 
         {
             abilities[index].Activate(transform.gameObject);
         }
@@ -33,6 +36,14 @@ public class AbilityManager : MonoBehaviour
         foreach (BaseAbility b in abilities)
         {
             b.Update();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        foreach (BaseAbility b in abilities)
+        {
+            b.LateUpdate();
         }
     }
 
