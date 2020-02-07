@@ -103,7 +103,7 @@ public class MenuManager : MonoBehaviour
         switch (LevelData.gameMode)
         {
             case GameMode.Goals:
-                LevelData.GoalsToWin = GoalDropDown.GetComponent<Dropdown>().value;
+                LevelData.GoalsToWin = LevelData.Goals[GoalDropDown.GetComponent<Dropdown>().value];
                 break;
             case GameMode.Time:
                 LevelData.MatchTime = LevelData.Times[TimeDropDown.GetComponent<Dropdown>().value];

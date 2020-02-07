@@ -11,6 +11,7 @@ public enum GameMode
 public static class LevelData
 {
     public static int[] Times = new int[] { 10, 60, 300, 600 };
+    public static int[] Goals = new int[] { 1, 3, 5, 10, 25 };
 
 
     public static int levelIndex = 1;
