@@ -10,7 +10,7 @@ class GrabHook : BaseBoomerang
 {
     private GameObject hookedObject;
     private LineRenderer lineRenderer;
-
+    private Transform cameraTrans;
 
     
 
@@ -18,6 +18,7 @@ class GrabHook : BaseBoomerang
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
+        cameraTrans = Camera.main.transform;
     }
     
 
@@ -36,9 +37,9 @@ class GrabHook : BaseBoomerang
     }
     
     private void LateUpdate()
-    {
-        lineRenderer.SetPosition(0, new Vector2(transform.position.x, transform.position.y));
-        lineRenderer.SetPosition(1, new Vector2(attackContainer.transform.position.x, attackContainer.transform.position.y));
+    { 
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, attackContainer.transform.position);
     }
 }
 
