@@ -11,7 +11,7 @@ public class RockWall : BaseAbility
         AudioManager.PlaySound("Rockwall", Random.Range(0.8f, 1.2f));
         Debug.Log("Rock wall worked!");
 
-        GameObject RockWall = Resources.Load<GameObject>("Rock Wall");
+        GameObject RockWall = Resources.Load<GameObject>("AbilityObjects/Rock Wall");
 
         if (player.GetComponent<IntentToAction>().state.facingLeft) RockWall = Instantiate(RockWall, player.transform.position + new Vector3(-1, 0), Quaternion.identity);
         else

@@ -52,7 +52,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2430776021576682866}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 2.5
@@ -188,10 +188,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a0513705fc1af74eb13607598e07681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilities: []
   AbilityObjects:
   - {fileID: 11400000, guid: 3101264f535074f45aa7f86601337985, type: 2}
   - {fileID: 11400000, guid: 0016d2a27968c7340a7c5908639f1a1d, type: 2}
-  - {fileID: 11400000, guid: 0016d2a27968c7340a7c5908639f1a1d, type: 2}
+  - {fileID: 11400000, guid: c038403d78b6f7e44ac0c81fb373480b, type: 2}
 --- !u!114 &6290798691834981924
 MonoBehaviour:
   m_ObjectHideFlags: 0

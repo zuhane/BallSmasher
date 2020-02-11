@@ -343,7 +343,7 @@ LineRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
 --- !u!96 &5709316652452031154
 TrailRenderer:
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargeLimit: 2
   velocityModifier: 0.1
-  enabledTime: 1
+  enabledTime: 0.4
   impactForce: 10
   attackReleaseSound: {fileID: 0}
   hitSoundWeak: {fileID: 0}
@@ -467,6 +467,6 @@ MonoBehaviour:
   smashEffectStrong: {fileID: 0}
   lifeTimeCounter: 0
   lifeTimeLimit: 0
-  distancefactor: 3
-  speed: 0.4
+  distancefactor: 2
+  speed: 0.3
   damage: 1

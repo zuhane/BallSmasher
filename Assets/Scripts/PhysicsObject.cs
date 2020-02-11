@@ -260,8 +260,20 @@ public class PhysicsObject : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.GetComponent<PointEffector2D>();
+
+
+        if (collision.gameObject.name == "kfhgkdfg")
+        {
+            int a = 1;
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
+
 
         foreach (ContactPoint2D contact in collision.contacts)
         {
