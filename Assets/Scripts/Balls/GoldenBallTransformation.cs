@@ -15,7 +15,7 @@ public class GoldenBallTransformation : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private TrailRenderer trailRenderer;
 
-    private int numElectrifications = 0;
+    public int numElectrifications = 0;
     private bool waitForElectrification = false;
     // Start is called before the first frame update
     void Start()

@@ -37,12 +37,15 @@ public class AttackContainer : MonoBehaviour
 
     private float currentForceChargeAmount;
 
+    private Animator animator;
+
     private StatsRPG statsRPG;
     private List<GameObject> activeWeapons = new List<GameObject>();
     private GameObject activeWeapon;
     private int currWeaponIndex = 0;
     private void Start()
     {
+
         player = transform.root.gameObject;
 
         intentToAction = player.GetComponent<IntentToAction>();
@@ -54,7 +57,7 @@ public class AttackContainer : MonoBehaviour
         LoadWeapon();
         SwitchWeapon();
 
-
+        animator = activeWeapon.transform.GetChild(0).GetComponent<Animator>();
     }
 
     void Update()
@@ -133,7 +136,7 @@ public class AttackContainer : MonoBehaviour
                     attackDirectionVector = intentToAction.state.facingLeft ? new Vector2(-1, .85f) : new Vector2(1, .85f);
                 }
 
-                if (attackDirection == AttackDirection.Clockwise || attackDirection ==  AttackDirection.Anticlockwise)
+                if (attackDirection == AttackDirection.Clockwise || attackDirection == AttackDirection.Anticlockwise)
                 {
                     float inputValue = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
                     attackDirectionVector = new Vector2(-(float)Math.Sin(inputValue), (float)Math.Cos(inputValue)).normalized;
@@ -143,6 +146,35 @@ public class AttackContainer : MonoBehaviour
                 transform.localPosition = Vector2.zero;
                 chargeState = ChargeState.Returning;
             }
+        }
+
+        AnimationStuff();
+    }
+
+    private void AnimationStuff()
+    {
+        if (chargeState == ChargeState.Charging)
+        {
+            animator.SetBool("Charging", true);
+        }
+
+        if (chargeState == ChargeState.FullyCharged)
+        {
+            animator.SetBool("Charging", false);
+            animator.SetBool("FullyCharged", true);
+        }
+
+        if (chargeState == ChargeState.Returning)
+        {
+            animator.SetBool("FullyCharged", false);
+            animator.SetBool("Returning", true);
+        }
+
+        if (chargeState == ChargeState.ReadyToFire)
+        {
+            animator.SetBool("Charging", false);
+            animator.SetBool("FullyCharged", false);
+            animator.SetBool("Returning", false);
         }
     }
 
@@ -218,6 +250,8 @@ public class AttackContainer : MonoBehaviour
 
         currWeaponIndex++;
         if (currWeaponIndex >= activeWeapons.Count) currWeaponIndex = 0;
+
+        animator = activeWeapon.transform.GetChild(0).GetComponent<Animator>();
     }
 
 }

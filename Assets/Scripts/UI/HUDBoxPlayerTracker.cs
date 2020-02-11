@@ -13,6 +13,8 @@ public class HUDBoxPlayerTracker : MonoBehaviour
 
     private GameObject nameText;
     private GameObject hpText;
+    private GameObject mpText;
+    private GameObject shardText;
     private GameObject abilityContainer;
 
     private void Start()
@@ -27,6 +29,8 @@ public class HUDBoxPlayerTracker : MonoBehaviour
 
         nameText = transform.Find("Name Text").gameObject;
         hpText = transform.Find("HP Text").gameObject;
+        mpText = transform.Find("MP Text").gameObject;
+        shardText = transform.Find("Shard Text").gameObject;
         abilityContainer = transform.Find("Abilities").gameObject;
         List<BaseAbility> abilities = player.GetComponent<AbilityManager>().abilities;
 
@@ -43,6 +47,7 @@ public class HUDBoxPlayerTracker : MonoBehaviour
     {
         nameText.GetComponent<TextMeshProUGUI>().text = "P" + playerManager.playerNumber;
         hpText.GetComponent<TextMeshProUGUI>().text = playerStats.HP + "/" + playerStats.MaxHP + " HP";
-        
+        mpText.GetComponent<TextMeshProUGUI>().text = playerStats.MP + "/" + playerStats.MaxMP + " MP";
+        shardText.GetComponent<TextMeshProUGUI>().text = playerStats.shards.ToString();    
     }
 }

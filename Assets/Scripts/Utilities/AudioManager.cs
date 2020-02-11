@@ -32,6 +32,21 @@ public class AudioManager : MonoBehaviour
         Instantiate(audioSource);
     }
 
+
+    public static void PlaySound(AudioClip audioClip, float pitch)
+    {
+
+        if (audioClip == null) return;
+        GameObject audiocube = Resources.Load<GameObject>("AudioCube");
+
+        AudioSource audioSource = audiocube.GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+
+        audioSource.pitch = pitch;
+
+        Instantiate(audioSource);
+    }
+
     public static void PlaySound(string audioString, float pitch)
     {
         GameObject audiocube = Resources.Load<GameObject>("AudioCube");

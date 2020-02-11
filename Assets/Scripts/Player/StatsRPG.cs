@@ -6,10 +6,12 @@ public class StatsRPG : MonoBehaviour
 {
 
     [SerializeField] public int MaxHP = 3;
-    [SerializeField] private int MaxMP = 5;
+    [SerializeField] public int MaxMP = 5;
+    [SerializeField] public int MaxShards = 20;
     [SerializeField] private int armour = 0;
     [SerializeField] public int attackDamage = 1;
     [SerializeField] private float knockbackForce = 6;
+    [HideInInspector] public int shards;
 
     public List<GameObject> weapons = new List<GameObject>();
 
@@ -82,16 +84,28 @@ public class StatsRPG : MonoBehaviour
     {
         if (heal < 1) return;
 
-        audioSource.clip = healNoise;
-        audioSource.pitch = Random.Range(0.7f, 1.6f);
-        audioSource.Play();
-
         HP += heal;
 
         if (HP > MaxHP)
         {
             HP = MaxHP;
         }
+    }
+
+    public void ChangeShards(int amount)
+    {
+        if (shards < 1 && amount < 1) return;
+        if (shards >= MaxShards && amount > 1) return;
+
+        shards += amount;
+    }
+
+    public void ChangeMP(int amount)
+    {
+        if (MP < 1 && amount < 0) return;
+        if (MP >= MaxMP && amount > 0) return;
+
+        MP += amount;
     }
 
     public void Die()

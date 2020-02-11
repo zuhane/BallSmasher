@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 150789164}
   - component: {fileID: 150789167}
   - component: {fileID: 5401644182758325682}
+  - component: {fileID: 117272606005354119}
   m_Layer: 10
   m_Name: HealBall
   m_TagString: Bouncy
@@ -183,13 +184,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockDamage: 1
   maxHealth: 0
-  playerDamage: -1
   startingBlockDamage: 1
-  startingPlayerDamage: -1
+  playerDamage: 0
+  startingPlayerDamage: 0
+  goalPoints: 1
   lifespan: 0
+  canElectrify: 1
   explosionParticle: {fileID: 3478010183448093419, guid: fa51241c77fdb7b4082293a1b89f1168,
     type: 3}
   explodeNoise: {fileID: 0}
+  electrified: 0
 --- !u!114 &5401644182758325682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +206,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9987de62c88149b409910cb8f8b03e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &117272606005354119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7489737378105079963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292545cb01c85174d84f7ae276fa8eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 70dc7804104cf6348b34769692cd8ab8, type: 3}
+  popEffect: {fileID: 2256027101055837489, guid: bea3b9be1378b9f499af136d5f9a88ed,
+    type: 3}
 --- !u!1 &7489737379271426557
 GameObject:
   m_ObjectHideFlags: 0

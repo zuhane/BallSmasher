@@ -12,7 +12,7 @@ public class AttackOrb : BaseBoomerang
         Ball ballHit = collisionRoot.GetComponent<Ball>();
         if (ballHit != null)
         {
-            rigidbody.AddForce((velocity * 10) * impactForce);
+            rigidbody.AddForce((velocity * 25) * impactForce);
             ballHit.TakeDamage(damage);
             if (charged)
             {

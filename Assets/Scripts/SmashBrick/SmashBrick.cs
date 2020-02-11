@@ -13,7 +13,7 @@ public class SmashBrick : MonoBehaviour
     private Animator animator;
     [SerializeField] private GameObject explosion;
     private AudioSource audioSource;
-    private int damageCounter, damageTimeLimit = 0;
+    private float damageCounter, damageTimeLimitInSecs = 0.3f;
     private bool damaged = false;
 
     private void Start()
@@ -29,9 +29,9 @@ public class SmashBrick : MonoBehaviour
     {
         if (damaged)
         {
-            damageCounter++;
+            damageCounter += Time.deltaTime;
 
-            if (damageCounter > damageTimeLimit)
+            if (damageCounter > damageTimeLimitInSecs)
             {
                 damageCounter = 0;
                 damaged = false;
@@ -49,48 +49,41 @@ public class SmashBrick : MonoBehaviour
 
             float tempBounceForce = 3.5f;
             bool fastEnoughToDamage = false;
-            float minVelocityToDamage = 0.0f;
+            float minVelocityToDamage = 0.1f;
 
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 if (contact.normal.y < 0 && tempRigid.velocity.y > minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.setY(tempBounceForce);
                 }
                 if (contact.normal.y > 0 && tempRigid.velocity.y < -minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.setY(-tempBounceForce);
                 }
                 if (contact.normal.x > 0 && tempRigid.velocity.x < -minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.setX(tempBounceForce);
                 }
                 if (contact.normal.x < 0 && tempRigid.velocity.x > minVelocityToDamage)
                 {
                     fastEnoughToDamage = true;
-                    tempRigid.setX(-tempBounceForce);
                 }
             }
 
             fastEnoughToDamage = true;
 
-            if (fastEnoughToDamage)
+            if (fastEnoughToDamage && !damaged)
             {
                 int damageToDeal = 0;
 
-                if (!damaged)
-                {
-                    damageToDeal = collision.gameObject.GetComponent<Ball>().blockDamage;
-                }
-
+                damageToDeal = collision.gameObject.GetComponent<Ball>().blockDamage;
+                
                 audioSource.pitch = Random.Range(1.2f, 1.8f);
                 audioSource.Play();
                 animator.SetTrigger("Hit");
-                collision.gameObject.GetComponent<Rigidbody2D>().setX(collision.GetContact(0).normal.x * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
-                collision.gameObject.GetComponent<Rigidbody2D>().setY(collision.GetContact(0).normal.y * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                //collision.gameObject.GetComponent<Rigidbody2D>().setX(collision.GetContact(0).normal.x * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.x);
+                //collision.gameObject.GetComponent<Rigidbody2D>().setY(collision.GetContact(0).normal.y * -collision.gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
                 Damage(damageToDeal);
             }
