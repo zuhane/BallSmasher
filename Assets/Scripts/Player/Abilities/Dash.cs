@@ -17,6 +17,7 @@ public class Dash : BaseAbility
         base.Activate(player);
         Debug.Log("Dash worked!");
 
+        player.GetComponent<StatsRPG>().ChangeMP(-1);
         AudioManager.PlaySound("Woosh", Random.Range(0.8f, 1.2f));
 
         if (player.GetComponent<IntentToAction>().state.facingLeft) player.GetComponent<PlayerPhysicsMovement>().AddVelocity(new Vector2(-dashSpeed, 0));

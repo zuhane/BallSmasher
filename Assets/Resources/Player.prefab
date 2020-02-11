@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2430776021576682879}
-  - component: {fileID: 2430776021576682878}
   - component: {fileID: 2430776021576682876}
   - component: {fileID: 2430776021576682865}
   - component: {fileID: 2430776021576682864}
@@ -18,6 +17,7 @@ GameObject:
   - component: {fileID: 1079849769528210242}
   - component: {fileID: 1077947487583757974}
   - component: {fileID: 6290798691834981924}
+  - component: {fileID: 8972369315783504024}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -42,27 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &2430776021576682878
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2430776021576682866}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 1
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 2.5
-  m_AngularDrag: 0.32
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &2430776021576682876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,10 +109,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHP: 6
-  MaxMP: 6
+  MaxMP: 3
   armour: 0
   attackDamage: 1
   knockbackForce: 6
+  shards: 0
   weapons:
   - {fileID: 4441261147921284307, guid: 8c7e04daea270274480cd156167d57b0, type: 3}
   - {fileID: 3193203740896613800, guid: c25c4451eca7e024494db472f9ff1c01, type: 3}
@@ -233,6 +213,27 @@ MonoBehaviour:
   facingLeft: 0
   jumpTakeOffSpeed: 5.5
   acceleration: 0.14
+--- !u!50 &8972369315783504024
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2430776021576682866}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2430776022666849406
 GameObject:
   m_ObjectHideFlags: 0
