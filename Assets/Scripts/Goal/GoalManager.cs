@@ -14,6 +14,8 @@ public class GoalManager : MonoBehaviour
     private GameObject[] balls;
     private GameOver gameOverScreen;
 
+    private GameObject goalOverlayEffect;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -25,6 +27,7 @@ public class GoalManager : MonoBehaviour
         balls = Resources.LoadAll<GameObject>("Balls");
 
         gameOverScreen = GameObject.Find("GameOver").GetComponent<GameOver>();
+        //goalOverlayEffect = new Resources.Load<GameObject>("GoalEffect");
 
         SpawnRandomBall();
     }
@@ -33,8 +36,11 @@ public class GoalManager : MonoBehaviour
     {
         ScoreKeeper.instance.UpdateScore(team, points);
 
-        audioSource.clip = clips[Random.Range(0, clips.GetLength(0))];
-        audioSource.Play();
+        AudioManager.PlaySound(clips[0]);
+        AudioManager.PlaySound(clips[Random.Range(1, clips.GetLength(0))]);
+
+        //Instantiate(goalOverlayEffect, new Vector3(1, 1, 0), Quaternion.identity, null);
+        //Destroy(goalOverlayEffect, 2);
 
         if (!gameOverScreen.CheckScoreCount())
         {

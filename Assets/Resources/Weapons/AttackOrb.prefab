@@ -353,7 +353,7 @@ MonoBehaviour:
   velocityModifier: 0.1
   enabledTime: 0.15
   impactForce: 25
-  attackReleaseSound: {fileID: 8300000, guid: 34be34c197dce714185eaed4f417982c, type: 3}
+  attackReleaseSound: {fileID: 8300000, guid: 8c0ce1455ba838c498ca6fd0a1cc8e3b, type: 3}
   hitSoundWeak: {fileID: 8300000, guid: 755ca3c4887e1ee478eeaed05a5f020f, type: 3}
   hitSoundStrong: {fileID: 8300000, guid: 38454faff44ac8747935e9bd40b98f0f, type: 3}
   chargeUpSound: {fileID: 8300000, guid: ba9407ab328f0b74db8205d4d9d19ec4, type: 3}
