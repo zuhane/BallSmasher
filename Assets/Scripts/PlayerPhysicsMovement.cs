@@ -7,10 +7,6 @@ using UnityEngine;
 public class PlayerPhysicsMovement : PhysicsObject
 {
     //Animator stuff
-    [HideInInspector] public bool running;
-    [HideInInspector] public bool ascending;
-    [HideInInspector] public bool descending;
-    [HideInInspector] public bool aerial;
     [HideInInspector] public bool crouching;
     [HideInInspector] public bool wallSliding;
     [HideInInspector] public bool sliding;
@@ -30,102 +26,67 @@ public class PlayerPhysicsMovement : PhysicsObject
     public void AddVelocity(Vector2 inVelocity)
     {
         targetVelocity = inVelocity;
-        velocity = inVelocity;
     }
-
-
 
     protected override void ComputeVelocity()
     {
         if (brushingFeet || brushingLeft || brushingRight)
-        {
             currJump = 0;
+
+        if (crouching || (!intent.left && !intent.right))
+        {
+            if (brushingFeet) targetVelocity.x *= velocityXDecayGrounded;
+            else targetVelocity.x *= velocityXDecayAerial;
         }
-
-        movingLeft = false;
-        movingRight = false;
-
-        if (!crouching)
+        else
         {
             if (intent.left)
             {
                 if (targetVelocity.x > -maxRunSpeedX)
                     targetVelocity.x -= acceleration;
-                movingLeft = true;
             }
             else if (intent.right)
             {
                 if (targetVelocity.x < maxRunSpeedX)
                     targetVelocity.x += acceleration;
-                movingRight = true;
             }
         }
+
+
+
 
         if (intent.crouch && brushingFeet) crouching = true; else crouching = false;
 
         if ((pushingLeft || pushingRight) && aerial) wallSliding = true; else wallSliding = false;
 
-        if ((movingLeft && !brushingLeft) || (movingRight && !brushingRight) && brushingFeet)
-        {
-            running = true;
-        }
-        else
-        {
-            running = false;
-        }
 
-        if (!brushingFeet)
-        {
-            aerial = true;
-
-            if (velocity.y < 0) descending = true;
-            else descending = false;
-
-            if (velocity.y > 0) ascending = true;
-            else ascending = false;
-        }
-        else
-        {
-            ascending = false;
-            descending = false;
-            aerial = false;
-        }
-
-        //Wall sliding
-        if (!brushingFeet && velocity.y < 0 && (pushingLeft || pushingRight)) currentGravModifier = 0.1f;
+        //Wall sliding //TODO: Use Physics Material to apply Friction.
+        if (wallSliding && descending) currentGravModifier = 0.1f;
         else currentGravModifier = originalGravModifier;
 
         if (intent.jump && currJump < maxJumps)
         {
-            velocity.y = jumpTakeOffSpeed;
+            targetVelocity.y = jumpTakeOffSpeed;
 
             //Wall jumping
-            if (brushingLeft && !brushingFeet && !pushingLeft)
+            if (brushingLeft && aerial && !wallSliding)
             {
-                movingRight = true;
                 targetVelocity.x += jumpTakeOffSpeed;
             }
-            if (brushingRight && !brushingFeet && !pushingRight)
+            if (brushingRight && aerial && !wallSliding)
             {
-                movingLeft = true;
                 targetVelocity.x -= jumpTakeOffSpeed;
             }
         }
         else if (intent.releaseJump)
         {
             currJump++;
-            if (velocity.y > 0)
+            if (ascending)
             {
-                velocity.y = velocity.y * 0.5f;
+                targetVelocity.y = targetVelocity.y * 0.5f;
             }
         }
-
         if (movingLeft) facingLeft = true;
         if (movingRight) facingLeft = false;
-
     }
-
-
-
-
 }

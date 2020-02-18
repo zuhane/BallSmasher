@@ -14,11 +14,9 @@ public class PhysicsObject : MonoBehaviour
     protected BoxCollider2D boxCollider;
 
     //Collision data
-    [HideInInspector] public bool brushingHead, brushingFeet, brushingLeft, brushingRight, pushingLeft, pushingRight;
-    private bool touchingAtLeastOneleft, touchingAtLeastOneRight;
+    public bool brushingHead, brushingFeet, brushingLeft, brushingRight, pushingLeft, pushingRight, aerial, descending, ascending, movingLeft, movingRight, running;
 
-    //TEMPORARY
-    [HideInInspector] protected bool movingLeft, movingRight;
+    private bool touchingAtLeastOneleft, touchingAtLeastOneRight;
 
     [HideInInspector] public float minGroundNormalY = 0.65f, minSideNormalX = 0.65f;
     [Range(0, 10)] [SerializeField] protected float originalGravModifier = 0.1f;
@@ -26,7 +24,7 @@ public class PhysicsObject : MonoBehaviour
 
     [HideInInspector] public Vector2 targetVelocity;
     protected Vector2 groundNormal;
-    [HideInInspector] public Vector2 velocity;
+    [HideInInspector] private Vector2 velocity;
     protected Rigidbody2D rb2d;
 
     protected ContactFilter2D contactFilter;
@@ -57,25 +55,18 @@ public class PhysicsObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         //targetVelocity = Vector2.zero;
         if (enabled)
         {
             ComputeVelocity();
 
-            if (!movingLeft && !movingRight)
-            {
-                if (brushingFeet) targetVelocity.x *= velocityXDecayGrounded;
-                else targetVelocity.x *= velocityXDecayAerial;
-            }
-
-            checkMaxSpeed();
+            ClampMaxSpeed();
 
             DebugContacts();
         }
     }
 
-    protected void checkMaxSpeed()
+    protected void ClampMaxSpeed()
     {
         targetVelocity = new Vector2(Mathf.Clamp(targetVelocity.x, -maxTotalSpeed.x, maxTotalSpeed.x),
                                      Mathf.Clamp(targetVelocity.y, -maxTotalSpeed.y, maxTotalSpeed.y));
@@ -111,23 +102,20 @@ public class PhysicsObject : MonoBehaviour
 
     private void FixedUpdate()
     {
-        brushingFeet = false; brushingHead = false;
+        brushingFeet = false; brushingHead = false; brushingLeft = false; brushingRight = false;
         pushingLeft = false; pushingRight = false;
+        movingLeft = false; movingRight = false;
+        aerial = false; ascending = false; descending = false;
 
         //This way seems the correct way. Needs more checks to cancel these out though.
         /*if (brushingLeft && targetVelocity.x > 0)*/
-        brushingLeft = false;
-        brushingRight = false;
 
+        velocity = targetVelocity;
+        
         velocity += currentGravModifier * Physics2D.gravity * Time.deltaTime;
-        velocity.x = targetVelocity.x;
-
-        brushingFeet = false;
-
+                     
         Vector2 deltaPosition = velocity * Time.deltaTime;
-
         Vector2 moveAlongGround = new Vector2(groundNormal.y, -groundNormal.x);
-
         Vector2 move = moveAlongGround * deltaPosition.x;
 
         Movement(move, false);
@@ -138,6 +126,28 @@ public class PhysicsObject : MonoBehaviour
 
         brushingLeft = PostSideCheck(-1f);
         brushingRight = PostSideCheck(1f);
+
+        if (velocity.x > 0) movingRight = true;
+        if (velocity.x < 0) movingLeft = true;
+
+
+        if ((movingLeft && !brushingLeft) || (movingRight && !brushingRight) && brushingFeet)
+            running = true;
+        else
+            running = false;
+
+
+        if (!brushingFeet)
+        {
+            aerial = true;
+            if (velocity.y < 0) descending = true;
+            else descending = false;
+            if (velocity.y > 0) ascending = true;
+            else ascending = false;
+        }
+
+        targetVelocity = velocity;
+
     }
 
     private bool PostSideCheck(float x)
@@ -251,6 +261,8 @@ public class PhysicsObject : MonoBehaviour
                 float modifiedDistance = hitBufferList[i].distance - shellRadius;
                 distance = modifiedDistance < distance ? modifiedDistance : distance;
             }
+
+
         }
 
         if (touchingAtLeastOneleft) brushingLeft = true;

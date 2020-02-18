@@ -84,6 +84,7 @@ public class IntentToAction : MonoBehaviour
 
         state.facingLeft = playerPhysics.facingLeft;
 
+        
         state.moving = playerPhysics.running;
         state.ascending = playerPhysics.ascending;
         state.descending = playerPhysics.descending;

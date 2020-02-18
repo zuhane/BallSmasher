@@ -19,6 +19,6 @@ public class FloatyBodyFollowPlayer : MonoBehaviour
     void Update()
     {
         transform.position = playerTransform.position;
-        rb.velocity = playerTransform.gameObject.GetComponent<PlayerPhysicsMovement>().velocity;
+        //rb.velocity = playerTransform.gameObject.GetComponent<PlayerPhysicsMovement>().velocity;
     }
 }
