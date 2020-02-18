@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -31,11 +32,19 @@ public class AbilityIcon : MonoBehaviour
 
         SetCooldownOverlay(0);
         cooldownText.text = "";
+
+        Ability.Activated += AbilityActivated;
     }
 
     private void SetCooldownOverlay(float percentageFullness)
     {
         cooldownMaskRect.sizeDelta = new Vector2(cooldownMaskRect.sizeDelta.x, percentageFullness);
+    }
+
+    private void AbilityActivated(object sender, EventArgs e)
+    {
+        percentOfMaskOverlay = 100;
+        miniTimer = 0;
     }
 
     void Update()
@@ -47,11 +56,6 @@ public class AbilityIcon : MonoBehaviour
         //Gives a nice smooth transition. Also shows a numerical display of the cooldown time left.
         if (!Ability.CanActivate)
         {
-            if (Ability.justActivated)
-            {
-                percentOfMaskOverlay = 100;
-                miniTimer = 0;
-            }
           
             SetCooldownOverlay(onePercentOfUIBar * percentOfMaskOverlay);
 

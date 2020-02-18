@@ -39,13 +39,6 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        foreach (BaseAbility b in abilities)
-        {
-            b.LateUpdate();
-        }
-    }
 
 
 
